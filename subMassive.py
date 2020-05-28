@@ -138,12 +138,56 @@ def compute_strongly_connected_component():
     print (ct)
 
     for c in filter_scc:
-        if len(c) > 5:
+        if len(c) > 3:
             print (len(c))
             print (c)
+    # export to
+    index = 1
+    color = {}
+    for c in filter_scc:
+        if len(c) > 3:
+            for n in c:
+                color[n] = index
+            index += 1
+    # export the nodes and color
+    file =  open('node_color.csv', 'w', newline='')
+    writer = csv.writer(file)
+    writer.writerow([ "Node", "Color"])
+    for n in graph.nodes:
+        if n in color:
+            # write that line with color
+            writer.writerow([n, color[n]])
+        else:
+            # write that line with ZERO as color
+            writer.writerow([n, 0])
+
+    file.close()
+
+
+    # export the edges
+    file =  open('edges.csv', 'w', newline='')
+    writer = csv.writer(file)
+    writer.writerow([ "Subject", "Object"])
+    for (l,r) in graph.edges:
+        writer.writerow([l, r])
+
+    file.close()
 
 
 
+def draw_graph():
+    graph_pos = nx.spectral_layout(graph)
+    #  # draw nodes, edges and labels
+    nx.draw_networkx_nodes(graph, graph_pos, node_size=5, node_color='blue', alpha=0.3)
+    nx.draw_networkx_edges(graph, graph_pos)
+    # nx.draw_networkx_labels(G, graph_pos, font_size=12, font_family='sans-serif')
+    #
+    # # show graph
+    # plt.show()
+
+    # nx.draw(graph)
+    plt.savefig("all_graph.png")
+    plt.show()
 
 def main ():
 
@@ -155,6 +199,7 @@ def main ():
     # c = nx.find_cycle(graph)
     # print ('cycle = ', c)
     compute_strongly_connected_component()
+    # draw_graph()
     # ===============
     end = time.time()
     hours, rem = divmod(end-start, 3600)
