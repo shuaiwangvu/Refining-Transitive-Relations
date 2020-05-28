@@ -26,6 +26,8 @@ import json
 import random
 # from equiClass import equiClassManager
 import random
+from tarjan import tarjan
+from collections import Counter
 
 # PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
 PATH_LOD = '/Users/sw-works/Documents/backbone/submassive_data/subC-all.hdt'
@@ -119,6 +121,30 @@ def construct_graph():
     print ('# nodes of graph = ', len(graph.nodes))
     print ('# edges of graph = ', len(graph.edges))
 
+def compute_strongly_connected_component():
+    dict = {}
+    for n in graph.nodes:
+        collect_succssor = []
+        for s in graph.successors(n):
+            collect_succssor.append(s)
+        dict[n] = collect_succssor
+    scc = tarjan(dict)
+    print ('# Connected Component        : ', len(scc))
+    filter_scc = [x for x in scc if len(x)>1]
+    print('# Connected Component Filtered: ', len(filter_scc))
+    ct = Counter()
+    for c in filter_scc:
+        ct[len(c)] += 1
+    print (ct)
+
+    for c in filter_scc:
+        if len(c) > 5:
+            print (len(c))
+            print (c)
+
+
+
+
 def main ():
 
     start = time.time()
@@ -126,8 +152,9 @@ def main ():
     # some small tests
     init_nodes()
     construct_graph()
-    c = nx.find_cycle(graph)
-    print ('cycle = ', c)
+    # c = nx.find_cycle(graph)
+    # print ('cycle = ', c)
+    compute_strongly_connected_component()
     # ===============
     end = time.time()
     hours, rem = divmod(end-start, 3600)
