@@ -23,7 +23,15 @@ import random
 PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
 hdt = HDTDocument(PATH_LOD)
 t = "http://www.w3.org/2002/07/owl#TransitiveProperty"
-
+a = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
+	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
+	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
+    #
+    #
+	# subject:  http://www.cyc.com/2003/04/01/cyc#TransitiveBinaryPredicate
+	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
+    # subject:  http://sw.opencyc.org/concept/Mx4rnhSeOBSXQdiB19IvbH2fDg
+	# predicate:   http://www.w3.org/2002/07/owl#sameAs
 
 print('as subject:')
 triples, cardinality = hdt.search_triples(t, "", "")
@@ -32,7 +40,7 @@ for (s, p, o) in triples:
     print ('\tpredicate: ', p)
     print ('\tobject:    ', o)
     print ('\n')
-    
+
 
 print ('\n\n')
 print ('as predicate:')
@@ -48,7 +56,22 @@ print ('\n\n')
 print ('as object:')
 triples, cardinality = hdt.search_triples("", "", t)
 print ('There are ', cardinality)
+collect_t_subject = set()
 for (s, p, o) in triples:
     print ('\tsubject: ', s)
     print ('\tpredicate:  ', p)
     print ('\n')
+    collect_t_subject.add(s)
+
+triples, cardinality = hdt.search_triples("", "", a)
+print ('There are ', cardinality, ' asymmetric property')
+collect_a_subject = set()
+for (s, p, o) in triples:
+    print ('\tsubject: ', s)
+    print ('\tpredicate:  ', p)
+    print ('\n')
+    collect_a_subject.add(s)
+both = collect_t_subject.intersection(collect_a_subject)
+print ('transitive and asymmetric: ', len (both))
+for b in both:
+    print (b)
