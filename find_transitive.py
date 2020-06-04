@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import tldextract
 import json
 import random
-from equiClass import equiClassManager
+# from equiClass import equiClassManager
 import random
 
 
