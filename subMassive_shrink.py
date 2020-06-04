@@ -28,9 +28,54 @@ import random
 import random
 from tarjan import tarjan
 from collections import Counter
+# from funcy import project
+
+# PATH_SUBMASSIVE = "/Users/sw-works/Documents/backbone/submassive_data/subC-all.nt"
+PATH_SUBMASSIVE = "/Users/sw-works/Documents/backbone/submassive_data/refined-subC-FA.nt"
+PATH_SAMEAS = "/Users/sw-works/Documents/backbone/sameAs_data/term2id_0-99.csv"
+
+dict_class_to_group = {}
+
+def export_class_nodes():
+    global dict_class_to_group
+    file =  open('class_group_names.csv', 'w', newline='')
+    writer = csv.writer(file)
+    writer.writerow([ "Class_name", "Group_ID"])
+
+    class_set = set()
+    with open(PATH_SUBMASSIVE) as  class_file:
+        csv_reader = csv.reader(class_file, delimiter=' ')
+        for row in csv_reader:
+            # print ( row[0][1:-1] , ' - and - ', row [2][1:-1])
+            # print ( row[0] , ' - and - ', row [2])
+            if len (row) > 3:
+                class_set.add(row[0][1:-1])
+                class_set.add(row[2][1:-1])
+            else:
+                print (row)
+    print('collected ', len(class_set), ' classes')
+    count_total_class = len(class_set)
+    count_found = 0
+    with open(PATH_SAMEAS) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=' ')
+        line_count = 0
+        count_processed = 0
+        for row in csv_reader:
+            count_processed += 1
+            # print ('count_processed = ', count_processed)
+            # print(row[0])
+            if row[0] in class_set:
+                # print ('Found: ',row[0], row[1])
+                writer.writerow([row[0], 'https://krr.cs.vu.nl/SUBMASSIVE/'+row[1]])
+                dict_class_to_group[row[0]] = 'https://krr.cs.vu.nl/SUBMASSIVE/'+row[1]
+                count_found += 1
+    print ('total found to be shrinked: ', count_found)
+    print('NOT TO BE shrinked: ', count_total_class - count_found)
+
 
 # PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
-PATH_LOD = '/Users/sw-works/Documents/backbone/submassive_data/subC-all.hdt'
+# PATH_LOD = '/Users/sw-works/Documents/backbone/submassive_data/subC-all.hdt'
+PATH_LOD = '/Users/sw-works/Documents/backbone/submassive_data/refined-subC-FA.hdt'
 subClassOf = "http://www.w3.org/2000/01/rdf-schema#subClassOf"
 equivalent = "http://www.w3.org/2002/07/owl#equivalentClass"
 
@@ -71,7 +116,7 @@ def all_subclass_removed(n):
 def filter_nodes():
     detected_to_remove = set()
     for n in collect_nodes:
-        if all_subclass_removed(n):
+        if all_subclass_removed(n) and n not in dict_class_to_group.keys():
             detected_to_remove.add(n)
     # TODO: to remove these nodes
     print ('filter : can remove ', len (detected_to_remove),' nodes')
@@ -83,7 +128,7 @@ def init_nodes():
     (subclass_triples, cardinality) = hdt_file.search_triples('', subClassOf, '')
     for (s, _, o) in subclass_triples:
         # if the s has only no subclass, then s can be removed.
-        if is_leaf_node(s):
+        if is_leaf_node(s) and s not in dict_class_to_group.keys():
             can_remove.add(s)
         else:
             collect_nodes.add(s)
@@ -92,7 +137,7 @@ def init_nodes():
     print ('\tcollect    = ', len(collect_nodes))
 
     for o in collect_nodes:
-        if all_subclass_removed(o):
+        if all_subclass_removed(o) and o not in dict_class_to_group.keys():
             can_remove.add(o)
 
     collect_nodes -= can_remove
@@ -122,11 +167,19 @@ def construct_graph():
         for (s, _, _) in subclass_triples:
             if s in collect_nodes:
                 if s != n :
+                    if s in dict_class_to_group.keys():
+                        s = dict_class_to_group[s]
+                    if n in dict_class_to_group.keys():
+                        n = dict_class_to_group[n]
                     graph.add_edge(s, n)
         (subclass_triples, cardinality) = hdt_file.search_triples(n, subClassOf, '')
         for (_, _, o) in subclass_triples:
             if o in collect_nodes:
                 if n != o:
+                    if o in dict_class_to_group.keys():
+                        o = dict_class_to_group[o]
+                    if n in dict_class_to_group.keys():
+                        n = dict_class_to_group[n]
                     graph.add_edge(n, o)
     print ('# nodes of graph = ', len(graph.nodes))
     print ('# edges of graph = ', len(graph.edges))
@@ -210,20 +263,25 @@ def draw_graph():
     # plt.show()
 
     # nx.draw(graph)
-    plt.savefig("all_graph.png")
+    plt.savefig("shrinked_graph.png")
     plt.show()
+
 
 def main ():
 
     start = time.time()
     # ==============
     # some small tests
+
+    export_class_nodes()
+
     init_nodes()
     construct_graph()
     # c = nx.find_cycle(graph)
     # print ('cycle = ', c)
     compute_strongly_connected_component()
-    # draw_graph()
+    draw_graph()
+
     # ===============
     end = time.time()
     hours, rem = divmod(end-start, 3600)
