@@ -114,6 +114,8 @@ for (s, p, o) in triples:
 collect_equivalent_properties = collect_reflexive_properties.intersection(collect_symmetric_properties.intersection(collect_transitive_properties))
 print ('There are ', len(collect_equivalent_properties), ' equivalent properties')
 
+
+# ====
 print ('not symmetric but reflexive:')
 tmp = collect_transitive_properties.intersection(collect_reflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
 print ('size: ', len(tmp))
@@ -129,6 +131,43 @@ if len(tmp) > 0:
 
 print ('not symmetric and irreflexive:')
 tmp = collect_transitive_properties.intersection(collect_irreflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
+print ('size: ', len(tmp))
+if len(tmp) > 0:
+    print ('example:', list(tmp)[0])
+
+
+# =====
+print ('#######')
+
+print ('symmetric and not reflexive:')
+tmp = collect_transitive_properties.intersection(collect_symmetric_properties).difference(collect_irreflexive_properties).difference(collect_reflexive_properties)
+print ('size: ', len(tmp))
+if len(tmp) > 0:
+    print ('example:', list(tmp)[0])
+
+print ('symmetric and irreflexive:')
+tmp = collect_transitive_properties.intersection(collect_symmetric_properties).intersection(collect_irreflexive_properties)
+print ('size: ', len(tmp))
+if len(tmp) > 0:
+    print ('example:', list(tmp)[0])
+
+# =====
+print ('#######')
+
+print ('assymmetric and reflexive:')
+tmp = collect_transitive_properties.intersection(collect_assymmetric_properties).intersection(collect_reflexive_properties)
+print ('size: ', len(tmp))
+if len(tmp) > 0:
+    print ('example:', list(tmp)[0])
+
+print ('assymmetric and not reflexive:')
+tmp = collect_transitive_properties.intersection(collect_assymmetric_properties).difference(collect_irreflexive_properties).difference(collect_reflexive_properties)
+print ('size: ', len(tmp))
+if len(tmp) > 0:
+    print ('example:', list(tmp)[0])
+
+print ('assymmetric and irreflexive:')
+tmp = collect_transitive_properties.intersection(collect_assymmetric_properties).interaction(collect_irreflexive_properties)
 print ('size: ', len(tmp))
 if len(tmp) > 0:
     print ('example:', list(tmp)[0])
