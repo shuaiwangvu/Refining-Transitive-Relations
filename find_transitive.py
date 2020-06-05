@@ -99,4 +99,6 @@ for b in collect_t_subject:
             pass
         if len(c) > 0:
             print('found ', len(c), ' cycles for ', b)
+            print (c)
             print ('graph (edge) size = ',cardinality)
+            print('\n')
