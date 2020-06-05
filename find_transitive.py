@@ -79,7 +79,7 @@ for b in both:
 
 
 
-for b in both:
+for b in collect_t_subject:
     # prepare a graph:
     graph = nx.DiGraph()
     triples, cardinality = hdt.search_triples("", b, "")
