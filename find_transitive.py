@@ -84,15 +84,18 @@ for b in collect_t_subject:
     graph = nx.DiGraph()
     triples, cardinality = hdt.search_triples("", b, "")
     # print ('graph (edge) size = ',cardinality)
-    collect_pairs = []
-    for (s, _, o) in triples:
-        collect_pairs.append((s, o))
-    graph.add_edges_from(collect_pairs)
-    c = []
-    try:
-        c = nx.find_cycle(graph)
-    except :
-        # print ('no cycle found for ', b)
-        pass
-    if len(c) > 0:
-        print('found ', len(c), ' cycles for ', b, '\n')
+    if cardinality >= 10699159:
+        print ('too large to find all cycles')
+    else:
+        collect_pairs = []
+        for (s, _, o) in triples:
+            collect_pairs.append((s, o))
+        graph.add_edges_from(collect_pairs)
+        c = []
+        try:
+            c = nx.find_cycle(graph)
+        except :
+            # print ('no cycle found for ', b)
+            pass
+        if len(c) > 0:
+            print('found ', len(c), ' cycles for ', b, '\n')
