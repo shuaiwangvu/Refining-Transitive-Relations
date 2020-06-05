@@ -90,6 +90,6 @@ for b in both:
     graph.add_edges_from(collect_pairs)
     try:
         c = nx.find_cycle(graph)
-    except e:
-        print (e)
+    except :
+        print ('no cycle found for ', b)
     print('found ', len(c), ' cycles')
