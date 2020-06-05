@@ -24,6 +24,7 @@ PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
 hdt = HDTDocument(PATH_LOD)
 t = "http://www.w3.org/2002/07/owl#TransitiveProperty"
 a = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
+eq = "http://www.w3.org/2002/07/owl#:equivalentProperty"
 	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
 	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
     #
@@ -62,24 +63,28 @@ for (s, p, o) in triples:
     print ('\tpredicate:  ', p)
     print ('\n')
     collect_t_subject.add(s)
-#
-# triples, cardinality = hdt.search_triples("", "", a)
-# print ('There are ', cardinality, ' asymmetric properties')
-# collect_a_subject = set()
-# for (s, p, o) in triples:
-#     # print ('\tsubject: ', s)
-#     # print ('\tpredicate:  ', p)
-#     # print ('\n')
-#     collect_a_subject.add(s)
-# both = collect_t_subject.intersection(collect_a_subject)
-# print ('transitive and asymmetric: ', len (both))
-# for b in both:
-#     print (b)
+
+triples, cardinality = hdt.search_triples("", "", eq)
+print ('There are ', cardinality, ' equivalent properties')
+collect_eq_subject = set()
+for (s, p, o) in triples:
+    # print ('\tsubject: ', s)
+    # print ('\tpredicate:  ', p)
+    # print ('\n')
+    collect_eq_subject.add(s)
+
+
+both = collect_t_subject.intersection(collect_a_subject)
+
+
+print ('transitive but not equivalent: ', len (both))
+for b in both:
+    print (b)
 
 
 
 
-for b in collect_t_subject:
+for b in both:
     # print ('\n\n')
     # prepare a graph:
     graph = nx.DiGraph()
