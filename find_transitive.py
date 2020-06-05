@@ -55,26 +55,26 @@ a = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
 print ('\n\n')
 print ('as object:')
 triples, cardinality = hdt.search_triples("", "", t)
-print ('There are ', cardinality)
+print ('There are ', cardinality, 'transitive properties')
 collect_t_subject = set()
 for (s, p, o) in triples:
     print ('\tsubject: ', s)
     print ('\tpredicate:  ', p)
     print ('\n')
     collect_t_subject.add(s)
-
-triples, cardinality = hdt.search_triples("", "", a)
-print ('There are ', cardinality, ' asymmetric property')
-collect_a_subject = set()
-for (s, p, o) in triples:
-    # print ('\tsubject: ', s)
-    # print ('\tpredicate:  ', p)
-    # print ('\n')
-    collect_a_subject.add(s)
-both = collect_t_subject.intersection(collect_a_subject)
-print ('transitive and asymmetric: ', len (both))
-for b in both:
-    print (b)
+#
+# triples, cardinality = hdt.search_triples("", "", a)
+# print ('There are ', cardinality, ' asymmetric properties')
+# collect_a_subject = set()
+# for (s, p, o) in triples:
+#     # print ('\tsubject: ', s)
+#     # print ('\tpredicate:  ', p)
+#     # print ('\n')
+#     collect_a_subject.add(s)
+# both = collect_t_subject.intersection(collect_a_subject)
+# print ('transitive and asymmetric: ', len (both))
+# for b in both:
+#     print (b)
 
 
 
