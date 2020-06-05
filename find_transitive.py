@@ -58,9 +58,9 @@ triples, cardinality = hdt.search_triples("", "", t)
 print ('There are ', cardinality)
 collect_t_subject = set()
 for (s, p, o) in triples:
-    # print ('\tsubject: ', s)
-    # print ('\tpredicate:  ', p)
-    # print ('\n')
+    print ('\tsubject: ', s)
+    print ('\tpredicate:  ', p)
+    print ('\n')
     collect_t_subject.add(s)
 
 triples, cardinality = hdt.search_triples("", "", a)
