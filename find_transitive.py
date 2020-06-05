@@ -167,7 +167,7 @@ if len(tmp) > 0:
     print ('example:', list(tmp)[0])
 
 print ('assymmetric and irreflexive:')
-tmp = collect_transitive_properties.intersection(collect_assymmetric_properties).interaction(collect_irreflexive_properties)
+tmp = collect_transitive_properties.intersection(collect_assymmetric_properties).intersection(collect_irreflexive_properties)
 print ('size: ', len(tmp))
 if len(tmp) > 0:
     print ('example:', list(tmp)[0])
