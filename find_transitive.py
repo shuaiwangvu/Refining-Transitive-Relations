@@ -114,6 +114,11 @@ for (s, p, o) in triples:
 collect_equivalent_properties = collect_reflexive_properties.intersection(collect_symmetric_properties.intersection(collect_transitive_properties))
 print ('There are ', len(collect_equivalent_properties), ' equivalent properties')
 
+print ('not symmetric but reflexive:')
+tmp = collect_transitive_properties.intersection(collect_reflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
+print ('size: ', len(tmp))
+if len(tmp) > 0:
+    print ('example:', tmp[0])
 
 
 #
