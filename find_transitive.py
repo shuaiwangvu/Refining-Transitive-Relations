@@ -80,7 +80,7 @@ for b in both:
 
 
 for b in collect_t_subject:
-    print ('\n\n')
+    # print ('\n\n')
     # prepare a graph:
     graph = nx.DiGraph()
     triples, cardinality = hdt.search_triples("", b, "")
@@ -98,5 +98,5 @@ for b in collect_t_subject:
             # print ('no cycle found for ', b)
             pass
         if len(c) > 0:
-            print('found ', len(c), ' cycles for ', b, '\n')
+            print('found ', len(c), ' cycles for ', b)
             print ('graph (edge) size = ',cardinality)
