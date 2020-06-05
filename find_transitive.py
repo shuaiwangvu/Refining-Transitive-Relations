@@ -23,8 +23,14 @@ import random
 PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
 hdt = HDTDocument(PATH_LOD)
 t = "http://www.w3.org/2002/07/owl#TransitiveProperty"
-a = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
-eq = "http://www.w3.org/2002/07/owl#:equivalentProperty"
+s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
+aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
+r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
+iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
+
+
+
+# is_eq_to = "http://www.w3.org/2002/07/owl#:equivalentProperty"
 	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
 	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
     #
@@ -57,53 +63,80 @@ print ('\n\n')
 print ('as object:')
 triples, cardinality = hdt.search_triples("", "", t)
 print ('There are ', cardinality, 'transitive properties')
-collect_t_subject = set()
+collect_transitive_properties = set()
 for (s, p, o) in triples:
     print ('\tsubject: ', s)
     print ('\tpredicate:  ', p)
     print ('\n')
-    collect_t_subject.add(s)
+    collect_transitive_properties.add(s)
 
-triples, cardinality = hdt.search_triples("", "", eq)
-print ('There are ', cardinality, ' equivalent properties')
-collect_eq_subject = set()
+triples, cardinality = hdt.search_triples("", "", s)
+print ('There are ', cardinality, ' symmetric properties')
+collect_symmetric_properties = set()
 for (s, p, o) in triples:
     # print ('\tsubject: ', s)
     # print ('\tpredicate:  ', p)
     # print ('\n')
-    collect_eq_subject.add(s)
+    collect_symmetric_properties.add(s)
+
+triples, cardinality = hdt.search_triples("", "", aS)
+print ('There are ', cardinality, ' assymmetric properties')
+collect_assymmetric_properties = set()
+for (s, p, o) in triples:
+    # print ('\tsubject: ', s)
+    # print ('\tpredicate:  ', p)
+    # print ('\n')
+    collect_assymmetric_properties.add(s)
 
 
-both = collect_t_subject.intersection(collect_a_subject)
+
+triples, cardinality = hdt.search_triples("", "", r)
+print ('There are ', cardinality, ' reflexive properties')
+collect_reflexive_properties = set()
+for (s, p, o) in triples:
+    # print ('\tsubject: ', s)
+    # print ('\tpredicate:  ', p)
+    # print ('\n')
+    collect_reflexive_properties.add(s)
 
 
-print ('transitive but not equivalent: ', len (both))
-for b in both:
-    print (b)
+triples, cardinality = hdt.search_triples("", "", iR)
+print ('There are ', cardinality, ' irreflexive properties')
+collect_irreflexive_properties = set()
+for (s, p, o) in triples:
+    # print ('\tsubject: ', s)
+    # print ('\tpredicate:  ', p)
+    # print ('\n')
+    collect_irreflexive_properties.add(s)
 
 
 
+collect_equivalent_properties = collect_reflexive_properties.intersection(collect_symmetric_properties.intersection(collect_transitive_properties))
+print ('There are ', len(collect_equivalent_properties), ' equivalent properties')
 
-for b in both:
-    # print ('\n\n')
-    # prepare a graph:
-    graph = nx.DiGraph()
-    triples, cardinality = hdt.search_triples("", b, "")
-    if cardinality >= 100000:
-        print ('too large to find all cycles: ', cardinality,' for ', b)
-    else:
-        collect_pairs = []
-        for (s, _, o) in triples:
-            collect_pairs.append((s, o))
-        graph.add_edges_from(collect_pairs)
-        c = []
-        try:
-            c = nx.find_cycle(graph)
-        except :
-            # print ('no cycle found for ', b)
-            pass
-        if len(c) > 0:
-            print('found ', len(c), ' cycles for ', b)
-            print (c)
-            print ('graph (edge) size = ',cardinality)
-            print('\n')
+
+
+#
+# for b in both:
+#     # print ('\n\n')
+#     # prepare a graph:
+#     graph = nx.DiGraph()
+#     triples, cardinality = hdt.search_triples("", b, "")
+#     if cardinality >= 100000:
+#         print ('too large to find all cycles: ', cardinality,' for ', b)
+#     else:
+#         collect_pairs = []
+#         for (s, _, o) in triples:
+#             collect_pairs.append((s, o))
+#         graph.add_edges_from(collect_pairs)
+#         c = []
+#         try:
+#             c = nx.find_cycle(graph)
+#         except :
+#             # print ('no cycle found for ', b)
+#             pass
+#         if len(c) > 0:
+#             print('found ', len(c), ' cycles for ', b)
+#             print (c)
+#             print ('graph (edge) size = ',cardinality)
+#             print('\n')
