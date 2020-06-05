@@ -75,3 +75,18 @@ both = collect_t_subject.intersection(collect_a_subject)
 print ('transitive and asymmetric: ', len (both))
 for b in both:
     print (b)
+
+
+
+
+for b in both:
+    # prepare a graph:
+    graph = nx.DiGraph()
+    triples, cardinality = hdt.search_triples("", b, "")
+    print ('graph (edge) size = ',cardinality)
+    collect_pairs = []
+    for (s, _, o) in triples:
+        collect_pairs.append((s, o))
+    self.graph.add_edges_from(collect_pairs)
+    c = nx.find_cycle(tmp_graph)
+    print('found ', len(c), ' cycles')
