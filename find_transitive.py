@@ -33,23 +33,23 @@ a = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
     # subject:  http://sw.opencyc.org/concept/Mx4rnhSeOBSXQdiB19IvbH2fDg
 	# predicate:   http://www.w3.org/2002/07/owl#sameAs
 
-print('as subject:')
-triples, cardinality = hdt.search_triples(t, "", "")
-print ('There are ', cardinality)
-for (s, p, o) in triples:
-    print ('\tpredicate: ', p)
-    print ('\tobject:    ', o)
-    print ('\n')
-
-
-print ('\n\n')
-print ('as predicate:')
-triples, cardinality = hdt.search_triples("", t, "")
-print ('There are ', cardinality)
-for (s, p, o) in triples:
-    print ('\tsubject: ', s)
-    print ('\tobject:  ', o)
-    print ('\n')
+# print('as subject:')
+# triples, cardinality = hdt.search_triples(t, "", "")
+# print ('There are ', cardinality)
+# for (s, p, o) in triples:
+#     print ('\tpredicate: ', p)
+#     print ('\tobject:    ', o)
+#     print ('\n')
+#
+#
+# print ('\n\n')
+# print ('as predicate:')
+# triples, cardinality = hdt.search_triples("", t, "")
+# print ('There are ', cardinality)
+# for (s, p, o) in triples:
+#     print ('\tsubject: ', s)
+#     print ('\tobject:  ', o)
+#     print ('\n')
 
 
 print ('\n\n')
@@ -58,18 +58,18 @@ triples, cardinality = hdt.search_triples("", "", t)
 print ('There are ', cardinality)
 collect_t_subject = set()
 for (s, p, o) in triples:
-    print ('\tsubject: ', s)
-    print ('\tpredicate:  ', p)
-    print ('\n')
+    # print ('\tsubject: ', s)
+    # print ('\tpredicate:  ', p)
+    # print ('\n')
     collect_t_subject.add(s)
 
 triples, cardinality = hdt.search_triples("", "", a)
 print ('There are ', cardinality, ' asymmetric property')
 collect_a_subject = set()
 for (s, p, o) in triples:
-    print ('\tsubject: ', s)
-    print ('\tpredicate:  ', p)
-    print ('\n')
+    # print ('\tsubject: ', s)
+    # print ('\tpredicate:  ', p)
+    # print ('\n')
     collect_a_subject.add(s)
 both = collect_t_subject.intersection(collect_a_subject)
 print ('transitive and asymmetric: ', len (both))
@@ -83,8 +83,7 @@ for b in collect_t_subject:
     # prepare a graph:
     graph = nx.DiGraph()
     triples, cardinality = hdt.search_triples("", b, "")
-    # print ('graph (edge) size = ',cardinality)
-    if cardinality >= 10699159:
+    if cardinality >= 10000:
         print ('too large to find all cycles')
     else:
         collect_pairs = []
@@ -99,3 +98,4 @@ for b in collect_t_subject:
             pass
         if len(c) > 0:
             print('found ', len(c), ' cycles for ', b, '\n')
+            print ('graph (edge) size = ',cardinality)
