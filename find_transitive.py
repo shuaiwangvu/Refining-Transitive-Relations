@@ -80,11 +80,12 @@ for b in both:
 
 
 for b in collect_t_subject:
+    print ('\n\n')
     # prepare a graph:
     graph = nx.DiGraph()
     triples, cardinality = hdt.search_triples("", b, "")
-    if cardinality >= 10000:
-        print ('too large to find all cycles: ', cardinality)
+    if cardinality >= 100000:
+        print ('too large to find all cycles: ', cardinality,' for ', b)
     else:
         collect_pairs = []
         for (s, _, o) in triples:
