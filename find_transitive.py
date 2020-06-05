@@ -121,6 +121,18 @@ if len(tmp) > 0:
     print ('example:', list(tmp)[0])
 
 
+print ('not symmetric and not reflexive:')
+tmp = collect_transitive_properties.difference(collect_reflexive_properties).difference(collect_irreflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
+print ('size: ', len(tmp))
+if len(tmp) > 0:
+    print ('example:', list(tmp)[0])
+
+print ('not symmetric and irreflexive:')
+tmp = collect_transitive_properties.intersection(collect_irreflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
+print ('size: ', len(tmp))
+if len(tmp) > 0:
+    print ('example:', list(tmp)[0])
+
 #
 # for b in both:
 #     # print ('\n\n')
