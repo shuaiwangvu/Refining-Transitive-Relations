@@ -65,9 +65,9 @@ triples, cardinality = hdt.search_triples("", "", t)
 print ('There are ', cardinality, 'transitive properties')
 collect_transitive_properties = set()
 for (s, p, o) in triples:
-    print ('\tsubject: ', s)
-    print ('\tpredicate:  ', p)
-    print ('\n')
+    # print ('\tsubject: ', s)
+    # print ('\tpredicate:  ', p)
+    # print ('\n')
     collect_transitive_properties.add(s)
 
 triples, cardinality = hdt.search_triples("", "", s)
@@ -118,7 +118,7 @@ print ('not symmetric but reflexive:')
 tmp = collect_transitive_properties.intersection(collect_reflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
 print ('size: ', len(tmp))
 if len(tmp) > 0:
-    print ('example:', tmp[0])
+    print ('example:', list(tmp)[0])
 
 
 #
