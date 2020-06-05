@@ -87,6 +87,6 @@ for b in both:
     collect_pairs = []
     for (s, _, o) in triples:
         collect_pairs.append((s, o))
-    self.graph.add_edges_from(collect_pairs)
+    graph.add_edges_from(collect_pairs)
     c = nx.find_cycle(tmp_graph)
     print('found ', len(c), ' cycles')
