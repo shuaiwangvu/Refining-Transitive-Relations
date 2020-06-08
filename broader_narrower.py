@@ -21,6 +21,8 @@ import random
 from rdflib import Graph, Literal, RDF, URIRef
 # rdflib knows about some namespaces, like FOAF
 from rdflib.namespace import FOAF , XSD
+import validators
+
 
 # create a Graph
 narrowerGraph = Graph()
@@ -77,8 +79,16 @@ print ('There are ', cardinality, 'narrower properties')
 for (s, p, o) in triples:
     # writer.writerow([s, o])
     # writer_integrated.writerow([s, o])
-    narrowerGraph.add((URIRef(s), narrowerRef, URIRef(o)))
-    integratedGraph.add((URIRef(s), narrowerRef, URIRef(o)))
+    valid=validators.url(o)
+    if valid==True:
+        # print("Url is valid")
+        narrowerGraph.add((URIRef(s), narrowerRef, URIRef(o)))
+        integratedGraph.add((URIRef(s), narrowerRef, URIRef(o)))
+    else:
+        # print("Invalid url")
+        narrowerGraph.add((URIRef(s), narrowerRef, Literal(o)))
+        integratedGraph.add((URIRef(s), narrowerRef, Literal(o)))
+
 
 # file.close()
 narrowerGraph.serialize(destination='narrower.nt', format='nt')
@@ -92,8 +102,17 @@ print ('There are ', cardinality, 'broader properties')
 for (s, p, o) in triples:
     # writer.writerow([s, o])
     # writer_integrated.writerow([o, s])
-    broaderGraph.add((URIRef(s), broaderRef, URIRef(o)))
-    integratedGraph.add((URIRef(o), narrowerRef, URIRef(s)))
+    # broaderGraph.add((URIRef(s), broaderRef, URIRef(o)))
+    # integratedGraph.add((URIRef(o), narrowerRef, URIRef(s)))
+    valid=validators.url(o)
+    if valid==True:
+        # print("Url is valid")
+        broaderGraph.add((URIRef(s), narrowerRef, URIRef(o)))
+        integratedGraph.add((URIRef(o), narrowerRef, URIRef(s)))
+    else:
+        # print("Invalid url")
+        broaderGraph.add((URIRef(s), narrowerRef, Literal(o)))
+        integratedGraph.add((Literal(o), narrowerRef, URIRef(s)))
 
 # file.close()
 broaderGraph.serialize(destination='broader.nt', format='nt')
