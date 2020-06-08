@@ -34,6 +34,11 @@ broader = "http://www.w3.org/2004/02/skos/core#broader"
 broaderTransitive = "http://www.w3.org/2004/02/skos/core#broaderTransitive"
 
 
+file_integrated =  open('integrated.csv', 'w', newline='')
+writer_integrated = csv.writer(file_integrated)
+writer_integrated.writerow([ "Narrower", "Broader"])
+
+
 
 triples, cardinality = hdt.search_triples("", narrower, "")
 print ('There are ', cardinality, 'narrower properties')
@@ -43,6 +48,7 @@ writer.writerow([ "Subject", "Object"])
 
 for (s, p, o) in triples:
     writer.writerow([s, o])
+    writer_integrated.writerow([s, o])
 
 file.close()
 
@@ -55,7 +61,8 @@ writer.writerow([ "Subject", "Object"])
 
 for (s, p, o) in triples:
     writer.writerow([s, o])
-
+    writer_integrated.writerow([o, s])
+    
 file.close()
 
 
