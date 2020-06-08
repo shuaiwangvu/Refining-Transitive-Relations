@@ -7,7 +7,7 @@ import numpy as np
 import datetime
 import pickle
 import time
-import networkx as nx
+# import networkx as nx
 import sys
 import csv
 from z3 import *
@@ -18,6 +18,32 @@ import json
 import random
 # from equiClass import equiClassManager
 import random
+from rdflib import Graph, Literal, RDF, URIRef
+# rdflib knows about some namespaces, like FOAF
+from rdflib.namespace import FOAF , XSD
+
+# create a Graph
+narrowerGraph = Graph()
+broaderGraph = Graph()
+integratedGraph = Graph()
+# Create an RDF URI node to use as the subject for multiple triples
+
+#
+# # Add triples using store's add() method.
+# g.add((donna, RDF.type, FOAF.Person))
+# g.add((donna, FOAF.nick, Literal("donna", lang="ed")))
+# g.add((donna, FOAF.name, Literal("Donna Fales")))
+# g.add((donna, FOAF.mbox, URIRef("mailto:donna@example.org")))
+#
+# # Add another person
+# ed = URIRef("http://example.org/edward")
+#
+# # Add triples using store's add() method.
+# g.add((ed, RDF.type, FOAF.Person))
+# g.add((ed, FOAF.nick, Literal("ed", datatype=XSD.string)))
+# g.add((ed, FOAF.name, Literal("Edward Scissorhands")))
+# g.add((ed, FOAF.mbox, URIRef("mailto:e.scissorhands@example.org")))
+
 
 
 PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
@@ -33,6 +59,8 @@ narrowerTransitive = "http://www.w3.org/2004/02/skos/core#narrowerTransitive"
 broader = "http://www.w3.org/2004/02/skos/core#broader"
 broaderTransitive = "http://www.w3.org/2004/02/skos/core#broaderTransitive"
 
+narrowerRef = URIRef(narrower)
+broaderRef = URIRef(broader)
 
 file_integrated =  open('integrated.csv', 'w', newline='')
 writer_integrated = csv.writer(file_integrated)
@@ -42,30 +70,34 @@ writer_integrated.writerow([ "Narrower", "Broader"])
 
 triples, cardinality = hdt.search_triples("", narrower, "")
 print ('There are ', cardinality, 'narrower properties')
-file =  open('narrower.csv', 'w', newline='')
-writer = csv.writer(file)
-writer.writerow([ "Subject", "Object"])
+# file =  open('narrower.csv', 'w', newline='')
+# writer = csv.writer(file)
+# writer.writerow([ "Subject", "Object"])
 
 for (s, p, o) in triples:
-    writer.writerow([s, o])
-    writer_integrated.writerow([s, o])
+    # writer.writerow([s, o])
+    # writer_integrated.writerow([s, o])
+    narrowerGraph.add((URIRef(s), narrowerRef, URIRef(o)))
+    integratedGraph.add((URIRef(s), narrowerRef, URIRef(o)))
 
-file.close()
-
+# file.close()
+narrowerGraph.serialize(destination='narrower.nt', format='nt')
 
 triples, cardinality = hdt.search_triples("", broader, "")
 print ('There are ', cardinality, 'broader properties')
-file =  open('broader.csv', 'w', newline='')
-writer = csv.writer(file)
-writer.writerow([ "Subject", "Object"])
+# file =  open('broader.csv', 'w', newline='')
+# writer = csv.writer(file)
+# writer.writerow([ "Subject", "Object"])
 
 for (s, p, o) in triples:
-    writer.writerow([s, o])
-    writer_integrated.writerow([o, s])
-    
-file.close()
+    # writer.writerow([s, o])
+    # writer_integrated.writerow([o, s])
+    broaderGraph.add((URIRef(s), broaderRef, URIRef(o)))
+    integratedGraph.add((URIRef(o), narrowerRef, URIRef(s)))
 
-
+# file.close()
+broaderGraph.serialize(destination='broader.nt', format='nt')
+integratedGraph.serialize(destination='integrated.nt', format='nt')
 
 #
 #
