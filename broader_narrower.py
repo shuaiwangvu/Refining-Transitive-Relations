@@ -78,11 +78,11 @@ triples, cardinality = hdt.search_triples("", narrower, "")
 print ('There are ', cardinality, 'narrower properties')
 
 for (s, p, o) in triples:
-    if s[0] == '"":
+    if s[0] == '"':
         s = s
     else:
         s = '<' + s + '>'
-    if o[0] == '"":
+    if o[0] == '"':
         o = o
     else:
         o = '<' + o + '>'
@@ -96,11 +96,11 @@ for (s, p, o) in triples:
 triples, cardinality = hdt.search_triples("", broader, "")
 print ('There are ', cardinality, 'broader properties')
 for (s, p, o) in triples:
-    if s[0] == '"":
+    if s[0] == '"':
         s = s
     else:
         s = '<' + s + '>'
-    if o[0] == '"":
+    if o[0] == '"':
         o = o
     else:
         o = '<' + o + '>'
