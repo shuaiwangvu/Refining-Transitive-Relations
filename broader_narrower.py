@@ -95,34 +95,34 @@ for (s, p, o) in triples:
 
 # file.close()
 narrowerGraph.serialize(destination='narrower.nt', format='nt')
-
-triples, cardinality = hdt.search_triples("", broader, "")
-print ('There are ', cardinality, 'broader properties')
-# file =  open('broader.csv', 'w', newline='')
-# writer = csv.writer(file)
-# writer.writerow([ "Subject", "Object"])
-
-for (s, p, o) in triples:
-    # writer.writerow([s, o])
-    # writer_integrated.writerow([o, s])
-    # broaderGraph.add((URIRef(s), broaderRef, URIRef(o)))
-    # integratedGraph.add((URIRef(o), narrowerRef, URIRef(s)))
-    if validators.url(o):
-        o = URIRef(o)
-    else:
-        o = Literal(o)
-
-    if validators.url(s):
-        s = URIRef(s)
-    else:
-        s = Literal(s)
-
-    narrowerGraph.add((s, broaderRef, o))
-    integratedGraph.add((o, broaderRef, s))
-
-# file.close()
-broaderGraph.serialize(destination='broader.nt', format='nt')
-integratedGraph.serialize(destination='integrated.nt', format='nt')
+#
+# triples, cardinality = hdt.search_triples("", broader, "")
+# print ('There are ', cardinality, 'broader properties')
+# # file =  open('broader.csv', 'w', newline='')
+# # writer = csv.writer(file)
+# # writer.writerow([ "Subject", "Object"])
+#
+# for (s, p, o) in triples:
+#     # writer.writerow([s, o])
+#     # writer_integrated.writerow([o, s])
+#     # broaderGraph.add((URIRef(s), broaderRef, URIRef(o)))
+#     # integratedGraph.add((URIRef(o), narrowerRef, URIRef(s)))
+#     if validators.url(o):
+#         o = URIRef(o)
+#     else:
+#         o = Literal(o)
+#
+#     if validators.url(s):
+#         s = URIRef(s)
+#     else:
+#         s = Literal(s)
+#
+#     broaderGraph.add((s, broaderRef, o))
+#     integratedGraph.add((o, broaderRef, s))
+#
+# # file.close()
+# broaderGraph.serialize(destination='broader.nt', format='nt')
+# integratedGraph.serialize(destination='integrated.nt', format='nt')
 
 #
 #
