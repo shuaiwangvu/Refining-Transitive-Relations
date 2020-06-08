@@ -20,7 +20,7 @@ import random
 import random
 from rdflib import Graph, Literal, RDF, URIRef
 # rdflib knows about some namespaces, like FOAF
-from rdflib.namespace import FOAF , XSD
+# from rdflib.namespace import FOAF , XSD
 import validators
 
 
@@ -61,6 +61,9 @@ narrowerTransitive = "http://www.w3.org/2004/02/skos/core#narrowerTransitive"
 broader = "http://www.w3.org/2004/02/skos/core#broader"
 broaderTransitive = "http://www.w3.org/2004/02/skos/core#broaderTransitive"
 
+narrowerRef = URIRef(narrower)
+broaderRef = URIRef(broader)
+
 file_integrated =  open('integrated.nt', 'w', newline='')
 file_narrower = open('narrower.nt', 'w', newline='')
 file_broader = open('broader.nt', 'w', newline='')
@@ -68,26 +71,37 @@ file_broader = open('broader.nt', 'w', newline='')
 
 triples, cardinality = hdt.search_triples("", narrower, "")
 print ('There are ', cardinality, 'narrower properties')
+# file =  open('narrower.csv', 'w', newline='')
+# writer = csv.writer(file)
+# writer.writerow([ "Subject", "Object"])
 
 for (s, p, o) in triples:
-    file_narrower.write('<' + s + '> <' + p + '> <' + o + '> .\n' )
-    file_integrated.write('<' + s + '> <' + p + '> <' + o + '> .\n' )
+    # writer.writerow([s, o])
+    # writer_integrated.writerow([s, o])
+    if validators.uri(o):
+        o = URIRef(o)
+    else:
+        o = Literal(o)
+
+    if validators.uri(s):
+        s = URIRef(s)
+    else:
+        s = Literal(s)
+
+    narrowerGraph.add((s, narrowerRef, o))
+    integratedGraph.add((s, narrowerRef, o))
+
 
 # file.close()
-# narrowerGraph.serialize(destination='narrower.nt', format='nt')
+narrowerGraph.serialize(destination='narrower.nt', format='nt')
 #
-triples, cardinality = hdt.search_triples("", broader, "")
-print ('There are ', cardinality, 'broader properties')
-for (s, p, o) in triples:
-    file_broader.write('<' + s + '> <' + p + '> <' + o + '> .\n' )
-    file_integrated.write('<' + o + '> <' + p + '> <' + s + '> .\n' )
-
-
-file_broader.close()
-file_narrower.close()
-file_integrated.close()
-
-
+# triples, cardinality = hdt.search_triples("", broader, "")
+# print ('There are ', cardinality, 'broader properties')
+# # file =  open('broader.csv', 'w', newline='')
+# # writer = csv.writer(file)
+# # writer.writerow([ "Subject", "Object"])
+#
+# for (s, p, o) in triples:
 #     # writer.writerow([s, o])
 #     # writer_integrated.writerow([o, s])
 #     # broaderGraph.add((URIRef(s), broaderRef, URIRef(o)))
