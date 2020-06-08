@@ -22,11 +22,11 @@ import random
 
 PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
 hdt = HDTDocument(PATH_LOD)
-t = "http://www.w3.org/2002/07/owl#TransitiveProperty"
-s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
-aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
-r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
-iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
+# t = "http://www.w3.org/2002/07/owl#TransitiveProperty"
+# s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
+# aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
+# r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
+# iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
 
 narrower = "http://www.w3.org/2004/02/skos/core#narrower"
 narrowerTransitive = "http://www.w3.org/2004/02/skos/core#narrowerTransitive"
@@ -35,39 +35,54 @@ broaderTransitive = "http://www.w3.org/2004/02/skos/core#broaderTransitive"
 
 
 
-print ('\n\n')
-print ('as predicate:')
 triples, cardinality = hdt.search_triples("", narrower, "")
 print ('There are ', cardinality, 'narrower properties')
-collect_narrower_properties = set()
-for (s, p, o) in triples:
-    if cardinality < 10:
-        print ('\tsubject: ', s)
-        print ('\tobject:  ', o)
-        print ('\n')
-    collect_narrower_properties.add(s)
+file =  open('narrower.csv', 'w', newline='')
+writer = csv.writer(file)
+writer.writerow([ "Subject", "Object"])
 
-print ('\n\n')
-print ('as subject:')
-triples, cardinality = hdt.search_triples(narrower, "" ,"")
-# print ('There are ', cardinality, 'narrower properties')
-# collect_narrower_properties = set()
 for (s, p, o) in triples:
-    print ('\tpredicate:  ', p)
-    print ('\tobject: ', o)
-    print ('\n')
-    # collect_narrower_properties.add(s)
+    writer.writerow([s, o])
 
-print ('\n\n')
-print ('as object:')
-triples, cardinality = hdt.search_triples("" ,"", narrower)
-# print ('There are ', cardinality, 'narrower properties')
-# collect_narrower_properties = set()
+file.close()
+
+
+triples, cardinality = hdt.search_triples("", broader, "")
+print ('There are ', cardinality, 'broader properties')
+file =  open('broader.csv', 'w', newline='')
+writer = csv.writer(file)
+writer.writerow([ "Subject", "Object"])
+
 for (s, p, o) in triples:
-    print ('\tsubject: ', s)
-    print ('\tpredicate:  ', p)
-    print ('\n')
-    # collect_narrower_properties.add(s)
+    writer.writerow([s, o])
+
+file.close()
+
+
+
+#
+#
+# print ('\n\n')
+# print ('as subject:')
+# triples, cardinality = hdt.search_triples(narrower, "" ,"")
+# # print ('There are ', cardinality, 'narrower properties')
+# # collect_narrower_properties = set()
+# for (s, p, o) in triples:
+#     print ('\tpredicate:  ', p)
+#     print ('\tobject: ', o)
+#     print ('\n')
+#     # collect_narrower_properties.add(s)
+#
+# print ('\n\n')
+# print ('as object:')
+# triples, cardinality = hdt.search_triples("" ,"", narrower)
+# # print ('There are ', cardinality, 'narrower properties')
+# # collect_narrower_properties = set()
+# for (s, p, o) in triples:
+#     print ('\tsubject: ', s)
+#     print ('\tpredicate:  ', p)
+#     print ('\n')
+#     # collect_narrower_properties.add(s)
 #
 # triples, cardinality = hdt.search_triples("", "", s)
 # print ('There are ', cardinality, ' symmetric properties')
