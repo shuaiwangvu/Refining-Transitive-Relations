@@ -69,10 +69,10 @@ file_narrower = open('narrower.nt', 'w', newline='')
 file_broader = open('broader.nt', 'w', newline='')
 
 
-file_integrated =  open('integrated.nt', 'w', newline='')
 file_narrower = open('narrower.nt', 'w', newline='')
 file_broader = open('broader.nt', 'w', newline='')
 
+# file_integrated =  open('integrated.nt', 'w', newline='')
 
 triples, cardinality = hdt.search_triples("", narrower, "")
 print ('There are ', cardinality, 'narrower properties')
@@ -88,7 +88,7 @@ for (s, p, o) in triples:
         o = '<' + o + '>'
     p = '<' + p + '>'
     file_narrower.write(s +' '+  p+  ' ' + o + '.\n' )
-    file_integrated.write(s +' '+  p+  ' ' + o + '.\n' )
+    # file_integrated.write(s +' '+  p+  ' ' + o + '.\n' )
 
 # file.close()
 # narrowerGraph.serialize(destination='narrower.nt', format='nt')
@@ -106,9 +106,10 @@ for (s, p, o) in triples:
         o = '<' + o + '>'
     p = '<' + p + '>'
     file_broader.write(s +' '+  p+  ' ' + o + '.\n' )
-    file_integrated.write(o +' '+  p+  ' ' + s + '.\n' )
+    # narrower_ =  '<' + narrower + '>'
+    # file_integrated.write(o +' '+  narrower +  ' ' + s + '.\n' )
 
 
 file_broader.close()
 file_narrower.close()
-file_integrated.close()
+# file_integrated.close()
