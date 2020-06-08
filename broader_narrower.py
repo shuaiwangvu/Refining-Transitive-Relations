@@ -61,48 +61,33 @@ narrowerTransitive = "http://www.w3.org/2004/02/skos/core#narrowerTransitive"
 broader = "http://www.w3.org/2004/02/skos/core#broader"
 broaderTransitive = "http://www.w3.org/2004/02/skos/core#broaderTransitive"
 
-narrowerRef = URIRef(narrower)
-broaderRef = URIRef(broader)
-
-file_integrated =  open('integrated.csv', 'w', newline='')
-writer_integrated = csv.writer(file_integrated)
-writer_integrated.writerow([ "Narrower", "Broader"])
-
+file_integrated =  open('integrated.nt', 'w', newline='')
+file_narrower = open('narrower.nt', 'w', newline='')
+file_broader = open('broader.nt', 'w', newline='')
 
 
 triples, cardinality = hdt.search_triples("", narrower, "")
 print ('There are ', cardinality, 'narrower properties')
-# file =  open('narrower.csv', 'w', newline='')
-# writer = csv.writer(file)
-# writer.writerow([ "Subject", "Object"])
 
 for (s, p, o) in triples:
-    # writer.writerow([s, o])
-    # writer_integrated.writerow([s, o])
-    if validators.url(o):
-        o = URIRef(o)
-    else:
-        o = Literal(o)
-
-    if validators.url(s):
-        s = URIRef(s)
-    else:
-        s = Literal(s)
-
-    narrowerGraph.add((s, narrowerRef, o))
-    integratedGraph.add((s, narrowerRef, o))
-
+    file_narrower.write('<' + s + '> <' + p + '> <' + o + '> .' )
+    file_integrated.write('<' + s + '> <' + p + '> <' + o + '> .' )
 
 # file.close()
-narrowerGraph.serialize(destination='narrower.nt', format='nt')
+# narrowerGraph.serialize(destination='narrower.nt', format='nt')
 #
-# triples, cardinality = hdt.search_triples("", broader, "")
-# print ('There are ', cardinality, 'broader properties')
-# # file =  open('broader.csv', 'w', newline='')
-# # writer = csv.writer(file)
-# # writer.writerow([ "Subject", "Object"])
-#
-# for (s, p, o) in triples:
+triples, cardinality = hdt.search_triples("", broader, "")
+print ('There are ', cardinality, 'broader properties')
+for (s, p, o) in triples:
+    file_braoder.write('<' + s + '> <' + p + '> <' + o + '> .' )
+    file_integrated.write('<' + o + '> <' + p + '> <' + s + '> .' )
+
+
+file_broader.close()
+file_narrower.close()
+file_integrated.close()
+
+
 #     # writer.writerow([s, o])
 #     # writer_integrated.writerow([o, s])
 #     # broaderGraph.add((URIRef(s), broaderRef, URIRef(o)))
