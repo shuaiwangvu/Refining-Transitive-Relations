@@ -89,8 +89,8 @@ for (s, p, o) in triples:
     else:
         s = Literal(s)
 
-    narrowerGraph.add(s, narrowerRef, o)
-    integratedGraph.add(s, narrowerRef, o)
+    narrowerGraph.add((s, narrowerRef, o))
+    integratedGraph.add((s, narrowerRef, o))
 
 
 # file.close()
@@ -117,8 +117,8 @@ for (s, p, o) in triples:
     else:
         s = Literal(s)
 
-    narrowerGraph.add(s, broaderRef, o)
-    integratedGraph.add(o, broaderRef, s)
+    narrowerGraph.add((s, broaderRef, o))
+    integratedGraph.add((o, broaderRef, s))
 
 # file.close()
 broaderGraph.serialize(destination='broader.nt', format='nt')
