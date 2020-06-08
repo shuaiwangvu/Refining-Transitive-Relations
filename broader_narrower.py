@@ -79,15 +79,18 @@ print ('There are ', cardinality, 'narrower properties')
 for (s, p, o) in triples:
     # writer.writerow([s, o])
     # writer_integrated.writerow([s, o])
-    valid=validators.url(o)
-    if valid==True:
-        # print("Url is valid")
-        narrowerGraph.add((URIRef(s), narrowerRef, URIRef(o)))
-        integratedGraph.add((URIRef(s), narrowerRef, URIRef(o)))
+    if validators.url(o):
+        o = URIRef(o)
     else:
-        # print("Invalid url")
-        narrowerGraph.add((URIRef(s), narrowerRef, Literal(o)))
-        integratedGraph.add((URIRef(s), narrowerRef, Literal(o)))
+        o = Literal(o)
+
+    if validators.url(s):
+        s = URIRef(s)
+    else:
+        s = Literal(s)
+
+    narrowerGraph.add(s, narrowerRef, o)
+    integratedGraph.add(s, narrowerRef, o)
 
 
 # file.close()
@@ -104,15 +107,18 @@ for (s, p, o) in triples:
     # writer_integrated.writerow([o, s])
     # broaderGraph.add((URIRef(s), broaderRef, URIRef(o)))
     # integratedGraph.add((URIRef(o), narrowerRef, URIRef(s)))
-    valid=validators.url(o)
-    if valid==True:
-        # print("Url is valid")
-        broaderGraph.add((URIRef(s), narrowerRef, URIRef(o)))
-        integratedGraph.add((URIRef(o), narrowerRef, URIRef(s)))
+    if validators.url(o):
+        o = URIRef(o)
     else:
-        # print("Invalid url")
-        broaderGraph.add((URIRef(s), narrowerRef, Literal(o)))
-        integratedGraph.add((Literal(o), narrowerRef, URIRef(s)))
+        o = Literal(o)
+
+    if validators.url(s):
+        s = URIRef(s)
+    else:
+        s = Literal(s)
+
+    narrowerGraph.add(s, broaderRef, o)
+    integratedGraph.add(o, broaderRef, s)
 
 # file.close()
 broaderGraph.serialize(destination='broader.nt', format='nt')
