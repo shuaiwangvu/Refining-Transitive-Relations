@@ -70,8 +70,8 @@ triples, cardinality = hdt.search_triples("", narrower, "")
 print ('There are ', cardinality, 'narrower properties')
 
 for (s, p, o) in triples:
-    file_narrower.write('<' + s + '> <' + p + '> <' + o + '> .' )
-    file_integrated.write('<' + s + '> <' + p + '> <' + o + '> .' )
+    file_narrower.write('<' + s + '> <' + p + '> <' + o + '> .\n' )
+    file_integrated.write('<' + s + '> <' + p + '> <' + o + '> .\n' )
 
 # file.close()
 # narrowerGraph.serialize(destination='narrower.nt', format='nt')
@@ -79,8 +79,8 @@ for (s, p, o) in triples:
 triples, cardinality = hdt.search_triples("", broader, "")
 print ('There are ', cardinality, 'broader properties')
 for (s, p, o) in triples:
-    file_broader.write('<' + s + '> <' + p + '> <' + o + '> .' )
-    file_integrated.write('<' + o + '> <' + p + '> <' + s + '> .' )
+    file_broader.write('<' + s + '> <' + p + '> <' + o + '> .\n' )
+    file_integrated.write('<' + o + '> <' + p + '> <' + s + '> .\n' )
 
 
 file_broader.close()
