@@ -1,3 +1,5 @@
+# this file gets the two broader & narrower subgraph from LOD-a-lot
+
 # http://www.w3.org/2002/07/owl#TransitiveProperty
 
 
@@ -66,16 +68,57 @@ broaderRef = URIRef(broader)
 
 file_integrated =  open('integrated.nt', 'w', newline='')
 file_narrower = open('narrower.nt', 'w', newline='')
-file_broader = open('broader.nt', 'w', newline='')
-
-
 file_narrower = open('narrower.nt', 'w', newline='')
 file_broader = open('broader.nt', 'w', newline='')
+file_broader = open('broader.nt', 'w', newline='')
+
+
+# file_narrower = open('narrower.nt', 'w', newline='')
+# file_broader = open('broader.nt', 'w', newline='')
+file_narrower = open('narrowerTransitive.nt', 'w', newline='')
+file_broader = open('broaderTransitive.nt', 'w', newline='')
 
 # file_integrated =  open('integrated.nt', 'w', newline='')
+#
+# triples, cardinality = hdt.search_triples("", narrower, "")
+# print ('There are ', cardinality, 'narrower properties')
+#
+# for (s, p, o) in triples:
+#     if s[0] == '"':
+#         s = s
+#     else:
+#         s = '<' + s + '>'
+#     if o[0] == '"':
+#         o = o
+#     else:
+#         o = '<' + o + '>'
+#     p = '<' + p + '>'
+#     file_narrower.write(s +' '+  p+  ' ' + o + '.\n' )
+#     # file_integrated.write(s +' '+  p+  ' ' + o + '.\n' )
+#
+# # file.close()
+# # narrowerGraph.serialize(destination='narrower.nt', format='nt')
+# #
+# triples, cardinality = hdt.search_triples("", broader, "")
+# print ('There are ', cardinality, 'broader properties')
+# for (s, p, o) in triples:
+#     if s[0] == '"':
+#         s = s
+#     else:
+#         s = '<' + s + '>'
+#     if o[0] == '"':
+#         o = o
+#     else:
+#         o = '<' + o + '>'
+#     p = '<' + p + '>'
+#     file_broader.write(s +' '+  p+  ' ' + o + '.\n' )
+#     # narrower_ =  '<' + narrower + '>'
+#     # file_integrated.write(o +' '+  narrower +  ' ' + s + '.\n' )
+#
 
-triples, cardinality = hdt.search_triples("", narrower, "")
-print ('There are ', cardinality, 'narrower properties')
+
+triples, cardinality = hdt.search_triples("", narrowerTransitive, "")
+print ('There are ', cardinality, 'narrowerTransitive properties')
 
 for (s, p, o) in triples:
     if s[0] == '"':
@@ -93,8 +136,8 @@ for (s, p, o) in triples:
 # file.close()
 # narrowerGraph.serialize(destination='narrower.nt', format='nt')
 #
-triples, cardinality = hdt.search_triples("", broader, "")
-print ('There are ', cardinality, 'broader properties')
+triples, cardinality = hdt.search_triples("", broaderTransitive, "")
+print ('There are ', cardinality, 'broaderTransitive properties')
 for (s, p, o) in triples:
     if s[0] == '"':
         s = s
