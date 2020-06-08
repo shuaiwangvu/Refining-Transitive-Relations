@@ -79,7 +79,7 @@ for (s, p, o) in triples:
 triples, cardinality = hdt.search_triples("", broader, "")
 print ('There are ', cardinality, 'broader properties')
 for (s, p, o) in triples:
-    file_braoder.write('<' + s + '> <' + p + '> <' + o + '> .' )
+    file_broader.write('<' + s + '> <' + p + '> <' + o + '> .' )
     file_integrated.write('<' + o + '> <' + p + '> <' + s + '> .' )
 
 
