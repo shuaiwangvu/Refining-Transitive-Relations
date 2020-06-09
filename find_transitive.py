@@ -59,6 +59,25 @@ iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
 #     print ('\n')
 
 
+# the predicates are:
+# http://data-gov.tw.rpi.edu/vocab/p/Tag
+# http://rdfs.org/ns/void#class
+# http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+# http://www.w3.org/2002/03owlt/testOntology#feature
+
+	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
+	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
+    #
+    #
+	# subject:  http://www.cyc.com/2003/04/01/cyc#TransitiveBinaryPredicate
+	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
+    #
+    #
+	# subject:  http://sw.opencyc.org/concept/Mx4rnhSeOBSXQdiB19IvbH2fDg
+	# predicate:   http://www.w3.org/2002/07/owl#sameAs
+    #
+
+
 print ('\n\n')
 print ('as object:')
 triples, cardinality = hdt.search_triples("", "", t)
