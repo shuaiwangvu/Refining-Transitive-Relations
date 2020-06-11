@@ -84,10 +84,14 @@ triples, cardinality = hdt.search_triples("", "", t)
 print ('There are ', cardinality, 'transitive properties')
 collect_transitive_properties = set()
 for (s, p, o) in triples:
-    # print ('\tsubject: ', s)
-    # print ('\tpredicate:  ', p)
-    # print ('\n')
+    print ('\tsubject: ', s)
+    print ('\tpredicate:  ', p)
+
     collect_transitive_properties.add(s)
+    t_triples, t_cardinality = hdt.search_triples("", s, "")
+    if t_cardinality > 10:
+        print (t_cardinality, ' :', s)
+    print ('\n')
 
 triples, cardinality = hdt.search_triples("", "", s)
 print ('There are ', cardinality, ' symmetric properties')
