@@ -101,6 +101,8 @@ triples, cardinality = hdt.search_triples("", broader, "")
 print ('There are ', cardinality, 'isPartOf properties')
 for (s, p, o) in triples:
     if s[0] == '"':
+        if s.count('"') > 2:
+            continue
         s = s
     else:
         s = '<' + s + '>'
