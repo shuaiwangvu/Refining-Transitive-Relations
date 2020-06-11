@@ -101,13 +101,13 @@ triples, cardinality = hdt.search_triples("", broader, "")
 print ('There are ', cardinality, 'isPartOf properties')
 for (s, p, o) in triples:
     if s[0] == '"':
-        if s.count('"') > 2:
+        if s.count('"') > 2 or '\x' in s: 
             continue
         s = s
     else:
         s = '<' + s + '>'
     if o[0] == '"':
-        if o.count('"') > 2:
+        if o.count('"') > 2 or '\x' in o:
             continue
         o = o
     else:
