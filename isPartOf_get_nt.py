@@ -107,6 +107,8 @@ for (s, p, o) in triples:
     else:
         s = '<' + s + '>'
     if o[0] == '"':
+        if o.count('"') > 2:
+            continue
         o = o
     else:
         o = '<' + o + '>'
