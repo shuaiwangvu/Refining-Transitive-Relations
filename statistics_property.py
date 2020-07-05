@@ -31,6 +31,8 @@ hdt = HDTDocument(PATH_LOD)
 property = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'
 objectProperty = "http://www.w3.org/2002/07/owl#ObjectProperty"
 subClassOf = "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+transitiveObjectProperty = 'http://www.w3.org/2002/07/owl#TransitiveProperty'
+resource = 'http://www.w3.org/2000/01/rdf-schema#Resource'
 
 
 transPropertyCollect = set()
@@ -72,6 +74,6 @@ if pcardinality > 0:
 
 print ('-------<as subject>--------')
 
-triples, cardinality = hdt.search_triples(objectProperty, "", "")
+triples, cardinality = hdt.search_triples(property, "", "")
 for (s, p, o) in triples:
-    print ('p, o', p, o)
+    print ('property: p, o', p, o)
