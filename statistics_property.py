@@ -37,10 +37,10 @@ for (s, p, o) in triples:
     print ('property: ', s, ' : ',scardinality)
 
 
-print ('-------<as object>--------')
-triples, cardinality = hdt.search_triples("", "", property)
-for (s, p, o) in triples:
-    print ('s, o = ', s, o)
+ptriples, pcardinality = hdt.search_triples(property, "", property)
+if pcardinality == 1:
+    print('it is subclass of itself')
+
 
 print ('-------<as subject>--------')
 
