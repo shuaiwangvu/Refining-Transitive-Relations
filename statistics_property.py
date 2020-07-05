@@ -32,26 +32,42 @@ property = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'
 objectProperty = "http://www.w3.org/2002/07/owl#ObjectProperty"
 subClassOf = "http://www.w3.org/2000/01/rdf-schema#subClassOf"
 
+
+transPropertyCollect = set()
 print('=====Property ======')
 triples, cardinality = hdt.search_triples("", subClassOf, property)
 print ('TOTAL subClassOf PROPERTY ', cardinality)
 for (s, p, o) in triples:
-    _, scardinality = hdt.search_triples("", "", s)
-    print ('property: ', s, ' : ',scardinality)
+    if 'transitive' in s Or 'Transitive' in s:
+        _, scardinality = hdt.search_triples("", "", s)
+        print ('property: ', s, ' : ',scardinality)
+        transPropertyCollect.add(s)
 
 
-
+transObjectPropertyCollect = set()
 print('=====Object property =====')
 triples, cardinality = hdt.search_triples("", subClassOf, objectProperty)
 print ('TOTAL subClassOf OBEJCTPROPERTY ', cardinality)
 for (s, p, o) in triples:
-    _, scardinality = hdt.search_triples("", "", s)
-    print ('ObjectProperty: ', s, ' : ',scardinality)
+    if 'transitive' in s Or 'Transitive' in s:
+        _, scardinality = hdt.search_triples("", "", s)
+        print ('ObjectProperty: ', s, ' : ',scardinality)
+        transObjectPropertyCollect.add(s)
+
+print('==== and their intersection ====')
+inter = transObjectPropertyCollect.intersection(transPropertyCollect)
+for it in inter:
+    print ('intersection: ', it)
+
+
+ptriples, pcardinality = hdt.search_triples(property, "", property)
+if pcardinality > 0:
+    print('property: it is subclass of itself')
 
 
 ptriples, pcardinality = hdt.search_triples(objectProperty, "", objectProperty)
-if pcardinality == 1:
-    print('it is subclass of itself')
+if pcardinality > 0:
+    print('objectProperty: it is subclass of itself')
 
 
 print ('-------<as subject>--------')
