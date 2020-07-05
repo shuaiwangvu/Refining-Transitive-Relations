@@ -1,0 +1,36 @@
+# Here we print the subclassof  rdfs:subClassOf owl:ObjectProperty in the LOD-a-lot file
+#
+
+from hdt import HDTDocument, IdentifierPosition
+import pandas as pd
+import numpy as np
+import datetime
+import pickle
+import time
+# import networkx as nx
+import sys
+import csv
+from z3 import *
+from bidict import bidict
+import matplotlib.pyplot as plt
+import tldextract
+import json
+import random
+# from equiClass import equiClassManager
+import random
+from rdflib import Graph, Literal, RDF, URIRef
+# rdflib knows about some namespaces, like FOAF
+# from rdflib.namespace import FOAF , XSD
+import validators
+
+
+
+propertyGraph = Graph()
+PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
+hdt = HDTDocument(PATH_LOD)
+
+property = "http://www.w3.org/2002/07/owl#ObjectProperty"
+subClassOf = "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+triples, cardinality = hdt.search_triples("", subClassOf, property)
+for (s, p, o) in triples:
+    print ('property: ', s)

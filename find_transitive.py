@@ -28,7 +28,7 @@ aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
 r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
 iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
 
-
+ 
 
 # is_eq_to = "http://www.w3.org/2002/07/owl#:equivalentProperty"
 	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)

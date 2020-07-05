@@ -68,9 +68,9 @@ broaderRef = URIRef(broader)
 
 file_integrated =  open('integrated.nt', 'w', newline='')
 file_narrower = open('narrower.nt', 'w', newline='')
-file_narrower = open('narrower.nt', 'w', newline='')
+# file_narrower = open('narrower.nt', 'w', newline='')
 file_broader = open('broader.nt', 'w', newline='')
-file_broader = open('broader.nt', 'w', newline='')
+# file_broader = open('broader.nt', 'w', newline='')
 
 
 # file_narrower = open('narrower.nt', 'w', newline='')
