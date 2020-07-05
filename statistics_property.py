@@ -92,3 +92,7 @@ print ('-------<subPropertyOf>--------')
 triples, cardinality = hdt.search_triples(subPropertyOf , "", property)
 for (s, p, o) in triples:
     print ('so, subPropertyOf ', p, ' Property')
+
+triples, cardinality = hdt.search_triples(subPropertyOf , "", "")
+for (s, p, o) in triples:
+    print ('subPropertyOf p, o', p, o)
