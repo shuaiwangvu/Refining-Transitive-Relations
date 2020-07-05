@@ -30,9 +30,19 @@ PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
 hdt = HDTDocument(PATH_LOD)
 property = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'
 objectProperty = "http://www.w3.org/2002/07/owl#ObjectProperty"
+
 subClassOf = "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+subPropertyOf = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
+
 transitiveObjectProperty = 'http://www.w3.org/2002/07/owl#TransitiveProperty'
 resource = 'http://www.w3.org/2000/01/rdf-schema#Resource'
+mindswap_type = 'http://owl.mindswap.org/2003/ont/owlweb.rdf#type'
+
+class2000  = 'http://www.w3.org/2000/01/rdf-schema#Class'
+class2002 = 'http://www.w3.org/2002/07/owl#Class'
+classtr = 'http://www.w3.org/TR/WD-rdf-schema#Class'
+
+datatype = 'http://www.w3.org/2000/01/rdf-schema#Datatype'
 
 
 transPropertyCollect = set()
@@ -72,8 +82,13 @@ if pcardinality > 0:
     print('objectProperty: it is subclass of itself')
 
 
-print ('-------<as subject>--------')
+# print ('-------<as subject>--------')
+#
+# triples, cardinality = hdt.search_triples(property, "", "")
+# for (s, p, o) in triples:
+#     print ('property: p, o', p, o)
+print ('-------<subPropertyOf>--------')
 
-triples, cardinality = hdt.search_triples(property, "", "")
+triples, cardinality = hdt.search_triples("",subPropertyOf , "")
 for (s, p, o) in triples:
-    print ('property: p, o', p, o)
+    print ('subproperty: s, o', s, o)
