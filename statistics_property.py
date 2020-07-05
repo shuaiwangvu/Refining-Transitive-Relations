@@ -38,7 +38,7 @@ print('=====Property ======')
 triples, cardinality = hdt.search_triples("", subClassOf, property)
 print ('TOTAL subClassOf PROPERTY ', cardinality)
 for (s, p, o) in triples:
-    if 'transitive' in s Or 'Transitive' in s:
+    if 'transitive' in s or 'Transitive' in s:
         _, scardinality = hdt.search_triples("", "", s)
         print ('property: ', s, ' : ',scardinality)
         transPropertyCollect.add(s)
@@ -49,7 +49,7 @@ print('=====Object property =====')
 triples, cardinality = hdt.search_triples("", subClassOf, objectProperty)
 print ('TOTAL subClassOf OBEJCTPROPERTY ', cardinality)
 for (s, p, o) in triples:
-    if 'transitive' in s Or 'Transitive' in s:
+    if 'transitive' in s or 'Transitive' in s:
         _, scardinality = hdt.search_triples("", "", s)
         print ('ObjectProperty: ', s, ' : ',scardinality)
         transObjectPropertyCollect.add(s)
