@@ -43,44 +43,44 @@ class2002 = 'http://www.w3.org/2002/07/owl#Class'
 classtr = 'http://www.w3.org/TR/WD-rdf-schema#Class'
 
 datatype = 'http://www.w3.org/2000/01/rdf-schema#Datatype'
+# http://www.w3.org/2002/07/owl#topDataProperty ????
 
+# transPropertyCollect = set()
+# print('=====Property ======')
+# triples, cardinality = hdt.search_triples("", subClassOf, property)
+# print ('TOTAL subClassOf PROPERTY ', cardinality)
+# for (s, p, o) in triples:
+#     if 'transitive' in s or 'Transitive' in s:
+#         _, scardinality = hdt.search_triples("", "", s)
+#         print ('property: ', s, ' : ',scardinality)
+#         transPropertyCollect.add(s)
 
-transPropertyCollect = set()
-print('=====Property ======')
-triples, cardinality = hdt.search_triples("", subClassOf, property)
-print ('TOTAL subClassOf PROPERTY ', cardinality)
-for (s, p, o) in triples:
-    if 'transitive' in s or 'Transitive' in s:
-        _, scardinality = hdt.search_triples("", "", s)
-        print ('property: ', s, ' : ',scardinality)
-        transPropertyCollect.add(s)
-
-
-transObjectPropertyCollect = set()
-print('=====Object property =====')
-triples, cardinality = hdt.search_triples("", subClassOf, objectProperty)
-print ('TOTAL subClassOf OBEJCTPROPERTY ', cardinality)
-for (s, p, o) in triples:
-    if 'transitive' in s or 'Transitive' in s:
-        _, scardinality = hdt.search_triples("", "", s)
-        print ('ObjectProperty: ', s, ' : ',scardinality)
-        transObjectPropertyCollect.add(s)
-
-print('==== and their intersection ====')
-inter = transObjectPropertyCollect.intersection(transPropertyCollect)
-for it in inter:
-    print ('intersection: ', it)
-
-
-ptriples, pcardinality = hdt.search_triples(property, "", property)
-if pcardinality > 0:
-    print('property: it is subclass of itself')
-
-
-ptriples, pcardinality = hdt.search_triples(objectProperty, "", objectProperty)
-if pcardinality > 0:
-    print('objectProperty: it is subclass of itself')
-
+#
+# transObjectPropertyCollect = set()
+# print('=====Object property =====')
+# triples, cardinality = hdt.search_triples("", subClassOf, objectProperty)
+# print ('TOTAL subClassOf OBEJCTPROPERTY ', cardinality)
+# for (s, p, o) in triples:
+#     if 'transitive' in s or 'Transitive' in s:
+#         _, scardinality = hdt.search_triples("", "", s)
+#         print ('ObjectProperty: ', s, ' : ',scardinality)
+#         transObjectPropertyCollect.add(s)
+#
+# print('==== and their intersection ====')
+# inter = transObjectPropertyCollect.intersection(transPropertyCollect)
+# for it in inter:
+#     print ('intersection: ', it)
+#
+#
+# ptriples, pcardinality = hdt.search_triples(property, "", property)
+# if pcardinality > 0:
+#     print('property: it is subclass of itself')
+#
+#
+# ptriples, pcardinality = hdt.search_triples(objectProperty, "", objectProperty)
+# if pcardinality > 0:
+#     print('objectProperty: it is subclass of itself')
+#
 
 # print ('-------<as subject>--------')
 #
@@ -89,6 +89,6 @@ if pcardinality > 0:
 #     print ('property: p, o', p, o)
 print ('-------<subPropertyOf>--------')
 
-triples, cardinality = hdt.search_triples("",subPropertyOf , "")
+triples, cardinality = hdt.search_triples(subPropertyOf , "", property)
 for (s, p, o) in triples:
-    print ('subproperty: s, o', s, o)
+    print ('so, subPropertyOf ', p, ' Property')
