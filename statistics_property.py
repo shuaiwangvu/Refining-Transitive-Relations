@@ -39,7 +39,7 @@ for (s, p, o) in triples:
     print ('property: ', s, ' : ',scardinality)
 
 
-``
+
 print('=====Object property =====')
 triples, cardinality = hdt.search_triples("", subClassOf, objectProperty)
 for (s, p, o) in triples:
