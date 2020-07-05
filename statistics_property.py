@@ -33,4 +33,17 @@ property = "http://www.w3.org/2002/07/owl#ObjectProperty"
 subClassOf = "http://www.w3.org/2000/01/rdf-schema#subClassOf"
 triples, cardinality = hdt.search_triples("", subClassOf, property)
 for (s, p, o) in triples:
-    print ('property: ', s)
+    _, scardinality = hdt.search_triples("", "", s)
+    print ('property: ', s, ' : ',scardinality)
+
+
+print ('-------<as object>--------')
+triples, cardinality = hdt.search_triples("", "", property)
+for (s, p, o) in triples:
+    print ('s, o = ', s, o)
+
+print ('-------<as subject>--------')
+
+triples, cardinality = hdt.search_triples(property, "", "")
+for (s, p, o) in triples:
+    print ('p, o', p, o)
