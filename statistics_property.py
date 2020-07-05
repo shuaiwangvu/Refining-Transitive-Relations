@@ -33,15 +33,15 @@ objectProperty = "http://www.w3.org/2002/07/owl#ObjectProperty"
 
 subClassOf = "http://www.w3.org/2000/01/rdf-schema#subClassOf"
 subPropertyOf = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
+type = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 
 transitiveObjectProperty = 'http://www.w3.org/2002/07/owl#TransitiveProperty'
 resource = 'http://www.w3.org/2000/01/rdf-schema#Resource'
-mindswap_type = 'http://owl.mindswap.org/2003/ont/owlweb.rdf#type'
-
 class2000  = 'http://www.w3.org/2000/01/rdf-schema#Class'
 class2002 = 'http://www.w3.org/2002/07/owl#Class'
 classtr = 'http://www.w3.org/TR/WD-rdf-schema#Class'
 
+mindswap_type = 'http://owl.mindswap.org/2003/ont/owlweb.rdf#type'
 datatype = 'http://www.w3.org/2000/01/rdf-schema#Datatype'
 # http://www.w3.org/2002/07/owl#topDataProperty ????
 
@@ -97,6 +97,11 @@ triples, cardinality = hdt.search_triples(subPropertyOf , subPropertyOf, subProp
 for (s, p, o) in triples:
     print ('subPropertyOf: ', p, o)
 
-triples, cardinality = hdt.search_triples(subClassOf , subClassOf, "")
+triples, cardinality = hdt.search_triples(subClassOf , subPropertyOf, "")
 for (s, p, o) in triples:
-    print ('subClassOf is subClassOf ', p, o)
+    print ('subClassOf is subPropertyOf ', p, o)
+
+
+triples, cardinality = hdt.search_triples(subClassOf , type, "")
+for (s, p, o) in triples:
+    print ('subClassOf is of type ', o)
