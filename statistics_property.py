@@ -34,6 +34,7 @@ subClassOf = "http://www.w3.org/2000/01/rdf-schema#subClassOf"
 
 print('=====Property ======')
 triples, cardinality = hdt.search_triples("", subClassOf, property)
+print ('TOTAL subClassOf PROPERTY ', cardinality)
 for (s, p, o) in triples:
     _, scardinality = hdt.search_triples("", "", s)
     print ('property: ', s, ' : ',scardinality)
@@ -42,9 +43,10 @@ for (s, p, o) in triples:
 
 print('=====Object property =====')
 triples, cardinality = hdt.search_triples("", subClassOf, objectProperty)
+print ('TOTAL subClassOf OBEJCTPROPERTY ', cardinality)
 for (s, p, o) in triples:
     _, scardinality = hdt.search_triples("", "", s)
-    print ('property: ', s, ' : ',scardinality)
+    print ('ObjectProperty: ', s, ' : ',scardinality)
 
 
 ptriples, pcardinality = hdt.search_triples(objectProperty, "", objectProperty)
