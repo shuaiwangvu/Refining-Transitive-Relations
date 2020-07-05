@@ -97,6 +97,6 @@ triples, cardinality = hdt.search_triples(subPropertyOf , subPropertyOf, subProp
 for (s, p, o) in triples:
     print ('subPropertyOf: ', p, o)
 
-triples, cardinality = hdt.search_triples(subPropertyOf , subClassOf, "")
+triples, cardinality = hdt.search_triples(subClassOf , subClassOf, "")
 for (s, p, o) in triples:
-    print ('subPropertyOf is subClassOf ', p, o)
+    print ('subClassOf is subClassOf ', p, o)
