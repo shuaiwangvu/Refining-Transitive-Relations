@@ -17,7 +17,7 @@ import tldextract
 import json
 import random
 # from equiClass import equiClassManager
-import random
+# import random
 
 
 PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
@@ -28,7 +28,7 @@ aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
 r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
 iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
 
- 
+
 
 # is_eq_to = "http://www.w3.org/2002/07/owl#:equivalentProperty"
 	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
@@ -83,15 +83,20 @@ print ('as object:')
 triples, cardinality = hdt.search_triples("", "", t)
 print ('There are ', cardinality, 'transitive properties')
 collect_transitive_properties = set()
-for (s, p, o) in triples:
 
+count = 0
+for (s, p, o) in triples:
     collect_transitive_properties.add(s)
     t_triples, t_cardinality = hdt.search_triples("", s, "")
-    if t_cardinality > 100:
+    if t_cardinality > 1000000:
         print ('\tsubject: ', s)
         print ('\tpredicate:  ', p)
         print (t_cardinality, ' :', s)
         print ('\n')
+        count += 1
+
+print ('')
+
 
 triples, cardinality = hdt.search_triples("", "", s)
 print ('There are ', cardinality, ' symmetric properties')
