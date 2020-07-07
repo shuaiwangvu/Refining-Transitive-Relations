@@ -30,6 +30,9 @@ iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
 
 type = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
 
+subClassOf = 'http://www.w3.org/2000/01/rdf-schema#subClassOf'
+subPropertyOf = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
+
 # is_eq_to = "http://www.w3.org/2002/07/owl#:equivalentProperty"
 	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
 	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
@@ -78,6 +81,9 @@ type = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
     #
 
 
+triples, cardinality = hdt.search_triples("", subClassOf, t)
+print ('There are ', cardinality, 'subclas of owl:transitive properties')
+
 print ('\n\n')
 print ('as object:')
 triples, cardinality = hdt.search_triples("", type, t)
@@ -95,7 +101,7 @@ for (s, p, o) in triples:
         print ('\n')
         count += 1
 
-print ('')
+print ('count over million', count)
 
 
 triples, cardinality = hdt.search_triples("", "", s)
