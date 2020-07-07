@@ -28,7 +28,7 @@ aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
 r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
 iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
 
-
+type = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
 
 # is_eq_to = "http://www.w3.org/2002/07/owl#:equivalentProperty"
 	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
@@ -80,7 +80,7 @@ iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
 
 print ('\n\n')
 print ('as object:')
-triples, cardinality = hdt.search_triples("", "", t)
+triples, cardinality = hdt.search_triples("", type, t)
 print ('There are ', cardinality, 'transitive properties')
 collect_transitive_properties = set()
 
