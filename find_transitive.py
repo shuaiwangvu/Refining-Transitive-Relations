@@ -246,7 +246,7 @@ geo = 'http://www.geonames.org/ontology#parentFeature'
 
 # subClassOf
 intervalContains = 'http://www.w3.org/2006/time#intervalContains'
-duringDuring = 'http://www.w3.org/2006/time#intervalDuring'
+intervalDuring = 'http://www.w3.org/2006/time#intervalDuring'
 
 hasPart = 'http://purl.org/dc/terms/hasPart'
 isPartOf = 'http://purl.org/dc/terms/isPartOf'
@@ -257,7 +257,7 @@ narrower = 'http://www.w3.org/2004/02/skos/core#narrower'
 broaderTransitive = 'http://www.w3.org/2004/02/skos/core#broaderTransitive'
 narrowerTransitive = 'http://www.w3.org/2004/02/skos/core#narrowerTransitive'
 
-list_relations = [geo, subClassOf, subPropertyOf, intervalContains, duringDuring, during, hasPart, isPartOf, broader, narrower, broaderTransitive, narrowerTransitive]
+list_relations = [geo, subClassOf, subPropertyOf, intervalContains, intervalDuring, hasPart, isPartOf, broader, narrower, broaderTransitive, narrowerTransitive]
 
 
 s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
