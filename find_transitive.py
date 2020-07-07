@@ -246,6 +246,7 @@ geo = 'http://www.geonames.org/ontology#parentFeature'
 
 # subClassOf
 intervalContains = 'http://www.w3.org/2006/time#intervalContains'
+during = 'http://www.w3.org/2006/time#intervalDuring'
 
 hasPart = 'http://purl.org/dc/terms/hasPart'
 isPartOf = 'http://purl.org/dc/terms/isPartOf'
@@ -256,7 +257,7 @@ narrower = 'http://www.w3.org/2004/02/skos/core#narrower'
 broaderTransitive = 'http://www.w3.org/2004/02/skos/core#broaderTransitive'
 narrowerTransitive = 'http://www.w3.org/2004/02/skos/core#narrowerTransitive'
 
-list_relations = [geo, subClassOf, subPropertyOf, intervalContains, hasPart, isPartOf, broader, narrower, broaderTransitive, narrowerTransitive]
+list_relations = [geo, subClassOf, subPropertyOf, intervalContains, during, hasPart, isPartOf, broader, narrower, broaderTransitive, narrowerTransitive]
 
 
 s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
@@ -274,6 +275,9 @@ list_properties = [s, aS, r, iR, f, ivf, ub, uq]
 
 for r in list_relations:
     # test SymmetricProperty, assymmetric, etc.
+    triples, cardinality = hdt.search_triples('', r, '')
+    print ('This relation ',r, ' has triples : ', cardinality)
+    
     for test_p in list_properties:
         triples, cardinality = hdt.search_triples(r, "", test_p)
         for (s, p , o) in triples:
