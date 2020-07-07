@@ -256,7 +256,7 @@ narrower = 'http://www.w3.org/2004/02/skos/core#narrower'
 broaderTransitive = 'http://www.w3.org/2004/02/skos/core#broaderTransitive'
 narrowerTransitive = 'http://www.w3.org/2004/02/skos/core#narrowerTransitive'
 
-list_relations = [geo, subClassOf, intervalContains, hasPart, isPartOf, broader, narrower, broaderTransitive, narrowerTransitive]
+list_relations = [geo, subClassOf, subPropertyOf, intervalContains, hasPart, isPartOf, broader, narrower, broaderTransitive, narrowerTransitive]
 
 
 s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
@@ -280,3 +280,15 @@ for r in list_relations:
             print ('subject  : ', s)
             print ('predicate: ', p)
             print ('object   : ', o, '\n\n')
+
+
+print('===== test other properties =====')
+
+for r in list_relations:
+    print('=======================:::::::: ', r)
+    # test SymmetricProperty, assymmetric, etc.
+    triples, cardinality = hdt.search_triples(r, "", "")
+    for (s, p , o) in triples:
+        print ('subject  : ', s)
+        print ('predicate: ', p)
+        print ('object   : ', o, '\n\n')
