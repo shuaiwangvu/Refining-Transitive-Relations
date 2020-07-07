@@ -81,140 +81,140 @@ subPropertyOf = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
     #
 
 
-
-triples, cardinality = hdt.search_triples("", subPropertyOf, t)
-print ('There are ', cardinality, 'subPropertyOf of owl:transitive properties')
-for (s,p ,o) in triples:
-    print ('subClass: ', s)
-
-
-
-
-triples, cardinality = hdt.search_triples("", subClassOf, t)
-print ('There are ', cardinality, 'subclass of owl:transitive properties')
-for (s,p ,o) in triples:
-    print ('subClass: ', s)
-
-print ('==========================\n\n')
-print ('as object:')
-triples, cardinality = hdt.search_triples("", type, t)
-print ('There are ', cardinality, 'transitive properties')
-collect_transitive_properties = set()
-count = 0
-for (s, p, o) in triples:
-    collect_transitive_properties.add(s)
-    t_triples, t_cardinality = hdt.search_triples("", s, "")
-    if t_cardinality > 1000000:
-        print ('\tsubject: ', s)
-        print ('\tpredicate:  ', p)
-        print (t_cardinality, ' :', s)
-        print ('\n')
-        count += 1
-
-print ('count over million', count)
-
-
-triples, cardinality = hdt.search_triples("", "", s)
-print ('There are ', cardinality, ' symmetric properties')
-collect_symmetric_properties = set()
-for (s, p, o) in triples:
-    # print ('\tsubject: ', s)
-    # print ('\tpredicate:  ', p)
-    # print ('\n')
-    collect_symmetric_properties.add(s)
-
-triples, cardinality = hdt.search_triples("", "", aS)
-print ('There are ', cardinality, ' assymmetric properties')
-collect_assymmetric_properties = set()
-for (s, p, o) in triples:
-    # print ('\tsubject: ', s)
-    # print ('\tpredicate:  ', p)
-    # print ('\n')
-    collect_assymmetric_properties.add(s)
-
-
-
-triples, cardinality = hdt.search_triples("", "", r)
-print ('There are ', cardinality, ' reflexive properties')
-collect_reflexive_properties = set()
-for (s, p, o) in triples:
-    # print ('\tsubject: ', s)
-    # print ('\tpredicate:  ', p)
-    # print ('\n')
-    collect_reflexive_properties.add(s)
-
-
-triples, cardinality = hdt.search_triples("", "", iR)
-print ('There are ', cardinality, ' irreflexive properties')
-collect_irreflexive_properties = set()
-for (s, p, o) in triples:
-    # print ('\tsubject: ', s)
-    # print ('\tpredicate:  ', p)
-    # print ('\n')
-    collect_irreflexive_properties.add(s)
-
-
-
-collect_equivalent_properties = collect_reflexive_properties.intersection(collect_symmetric_properties.intersection(collect_transitive_properties))
-print ('There are ', len(collect_equivalent_properties), ' equivalent properties')
-
-
-# ====
-print ('not symmetric but reflexive:')
-tmp = collect_transitive_properties.intersection(collect_reflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
-print ('size: ', len(tmp))
-if len(tmp) > 0:
-    print ('example:', list(tmp)[0])
-
-
-print ('not symmetric and not reflexive:')
-tmp = collect_transitive_properties.difference(collect_reflexive_properties).difference(collect_irreflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
-print ('size: ', len(tmp))
-if len(tmp) > 0:
-    print ('example:', list(tmp)[0])
-
-print ('not symmetric and irreflexive:')
-tmp = collect_transitive_properties.intersection(collect_irreflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
-print ('size: ', len(tmp))
-if len(tmp) > 0:
-    print ('example:', list(tmp)[0])
-
-
-# =====
-print ('#######')
-
-print ('symmetric and not reflexive:')
-tmp = collect_transitive_properties.intersection(collect_symmetric_properties).difference(collect_irreflexive_properties).difference(collect_reflexive_properties)
-print ('size: ', len(tmp))
-if len(tmp) > 0:
-    print ('example:', list(tmp)[0])
-
-print ('symmetric and irreflexive:')
-tmp = collect_transitive_properties.intersection(collect_symmetric_properties).intersection(collect_irreflexive_properties)
-print ('size: ', len(tmp))
-if len(tmp) > 0:
-    print ('example:', list(tmp)[0])
-
-# =====
-print ('#######')
-
-print ('assymmetric and reflexive:')
-tmp = collect_transitive_properties.intersection(collect_assymmetric_properties).intersection(collect_reflexive_properties)
-print ('size: ', len(tmp))
-if len(tmp) > 0:
-    print ('example:', list(tmp)[0])
-
-print ('assymmetric and not reflexive:')
-tmp = collect_transitive_properties.intersection(collect_assymmetric_properties).difference(collect_irreflexive_properties).difference(collect_reflexive_properties)
-print ('size: ', len(tmp))
-if len(tmp) > 0:
-    print ('example:', list(tmp)[0])
-
-print ('assymmetric and irreflexive:')
-tmp = collect_transitive_properties.intersection(collect_assymmetric_properties).intersection(collect_irreflexive_properties)
-print ('size: ', len(tmp))
-if len(tmp) > 0:
-    print ('example:', list(tmp)[0])
+#
+# triples, cardinality = hdt.search_triples("", subPropertyOf, t)
+# print ('There are ', cardinality, 'subPropertyOf of owl:transitive properties')
+# for (s,p ,o) in triples:
+#     print ('subClass: ', s)
+#
+#
+#
+#
+# triples, cardinality = hdt.search_triples("", subClassOf, t)
+# print ('There are ', cardinality, 'subclass of owl:transitive properties')
+# for (s,p ,o) in triples:
+#     print ('subClass: ', s)
+#
+# print ('==========================\n\n')
+# print ('as object:')
+# triples, cardinality = hdt.search_triples("", type, t)
+# print ('There are ', cardinality, 'transitive properties')
+# collect_transitive_properties = set()
+# count = 0
+# for (s, p, o) in triples:
+#     collect_transitive_properties.add(s)
+#     t_triples, t_cardinality = hdt.search_triples("", s, "")
+#     if t_cardinality > 1000000:
+#         print ('\tsubject: ', s)
+#         print ('\tpredicate:  ', p)
+#         print (t_cardinality, ' :', s)
+#         print ('\n')
+#         count += 1
+#
+# print ('count over million', count)
+#
+#
+# triples, cardinality = hdt.search_triples("", "", s)
+# print ('There are ', cardinality, ' symmetric properties')
+# collect_symmetric_properties = set()
+# for (s, p, o) in triples:
+#     # print ('\tsubject: ', s)
+#     # print ('\tpredicate:  ', p)
+#     # print ('\n')
+#     collect_symmetric_properties.add(s)
+#
+# triples, cardinality = hdt.search_triples("", "", aS)
+# print ('There are ', cardinality, ' assymmetric properties')
+# collect_assymmetric_properties = set()
+# for (s, p, o) in triples:
+#     # print ('\tsubject: ', s)
+#     # print ('\tpredicate:  ', p)
+#     # print ('\n')
+#     collect_assymmetric_properties.add(s)
+#
+#
+#
+# triples, cardinality = hdt.search_triples("", "", r)
+# print ('There are ', cardinality, ' reflexive properties')
+# collect_reflexive_properties = set()
+# for (s, p, o) in triples:
+#     # print ('\tsubject: ', s)
+#     # print ('\tpredicate:  ', p)
+#     # print ('\n')
+#     collect_reflexive_properties.add(s)
+#
+#
+# triples, cardinality = hdt.search_triples("", "", iR)
+# print ('There are ', cardinality, ' irreflexive properties')
+# collect_irreflexive_properties = set()
+# for (s, p, o) in triples:
+#     # print ('\tsubject: ', s)
+#     # print ('\tpredicate:  ', p)
+#     # print ('\n')
+#     collect_irreflexive_properties.add(s)
+#
+#
+#
+# collect_equivalent_properties = collect_reflexive_properties.intersection(collect_symmetric_properties.intersection(collect_transitive_properties))
+# print ('There are ', len(collect_equivalent_properties), ' equivalent properties')
+#
+#
+# # ====
+# print ('not symmetric but reflexive:')
+# tmp = collect_transitive_properties.intersection(collect_reflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
+# print ('size: ', len(tmp))
+# if len(tmp) > 0:
+#     print ('example:', list(tmp)[0])
+#
+#
+# print ('not symmetric and not reflexive:')
+# tmp = collect_transitive_properties.difference(collect_reflexive_properties).difference(collect_irreflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
+# print ('size: ', len(tmp))
+# if len(tmp) > 0:
+#     print ('example:', list(tmp)[0])
+#
+# print ('not symmetric and irreflexive:')
+# tmp = collect_transitive_properties.intersection(collect_irreflexive_properties).difference(collect_assymmetric_properties).difference(collect_symmetric_properties)
+# print ('size: ', len(tmp))
+# if len(tmp) > 0:
+#     print ('example:', list(tmp)[0])
+#
+#
+# # =====
+# print ('#######')
+#
+# print ('symmetric and not reflexive:')
+# tmp = collect_transitive_properties.intersection(collect_symmetric_properties).difference(collect_irreflexive_properties).difference(collect_reflexive_properties)
+# print ('size: ', len(tmp))
+# if len(tmp) > 0:
+#     print ('example:', list(tmp)[0])
+#
+# print ('symmetric and irreflexive:')
+# tmp = collect_transitive_properties.intersection(collect_symmetric_properties).intersection(collect_irreflexive_properties)
+# print ('size: ', len(tmp))
+# if len(tmp) > 0:
+#     print ('example:', list(tmp)[0])
+#
+# # =====
+# print ('#######')
+#
+# print ('assymmetric and reflexive:')
+# tmp = collect_transitive_properties.intersection(collect_assymmetric_properties).intersection(collect_reflexive_properties)
+# print ('size: ', len(tmp))
+# if len(tmp) > 0:
+#     print ('example:', list(tmp)[0])
+#
+# print ('assymmetric and not reflexive:')
+# tmp = collect_transitive_properties.intersection(collect_assymmetric_properties).difference(collect_irreflexive_properties).difference(collect_reflexive_properties)
+# print ('size: ', len(tmp))
+# if len(tmp) > 0:
+#     print ('example:', list(tmp)[0])
+#
+# print ('assymmetric and irreflexive:')
+# tmp = collect_transitive_properties.intersection(collect_assymmetric_properties).intersection(collect_irreflexive_properties)
+# print ('size: ', len(tmp))
+# if len(tmp) > 0:
+#     print ('example:', list(tmp)[0])
 
 #
 # for b in both:
@@ -240,3 +240,43 @@ if len(tmp) > 0:
 #             print (c)
 #             print ('graph (edge) size = ',cardinality)
 #             print('\n')
+
+
+geo = 'http://www.geonames.org/ontology#parentFeature'
+
+# subClassOf
+intervalContains = 'http://www.w3.org/2006/time#intervalContains'
+
+hasPart = 'http://purl.org/dc/terms/hasPart'
+isPartOf = 'http://purl.org/dc/terms/isPartOf'
+
+broader = 'http://www.w3.org/2004/02/skos/core#broader'
+narrower = 'http://www.w3.org/2004/02/skos/core#narrower'
+
+broaderTransitive = 'http://www.w3.org/2004/02/skos/core#broaderTransitive'
+narrowerTransitive = 'http://www.w3.org/2004/02/skos/core#narrowerTransitive'
+
+list_relations = [geo, subClassOf, intervalContains, hasPart, isPartOf, broader, narrower, broaderTransitive, narrowerTransitive]
+
+
+s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
+aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
+r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
+iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
+f = "http://www.w3.org/2002/07/owl#FunctionalProperty"
+ivf = ' http://www.w3.org/2002/07/owl#InverseFunctionalProperty'
+
+ub = 'http://www.daml.org/2000/12/daml+oil#UnambiguousProperty'
+uq = 'http://www.daml.org/2001/03/daml+oil#UniqueProperty'
+
+
+list_properties = [s, aS, r, iR, f, ivf, ub, uq]
+
+for r in list_relations:
+    # test SymmetricProperty, assymmetric, etc.
+    for test_p in list_properties:
+        triples, cardinality = hdt.search_triples(r, "", test_p)
+        for (s, p , o) in triples:
+            print ('subject  : ', s)
+            print ('predicate: ', p)
+            print ('object   : ', o, '\n\n')
