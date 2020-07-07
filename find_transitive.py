@@ -81,15 +81,25 @@ subPropertyOf = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
     #
 
 
-triples, cardinality = hdt.search_triples("", subClassOf, t)
-print ('There are ', cardinality, 'subclas of owl:transitive properties')
 
-print ('\n\n')
+triples, cardinality = hdt.search_triples("", subPropertyOf, t)
+print ('There are ', cardinality, 'subPropertyOf of owl:transitive properties')
+for (s,p ,o) in triples:
+    print ('subClass: ', s)
+
+
+
+
+triples, cardinality = hdt.search_triples("", subClassOf, t)
+print ('There are ', cardinality, 'subclass of owl:transitive properties')
+for (s,p ,o) in triples:
+    print ('subClass: ', s)
+
+print ('==========================\n\n')
 print ('as object:')
 triples, cardinality = hdt.search_triples("", type, t)
 print ('There are ', cardinality, 'transitive properties')
 collect_transitive_properties = set()
-
 count = 0
 for (s, p, o) in triples:
     collect_transitive_properties.add(s)
