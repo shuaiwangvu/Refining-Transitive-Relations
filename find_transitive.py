@@ -285,14 +285,14 @@ for r in list_relations:
     #         print ('predicate: ', p)
     #         print ('object   : ', o, '\n\n')
 
-#
-# print('===== test other properties =====')
-#
-# for r in list_relations:
-#     print('=======================:::::::: ', r)
-#     # test SymmetricProperty, assymmetric, etc.
-#     triples, cardinality = hdt.search_triples(r, "", "")
-#     for (s, p , o) in triples:
-#         print ('subject  : ', s)
-#         print ('predicate: ', p)
-#         print ('object   : ', o, '\n\n')
+
+print('===== test other properties =====')
+
+for r in [intervalDuring]:
+    print('=======================:::::::: ', r)
+    # test SymmetricProperty, assymmetric, etc.
+    triples, cardinality = hdt.search_triples(r, "", "")
+    for (s, p , o) in triples:
+        print ('subject  : ', s)
+        print ('predicate: ', p)
+        print ('object   : ', o, '\n\n')
