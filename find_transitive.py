@@ -90,26 +90,26 @@ subPropertyOf = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
 #
 #
 #
-# triples, cardinality = hdt.search_triples("", subClassOf, t)
-# print ('There are ', cardinality, 'subclass of owl:transitive properties')
-# for (s,p ,o) in triples:
-#     print ('subClass: ', s)
-#
-# print ('==========================\n\n')
-# print ('as object:')
-# triples, cardinality = hdt.search_triples("", type, t)
-# print ('There are ', cardinality, 'transitive properties')
-# collect_transitive_properties = set()
-# count = 0
-# for (s, p, o) in triples:
-#     collect_transitive_properties.add(s)
-#     t_triples, t_cardinality = hdt.search_triples("", s, "")
-#     if t_cardinality > 1000000:
-#         print ('\tsubject: ', s)
-#         print ('\tpredicate:  ', p)
-#         print (t_cardinality, ' :', s)
-#         print ('\n')
-#         count += 1
+triples, cardinality = hdt.search_triples("", subClassOf, t)
+print ('There are ', cardinality, 'subclass of owl:transitive properties')
+for (s,p ,o) in triples:
+    print ('subClass: ', s)
+
+print ('==========================\n\n')
+print ('as object:')
+triples, cardinality = hdt.search_triples("", type, t)
+print ('There are ', cardinality, 'transitive properties')
+collect_transitive_properties = set()
+count = 0
+for (s, p, o) in triples:
+    collect_transitive_properties.add(s)
+    t_triples, t_cardinality = hdt.search_triples("", s, "")
+    if t_cardinality > 10000:
+        print ('\tsubject: ', s)
+        print ('\tpredicate:  ', p)
+        print (t_cardinality, ' :', s)
+        print ('\n')
+        count += 1
 #
 # print ('count over million', count)
 #
@@ -241,58 +241,58 @@ subPropertyOf = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
 #             print ('graph (edge) size = ',cardinality)
 #             print('\n')
 
-
-geo = 'http://www.geonames.org/ontology#parentFeature'
-
-# subClassOf
-intervalContains = 'http://www.w3.org/2006/time#intervalContains'
-intervalDuring = 'http://www.w3.org/2006/time#intervalDuring'
-
-hasPart = 'http://purl.org/dc/terms/hasPart'
-isPartOf = 'http://purl.org/dc/terms/isPartOf'
-
-broader = 'http://www.w3.org/2004/02/skos/core#broader'
-narrower = 'http://www.w3.org/2004/02/skos/core#narrower'
-
-broaderTransitive = 'http://www.w3.org/2004/02/skos/core#broaderTransitive'
-narrowerTransitive = 'http://www.w3.org/2004/02/skos/core#narrowerTransitive'
-
-list_relations = [geo, subClassOf, subPropertyOf, intervalContains, intervalDuring, hasPart, isPartOf, broader, narrower, broaderTransitive, narrowerTransitive]
-
-
-s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
-aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
-r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
-iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
-f = "http://www.w3.org/2002/07/owl#FunctionalProperty"
-ivf = ' http://www.w3.org/2002/07/owl#InverseFunctionalProperty'
-
-ub = 'http://www.daml.org/2000/12/daml+oil#UnambiguousProperty'
-uq = 'http://www.daml.org/2001/03/daml+oil#UniqueProperty'
-
-
-list_properties = [s, aS, r, iR, f, ivf, ub, uq]
-
-for r in list_relations:
-    # test SymmetricProperty, assymmetric, etc.
-    triples, cardinality = hdt.search_triples('', r, '')
-    print ('This relation ',r, ' has triples : ', cardinality)
-
-    # for test_p in list_properties:
-    #     triples, cardinality = hdt.search_triples(r, "", test_p)
-    #     for (s, p , o) in triples:
-    #         print ('subject  : ', s)
-    #         print ('predicate: ', p)
-    #         print ('object   : ', o, '\n\n')
-
-
-print('===== test other properties =====')
-
-for r in [intervalDuring]:
-    print('=======================:::::::: ', r)
-    # test SymmetricProperty, assymmetric, etc.
-    triples, cardinality = hdt.search_triples(r, "", "")
-    for (s, p , o) in triples:
-        print ('subject  : ', s)
-        print ('predicate: ', p)
-        print ('object   : ', o, '\n\n')
+#
+# geo = 'http://www.geonames.org/ontology#parentFeature'
+#
+# # subClassOf
+# intervalContains = 'http://www.w3.org/2006/time#intervalContains'
+# intervalDuring = 'http://www.w3.org/2006/time#intervalDuring'
+#
+# hasPart = 'http://purl.org/dc/terms/hasPart'
+# isPartOf = 'http://purl.org/dc/terms/isPartOf'
+#
+# broader = 'http://www.w3.org/2004/02/skos/core#broader'
+# narrower = 'http://www.w3.org/2004/02/skos/core#narrower'
+#
+# broaderTransitive = 'http://www.w3.org/2004/02/skos/core#broaderTransitive'
+# narrowerTransitive = 'http://www.w3.org/2004/02/skos/core#narrowerTransitive'
+#
+# list_relations = [geo, subClassOf, subPropertyOf, intervalContains, intervalDuring, hasPart, isPartOf, broader, narrower, broaderTransitive, narrowerTransitive]
+#
+#
+# s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
+# aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
+# r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
+# iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
+# f = "http://www.w3.org/2002/07/owl#FunctionalProperty"
+# ivf = ' http://www.w3.org/2002/07/owl#InverseFunctionalProperty'
+#
+# ub = 'http://www.daml.org/2000/12/daml+oil#UnambiguousProperty'
+# uq = 'http://www.daml.org/2001/03/daml+oil#UniqueProperty'
+#
+#
+# list_properties = [s, aS, r, iR, f, ivf, ub, uq]
+#
+# for r in list_relations:
+#     # test SymmetricProperty, assymmetric, etc.
+#     triples, cardinality = hdt.search_triples('', r, '')
+#     print ('This relation ',r, ' has triples : ', cardinality)
+#
+#     # for test_p in list_properties:
+#     #     triples, cardinality = hdt.search_triples(r, "", test_p)
+#     #     for (s, p , o) in triples:
+#     #         print ('subject  : ', s)
+#     #         print ('predicate: ', p)
+#     #         print ('object   : ', o, '\n\n')
+#
+#
+# print('===== test other properties =====')
+#
+# for r in [intervalDuring]:
+#     print('=======================:::::::: ', r)
+#     # test SymmetricProperty, assymmetric, etc.
+#     triples, cardinality = hdt.search_triples(r, "", "")
+#     for (s, p , o) in triples:
+#         print ('subject  : ', s)
+#         print ('predicate: ', p)
+#         print ('object   : ', o, '\n\n')
