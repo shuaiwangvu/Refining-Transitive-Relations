@@ -140,6 +140,7 @@ def compute_strongly_connected_component():
         dict[n] = collect_succssor
     scc = tarjan(dict)
     print ('# Connected Component        : ', len(scc))
+    print (scc)
     filter_scc = [x for x in scc if len(x)>1]
     print('# Connected Component Filtered: ', len(filter_scc))
     ct = Counter()
@@ -148,7 +149,7 @@ def compute_strongly_connected_component():
     print (ct)
 
     for c in filter_scc:
-        if len(c) > 3:
+        if len(c) < 3:
             print (len(c))
             print (c)
     # export to
