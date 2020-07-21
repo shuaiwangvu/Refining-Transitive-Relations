@@ -95,7 +95,7 @@ print ('There are ', cardinality, 'subclass of owl:transitive properties')
 for (s,p ,o) in triples:
     print ('subClassOf: ', s)
 
-
+f
 
 
 
