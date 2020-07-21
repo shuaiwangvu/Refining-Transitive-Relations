@@ -82,34 +82,38 @@ subPropertyOf = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
 
 
 #
-# triples, cardinality = hdt.search_triples("", subPropertyOf, t)
-# print ('There are ', cardinality, 'subPropertyOf of owl:transitive properties')
-# for (s,p ,o) in triples:
-#     print ('subClass: ', s)
-#
-#
-#
-#
+
+triples, cardinality = hdt.search_triples("", subPropertyOf, t)
+print ('There are ', cardinality, 'subPropertyOf of owl:transitive properties')
+for (s,p ,o) in triples:
+    print ('subPropertyOf: ', s)
+
+
+
 triples, cardinality = hdt.search_triples("", subClassOf, t)
 print ('There are ', cardinality, 'subclass of owl:transitive properties')
 for (s,p ,o) in triples:
-    print ('subClass: ', s)
+    print ('subClassOf: ', s)
 
-print ('==========================\n\n')
-print ('as object:')
-triples, cardinality = hdt.search_triples("", type, t)
-print ('There are ', cardinality, 'transitive properties')
-collect_transitive_properties = set()
-count = 0
-for (s, p, o) in triples:
-    collect_transitive_properties.add(s)
-    t_triples, t_cardinality = hdt.search_triples("", s, "")
-    if t_cardinality > 10000:
-        print ('\tsubject: ', s)
-        print ('\tpredicate:  ', p)
-        print (t_cardinality, ' :', s)
-        print ('\n')
-        count += 1
+
+
+
+
+# print ('==========================\n\n')
+# print ('as object:')
+# triples, cardinality = hdt.search_triples("", type, t)
+# print ('There are ', cardinality, 'transitive properties')
+# collect_transitive_properties = set()
+# count = 0
+# for (s, p, o) in triples:
+#     collect_transitive_properties.add(s)
+#     t_triples, t_cardinality = hdt.search_triples("", s, "")
+#     if t_cardinality > 10000:
+#         print ('\tsubject: ', s)
+#         print ('\tpredicate:  ', p)
+#         print (t_cardinality, ' :', s)
+#         print ('\n')
+#         count += 1
 #
 # print ('count over million', count)
 #
