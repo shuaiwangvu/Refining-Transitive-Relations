@@ -107,17 +107,25 @@ print ('There are ', cardinality, 'subclass of owl:transitive properties')
 for (s,p ,o) in triples:
     print ('subClassOf: ', s)
 
-
+total_inverse = 0
 triples, cardinality = hdt.search_triples("", type, t)
 print ('There are ', cardinality, 'type of owl:transitive properties')
 for (s,p ,o) in triples:
+    inv_collect = set()
     print ('property: ', s)
     triples1, cardinality1 = hdt.search_triples(s ,inv, '')
+    count += cardinality1
     for (s,p,o) in triples1:
         print ('\t it has inverse: ', o)
-    triples2, cardinality2 = hdt.search_triples(s ,inv, '')
+        inv_collect.add(o)
+    triples2, cardinality2 = hdt.search_triples(‘’ ,inv, s)
+    count += cardinality2
     for (s,p,o) in triples2:
-        print ('\t it has inverse: ', o)
+        print ('\t it has inverse: ', s)
+        inv_collect.add(s)
+    print('count inverse: ', len(inv_collect))
+    total_inverse += len(inv_collect)
+print ('total inverse', total_inverse)
 
 
 
