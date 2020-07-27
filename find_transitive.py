@@ -158,6 +158,8 @@ print("nb predicates: %i" % hdt.nb_predicates)
 
 
 print ('***** end *****')
+
+
 # find the inverse of a transitive property
 
 # subproperty
