@@ -152,8 +152,9 @@ for p in inv_collect:
 print('count_triples_trans: ', count_triples_trans)
 print('count_triples_inv: ', count_triples_inv)
 
-triples, cardinality = hdt.search_triples("", "", "")
-print('in  total triple: ', cardinality)
+
+print("nb triples: %i" % hdt.total_triples)
+print("nb predicates: %i" % hdt.nb_predicates)
 # find the inverse of a transitive property
 
 # subproperty
