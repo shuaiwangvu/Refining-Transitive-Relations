@@ -124,7 +124,7 @@ while len(trans_collect) != record :
         for (s,p,o) in triples:
             # print('new:',s,p,o)
             found_subp.add(str(s))
-    trans_collect.union(found_subp)
+    trans_collect = trans_collect.union(found_subp)
 
 print ('now there are ', len(trans_collect), 'type of owl:transitive properties')
 
