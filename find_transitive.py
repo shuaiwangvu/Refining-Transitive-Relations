@@ -169,21 +169,24 @@ print('count_triples_inv: ', count_triples_inv)
 
 # print ('==========================\n\n')
 # print ('as object:')
-# triples, cardinality = hdt.search_triples("", type, t)
-# print ('There are ', cardinality, 'transitive properties')
-# collect_transitive_properties = set()
-# count = 0
-# for (s, p, o) in triples:
-#     collect_transitive_properties.add(s)
-#     t_triples, t_cardinality = hdt.search_triples("", s, "")
-#     if t_cardinality > 10000:
-#         print ('\tsubject: ', s)
-#         print ('\tpredicate:  ', p)
-#         print (t_cardinality, ' :', s)
-#         print ('\n')
-#         count += 1
-#
-# print ('count over million', count)
+count = 0
+for p in count_triples_trans:
+    t_triples, t_cardinality = hdt.search_triples("", p, "")
+    if t_cardinality > 10000:
+        print ('trans: ', p)
+        count += 1
+
+print ('trans: count over million', count)
+
+
+count = 0
+for p in count_triples_inv:
+    t_triples, t_cardinality = hdt.search_triples("", p, "")
+    if t_cardinality > 10000:
+        print('inv: ', p)
+        count += 1
+
+print ('inv: count over million', count)
 #
 #
 # triples, cardinality = hdt.search_triples("", "", s)
