@@ -36,6 +36,8 @@ subPropertyOf = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
 broader = 'http://www.w3.org/2004/02/skos/core#broader'
 narrower = 'http://www.w3.org/2004/02/skos/core#narrower'
 
+inv = 'http://www.w3.org/2002/07/owl#inverseOf'
+
 # is_eq_to = "http://www.w3.org/2002/07/owl#:equivalentProperty"
 	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
 	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
@@ -109,24 +111,32 @@ for (s,p ,o) in triples:
 triples, cardinality = hdt.search_triples("", type, t)
 print ('There are ', cardinality, 'type of owl:transitive properties')
 for (s,p ,o) in triples:
-    print ('type: ', s)
+    print ('property: ', s)
+    triples1, cardinality1 = hdt.search_triples(s ,inv, '')
+    for (s,p,o) in triples1:
+        print ('\t it has inverse: ', o)
+    triples2, cardinality2 = hdt.search_triples(s ,inv, '')
+    for (s,p,o) in triples2:
+        print ('\t it has inverse: ', o)
+
+
 
 
 
 # find the inverse of a transitive property
 
 # subproperty
-
-triples, cardinality = hdt.search_triples(narrower, "", broader)
-print ('There are ', cardinality, 'narrower -> broader')
-for (s,p ,o) in triples:
-    print ('predicate: ', p)
-
-
-triples, cardinality = hdt.search_triples(broader, "", narrower)
-print ('There are ', cardinality, 'broader -> narrower')
-for (s,p ,o) in triples:
-    print ('predicate: ', p)
+#
+# triples, cardinality = hdt.search_triples(narrower, "", broader)
+# print ('There are ', cardinality, 'narrower -> broader')
+# for (s,p ,o) in triples:
+#     print ('predicate: ', p)
+#
+#
+# triples, cardinality = hdt.search_triples(broader, "", narrower)
+# print ('There are ', cardinality, 'broader -> narrower')
+# for (s,p ,o) in triples:
+#     print ('predicate: ', p)
 
 
 
