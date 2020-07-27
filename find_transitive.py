@@ -127,13 +127,13 @@ for (s,p ,o) in triples:
     for (s2,p2,o2) in triples2:
         print ('\t it has inverse: ', s2)
         inv_collect.add(str(s2))
-        
+
     print('count inverse: ', len(inv_collect))
     # total_inverse += len(inv_collect)
 
 
 print('======')
-inv_collect = trans_collect.difference(inv_collect)
+inv_collect = inv_collect.difference(trans_collect)
 
 print ('transitive relations', len(trans_collect))
 print ('total inverse', len (inv_collect))
