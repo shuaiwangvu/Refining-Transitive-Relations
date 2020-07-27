@@ -83,6 +83,13 @@ subPropertyOf = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
 
 #
 
+
+
+triples, cardinality = hdt.search_triples(t, "", "")
+print ('There are ', cardinality, ' owl:transitive properties')
+for (s,p ,o) in triples:
+    print ('owl:transitive property: ', p, o)
+
 triples, cardinality = hdt.search_triples("", subPropertyOf, t)
 print ('There are ', cardinality, 'subPropertyOf of owl:transitive properties')
 for (s,p ,o) in triples:
@@ -94,6 +101,19 @@ triples, cardinality = hdt.search_triples("", subClassOf, t)
 print ('There are ', cardinality, 'subclass of owl:transitive properties')
 for (s,p ,o) in triples:
     print ('subClassOf: ', s)
+
+
+triples, cardinality = hdt.search_triples("", type, t)
+print ('There are ', cardinality, 'type of owl:transitive properties')
+for (s,p ,o) in triples:
+    print ('type: ', s)
+
+
+
+# find the inverse of a transitive property
+
+# subproperty
+
 
 
 
