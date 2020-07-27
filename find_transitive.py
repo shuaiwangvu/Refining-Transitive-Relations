@@ -137,7 +137,7 @@ inv_collect = inv_collect.difference(trans_collect)
 
 print ('transitive relations', len(trans_collect))
 print ('total inverse', len (inv_collect))
-
+ 
 # count how many triples are there in total
 count_triples_trans = 0
 for p in trans_collect:
