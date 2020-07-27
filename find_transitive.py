@@ -118,7 +118,7 @@ for (s,p ,o) in triples:
     for (s,p,o) in triples1:
         print ('\t it has inverse: ', o)
         inv_collect.add(o)
-    triples2, cardinality2 = hdt.search_triples(‘’ ,inv, s)
+    triples2, cardinality2 = hdt.search_triples('',inv, s)
     count += cardinality2
     for (s,p,o) in triples2:
         print ('\t it has inverse: ', s)
