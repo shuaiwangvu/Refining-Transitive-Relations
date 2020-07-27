@@ -119,14 +119,14 @@ for (s,p ,o) in triples:
 
     for (s,p,o) in triples1:
         print ('\t it has inverse: ', o)
-        inv_collect.add(o)
+        inv_collect.add(str(o))
 
 
     triples2, cardinality2 = hdt.search_triples('',inv, s)
 
     for (s,p,o) in triples2:
         print ('\t it has inverse: ', s)
-        inv_collect.add(s)
+        inv_collect.add(str(s))
     print('count inverse: ', len(inv_collect))
     # total_inverse += len(inv_collect)
 
