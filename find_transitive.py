@@ -170,7 +170,7 @@ print('count_triples_inv: ', count_triples_inv)
 # print ('==========================\n\n')
 # print ('as object:')
 count = 0
-for p in count_triples_trans:
+for p in trans_collect:
     t_triples, t_cardinality = hdt.search_triples("", p, "")
     if t_cardinality > 10000:
         print ('trans: ', p)
@@ -180,7 +180,7 @@ print ('trans: count over million', count)
 
 
 count = 0
-for p in count_triples_inv:
+for p in inv_collect:
     t_triples, t_cardinality = hdt.search_triples("", p, "")
     if t_cardinality > 10000:
         print('inv: ', p)
