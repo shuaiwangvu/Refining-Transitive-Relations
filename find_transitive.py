@@ -137,7 +137,7 @@ inv_collect = inv_collect.difference(trans_collect)
 
 print ('transitive relations', len(trans_collect))
 print ('total inverse', len (inv_collect))
- 
+
 # count how many triples are there in total
 count_triples_trans = 0
 for p in trans_collect:
@@ -153,13 +153,18 @@ print('count_triples_trans: ', count_triples_trans)
 print('count_triples_inv: ', count_triples_inv)
 
 
+
 print("nb triples: %i" % hdt.total_triples)
 print("nb predicates: %i" % hdt.nb_predicates)
 
 
+
+
+triples, cardinality = hdt.search_triples("", "", "")
+print ('There are ', cardinality, '  triples')
+
+
 print ('***** end *****')
-
-
 # find the inverse of a transitive property
 
 # subproperty
