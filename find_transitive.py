@@ -33,6 +33,9 @@ type = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
 subClassOf = 'http://www.w3.org/2000/01/rdf-schema#subClassOf'
 subPropertyOf = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf'
 
+broader = 'http://www.w3.org/2004/02/skos/core#broader'
+narrower = 'http://www.w3.org/2004/02/skos/core#narrower'
+
 # is_eq_to = "http://www.w3.org/2002/07/owl#:equivalentProperty"
 	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
 	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
@@ -90,11 +93,11 @@ print ('There are ', cardinality, ' owl:transitive properties')
 for (s,p ,o) in triples:
     print ('owl:transitive property: ', p, o)
 
+
 triples, cardinality = hdt.search_triples("", subPropertyOf, t)
 print ('There are ', cardinality, 'subPropertyOf of owl:transitive properties')
 for (s,p ,o) in triples:
     print ('subPropertyOf: ', s)
-
 
 
 triples, cardinality = hdt.search_triples("", subClassOf, t)
@@ -114,8 +117,16 @@ for (s,p ,o) in triples:
 
 # subproperty
 
+triples, cardinality = hdt.search_triples(narrower, "", broader)
+print ('There are ', cardinality, 'narrower -> broader')
+for (s,p ,o) in triples:
+    print ('predicate: ', p)
 
 
+triples, cardinality = hdt.search_triples(broader, "", narrower)
+print ('There are ', cardinality, 'broader -> narrower')
+for (s,p ,o) in triples:
+    print ('predicate: ', p)
 
 
 
