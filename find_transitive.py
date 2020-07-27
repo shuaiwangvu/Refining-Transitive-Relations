@@ -115,6 +115,16 @@ print ('There are ', cardinality, 'type of owl:transitive properties')
 for (s,p ,o) in triples:
     trans_collect.add(str(s))
 
+# and another http://www.cyc.com/2003/04/01/cyc#EquivalenceRelation
+cyc_eq = 'http://www.cyc.com/2003/04/01/cyc#EquivalenceRelation'
+triples, cardinality = hdt.search_triples("", type, cyc_eq)
+print ('There are ', cardinality, 'type of cyc#eq properties')
+for (s,p ,o) in triples:
+    trans_collect.add(str(s))
+
+print ('So in total that is ', len(trans_collect))
+
+
 record = 0
 while len(trans_collect) != record :
     record = len(trans_collect)
