@@ -132,6 +132,7 @@ for (s,p ,o) in triples:
 
 
 print('======')
+inv_collect = trans_collect.difference(inv_collect)
 print ('total inverse', len (inv_collect))
 print ('transitive relations', len(trans_collect))
 
