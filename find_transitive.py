@@ -122,7 +122,7 @@ while len(trans_collect) != record :
     for t in trans_collect:
         triples, cardinality = hdt.search_triples("", subPropertyOf, t)
         for (s,p,o) in triples:
-            print('new:',s,p,o)
+            # print('new:',s,p,o)
             found_subp.add(str(s))
     trans_collect.union(found_subp)
 
