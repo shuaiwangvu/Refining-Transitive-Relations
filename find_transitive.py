@@ -113,20 +113,21 @@ inv_collect = set()
 triples, cardinality = hdt.search_triples("", type, t)
 print ('There are ', cardinality, 'type of owl:transitive properties')
 for (s,p ,o) in triples:
-    trans_collect.add(s)
+    trans_collect.add(str(s))
     print ('property: ', s)
     triples1, cardinality1 = hdt.search_triples(s ,inv, '')
 
-    for (s,p,o) in triples1:
-        print ('\t it has inverse: ', o)
-        inv_collect.add(str(o))
+    for (s1,p1,o1) in triples1:
+        print ('\t it has inverse: ', o1)
+        inv_collect.add(str(o1))
 
 
     triples2, cardinality2 = hdt.search_triples('',inv, s)
 
-    for (s,p,o) in triples2:
-        print ('\t it has inverse: ', s)
-        inv_collect.add(str(s))
+    for (s2,p2,o2) in triples2:
+        print ('\t it has inverse: ', s2)
+        inv_collect.add(str(s2))
+        
     print('count inverse: ', len(inv_collect))
     # total_inverse += len(inv_collect)
 
