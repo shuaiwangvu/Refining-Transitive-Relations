@@ -169,16 +169,13 @@ print('count_triples_inv: ', count_triples_inv)
 
 
 
-print("nb triples: %i" % hdt.total_triples)
-print("nb predicates: %i" % hdt.nb_predicates)
-
-
-
+#print("nb triples: %i" % hdt.total_triples)
+#print("nb predicates: %i" % hdt.nb_predicates)
 
 triples, cardinality = hdt.search_triples("", "", "")
 print ('There are ', cardinality, '  triples')
-
-
+print ('percentage : ', (count_triples_trans + count_triples_inv) / cardinality)
+ 
 print ('***** end *****')
 # find the inverse of a transitive property
 
