@@ -128,21 +128,21 @@ while len(trans_collect) != record :
 print ('now there are ', len(trans_collect), 'type of owl:transitive properties')
 
 for s in trans_collect:
-    print ('property: ', s)
+    #print ('property: ', s)
     triples1, cardinality1 = hdt.search_triples(s ,inv, '')
 
     for (s1,p1,o1) in triples1:
-        print ('\t it has inverse: ', o1)
+        #print ('\t it has inverse: ', o1)
         inv_collect.add(str(o1))
 
 
     triples2, cardinality2 = hdt.search_triples('',inv, s)
 
     for (s2,p2,o2) in triples2:
-        print ('\t it has inverse: ', s2)
+        #print ('\t it has inverse: ', s2)
         inv_collect.add(str(s2))
 
-    print('count inverse: ', len(inv_collect))
+    #print('count inverse: ', len(inv_collect))
     # total_inverse += len(inv_collect)
 
 
