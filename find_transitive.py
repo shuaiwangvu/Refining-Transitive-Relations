@@ -233,6 +233,17 @@ sort_ct = sorted(ct.items(), key=lambda x: x[1], reverse=True)
 for p in sort_ct:
     print (p)
 
+
+
+print (' ....... type ........')
+triples, cardinality = hdt.search_triples(type, '', '')
+print ('There are ', cardinality, ' properties for TYPE')
+for (s, p, o) in triples:
+    print ('\tpredicate:  ', p)
+    print ('\tobject: ', o)
+    print ('\n')
+
+
 # triples, cardinality = hdt.search_triples("", "", s)
 # print ('There are ', cardinality, ' symmetric properties')
 # collect_symmetric_properties = set()
