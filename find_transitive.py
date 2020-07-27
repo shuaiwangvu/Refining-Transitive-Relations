@@ -153,7 +153,7 @@ print('count_triples_trans: ', count_triples_trans)
 print('count_triples_inv: ', count_triples_inv)
 
 triples, cardinality = hdt.search_triples("", "", "")
-print('total triple: ', cardinality)
+print('in  total triple: ', cardinality)
 # find the inverse of a transitive property
 
 # subproperty
