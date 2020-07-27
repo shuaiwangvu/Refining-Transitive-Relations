@@ -114,6 +114,18 @@ triples, cardinality = hdt.search_triples("", type, t)
 print ('There are ', cardinality, 'type of owl:transitive properties')
 for (s,p ,o) in triples:
     trans_collect.add(str(s))
+
+record = 0
+while len(trans_collect) != record :
+    record = len(trans_collect):
+    for t in trans_collect:
+        triples, cardinality = hdt.search_triples("", subPropertyOf, t)
+        for (s,p ,o) in triples:
+            trans_collect.add(str(s))
+
+print ('now there are ', len(trans_collect), 'type of owl:transitive properties') 
+
+for s in trans_collect:
     print ('property: ', s)
     triples1, cardinality1 = hdt.search_triples(s ,inv, '')
 
