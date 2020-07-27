@@ -155,6 +155,9 @@ print('count_triples_inv: ', count_triples_inv)
 
 print("nb triples: %i" % hdt.total_triples)
 print("nb predicates: %i" % hdt.nb_predicates)
+
+
+print ('***** end *****')
 # find the inverse of a transitive property
 
 # subproperty
