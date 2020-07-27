@@ -133,8 +133,9 @@ for (s,p ,o) in triples:
 
 print('======')
 inv_collect = trans_collect.difference(inv_collect)
-print ('total inverse', len (inv_collect))
+
 print ('transitive relations', len(trans_collect))
+print ('total inverse', len (inv_collect))
 
 # count how many triples are there in total
 count_triples_trans = 0
@@ -169,26 +170,27 @@ print('count_triples_inv: ', count_triples_inv)
 
 # print ('==========================\n\n')
 # print ('as object:')
+
 count = 0
 for p in trans_collect:
     t_triples, t_cardinality = hdt.search_triples("", p, "")
-    if t_cardinality > 10000:
+    if t_cardinality > 1000000:
         print ('trans: ', p)
         count += 1
 
 print ('trans: count over million', count)
 
-
 count = 0
 for p in inv_collect:
     t_triples, t_cardinality = hdt.search_triples("", p, "")
-    if t_cardinality > 10000:
+    if t_cardinality > 1000000:
         print('inv: ', p)
         count += 1
 
 print ('inv: count over million', count)
-#
-#
+
+
+
 # triples, cardinality = hdt.search_triples("", "", s)
 # print ('There are ', cardinality, ' symmetric properties')
 # collect_symmetric_properties = set()
