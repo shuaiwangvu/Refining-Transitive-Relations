@@ -175,7 +175,7 @@ print('count_triples_inv: ', count_triples_inv)
 triples, cardinality = hdt.search_triples("", "", "")
 print ('There are ', cardinality, '  triples')
 print ('percentage : ', (count_triples_trans + count_triples_inv) / cardinality)
- 
+
 print ('***** end *****')
 # find the inverse of a transitive property
 
@@ -197,11 +197,14 @@ print ('***** end *****')
 # print ('==========================\n\n')
 # print ('as object:')
 
+ct = {}
+
 count = 0
 for p in trans_collect:
     t_triples, t_cardinality = hdt.search_triples("", p, "")
     if t_cardinality > 1000000:
-        print ('trans: ', p)
+        print ('trans: ', p, ' : ', t_cardinality)
+        ct[p] = t_cardinality
         count += 1
 
 print ('trans: count over million', count)
@@ -210,12 +213,15 @@ count = 0
 for p in inv_collect:
     t_triples, t_cardinality = hdt.search_triples("", p, "")
     if t_cardinality > 1000000:
-        print('inv: ', p)
+        ct[p] = t_cardinality
+        print('inv: ', p, ' : ', t_cardinality)
         count += 1
 
 print ('inv: count over million', count)
 
-
+sort_ct = sorted(ct.items(), key=lambda x: x[1], reverse=True)
+for p in sort_ct:
+    print (p)
 
 # triples, cardinality = hdt.search_triples("", "", s)
 # print ('There are ', cardinality, ' symmetric properties')
