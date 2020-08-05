@@ -140,14 +140,14 @@ def compute_strongly_connected_component():
     print (ct)
 
     for c in filter_scc:
-        if len(c) > 3:
+        if len(c) < 3: # check when <3 , what the categories are like.
             print (len(c))
             print (c)
     # export to
     index = 1
     color = {}
     for c in filter_scc:
-        if len(c) > 3:
+        if len(c) < 3:
             for n in c:
                 color[n] = index
             index += 1
@@ -224,4 +224,4 @@ def main ():
 
 
 if __name__ == "__main__":
-    main(
+    main()
