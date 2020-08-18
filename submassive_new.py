@@ -39,7 +39,7 @@ def init_graph():
 	global collect_nodes
 	global can_remove
 	print ('init the graph')
-	with gzip.open(path+subclass_file, "rt") as f:
+	with gzip.open(path+ broader_file, "rt") as f:
 		line = f.readline()
 		while line:
 			row = line.split('\t')
@@ -54,7 +54,7 @@ def init_graph():
 
 def load_weight():
 	global weight
-	with gzip.open(path+subclass_weight, "rt") as f:
+	with gzip.open(path+broader_weight, "rt") as f:
 		line = f.readline()
 		while line:
 			row = line.split('\t')
@@ -70,57 +70,33 @@ def load_weight():
 
 def detected_nodes_to_remove():
 	# while the nodes are being
-	detected_to_remove = set()
-	for n in collect_nodes:
-		flag_all_succ_removed = True
-		for x in graph.successors(n):
-			if x not in can_remove:
-				flag_all_succ_removed = False
-		if flag_all_succ_removed :
-			detected_to_remove.add(n)
-
-		flag_all_pred_removed = True
-		for x in graph.predecessors(n):
-			if x not in can_remove:
-				flag_all_pred_removed = False
-		if flag_all_pred_removed :
-			detected_to_remove.add(n)
-	return detected_to_remove
+	can_remove = []
+	for n in graph.nodes:
+		if graph.out_degree(n) == 0 or graph.in_degree(n) == 0:
+			can_remove.append(n)
+	print ('this round removes: ', len(can_remove))
+	return can_remove
 
 
 def simplify_graph():
 	global collect_nodes
 	global can_remove
-	for n in graph.nodes:
-		if graph.out_degree(n) == 0 or graph.in_degree(n) == 0:
-			can_remove.add(n)
-		else:
-			collect_nodes.add(n)
 
-	graph.remove_nodes_from(can_remove)
-	print ('graph has size: ', len(graph.nodes))
-			# can_remove.add(n)
-		# else:
-		# 	collect_nodes.add(n)
-
-	record_size = len(collect_nodes)
-	print ('before the while-loop, the size of nodes is ', record_size)
-
-	 # filter_nodes ()
-
+	record_size = graph.number_of_nodes()
 	detected_to_remove = detected_nodes_to_remove()
+	graph.remove_nodes_from(detected_to_remove)
+	# print ('graph has size: ', len(graph.nodes))
 
-	collect_nodes = collect_nodes.difference(detected_to_remove)
-	can_remove = can_remove.union(detected_to_remove)
-	while (record_size != len(collect_nodes)):
-		record_size = len(collect_nodes)
-		print ('before: ',record_size)
-
+	print ('before the while-loop, the size of nodes is ', record_size)
+	while (record_size != graph.number_of_nodes()):
+		record_size = graph.number_of_nodes()
+		print ('now: ', record_size)
 		detected_to_remove = detected_nodes_to_remove()
-
-		collect_nodes = collect_nodes.difference(detected_to_remove)
-		can_remove = can_remove.union(detected_to_remove)
-		print ('after:  ',len(collect_nodes))
+		# collect_nodes = collect_nodes.difference(detected_to_remove)
+		# can_remove = can_remove.union(detected_to_remove)
+		graph.remove_nodes_from(detected_to_remove)
+		# record_size = graph.number_of_nodes()
+		# print ('after:  ', record_size)
 
 def compute_strongly_connected_component():
 	global filter_scc
@@ -146,18 +122,29 @@ def find_cycles():
 	dic_cycles = []
 	count = 0
 	for f in filter_scc:
-		# compute a subgraph
-		sg = graph.subgraph(f)
-		# find at most
 		collect_cycles = []
+		if len(f) == 2:
+			collect_cycles.append(f)
+			collect_cycles.append([f[1], f[0]])
+			count+=2
+		else:
+			# compute a subgraph
+			sg = graph.subgraph(f)
+			if sg.number_of_nodes()>1000:
+				print ('\nnodes = ', sg.number_of_nodes())
+				print ('edges = ', sg.number_of_edges())
+			# find at most
+			collect_cycles = []
 
-		# cycle_limit = MAX_cycle_ratio * len (f)
-		for (l,r) in sg.edges():
-			c = nx.shortest_path(G = sg, source = r, target=l)
-			print (c)
-			collect_cycles.append(c)
-		count += len(collect_cycles)
-		dic_cycles += collect_cycles
+			# cycle_limit = MAX_cycle_ratio * len (f)
+			for (l,r) in sg.edges():
+				c = nx.shortest_path(G = sg, source = r, target=l)
+				# print (c)
+				collect_cycles.append(c)
+			count += len(collect_cycles)
+			print ('cycles = ', len(collect_cycles))
+			dic_cycles += collect_cycles
+
 	print ('found cycles ', count)
 	return dic_cycles
 
