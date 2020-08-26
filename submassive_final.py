@@ -34,15 +34,17 @@ collect_nodes = set()
 can_remove = set()
 weight = {}
 
-scc_size_limit = 800
+scc_size_limit = 2000
 
 timeout = 1000 * 60 * 1
 o = Optimize()
 o.set("timeout", timeout)
 print('timeout = ',timeout/1000/60, 'mins')
 
-num_clause_limit = 200
+num_clause_limit = 4000
 encode = {}
+
+path_size_limit = 20
 
 edges_to_remove = []
 
@@ -65,9 +67,9 @@ def obtain_scc_graph ():
 	global can_remove
 	global d
 
-	print ('init the graph')
+	print ('init the graph') 
 
-	with gzip.open(path + broader_file, "rt") as f:
+	with gzip.open(path + subclass_file, "rt") as f:
 
 		line = f.readline()
 		while line:
@@ -80,6 +82,7 @@ def obtain_scc_graph ():
 			line = f.readline()
 	sccs = tarjan(d)
 	filter_sccs = [x for x in sccs if len(x)>1]
+	filter_sccs =  sorted (filter_sccs, key=(lambda x: len(x)), reverse=False)
 	G = nx.DiGraph(d)
 	collect_scc_graph = []
 	for f in filter_sccs:
@@ -95,14 +98,14 @@ def cut_to_limit(graph):
 		return [], [graph]
 
 	graph = nx.DiGraph(graph) # otherwise, it would remain frozen, can't be modified
-	print ('cut this scc size = ', graph.number_of_nodes())
+	# print ('cut this scc size = ', graph.number_of_nodes())
 	adjacency = {}
 
 	ele_to_index = {}
 	index_to_ele = {}
 	# num_partitions = int((graph.number_of_nodes() / scc_size_limit)) + 1
 	num_partitions = 2
-	print ('cut into ', num_partitions, ' partitions')
+	# print ('cut into ', num_partitions, ' partitions')
 
 	index = 0
 
@@ -193,7 +196,8 @@ def cut_to_limit(graph):
 			# collect_subgraphs_removed_edges += sg_edges_between_subgraphs
 			#TODO: use the SCC instead!
 			sccs = compute_scc_from_graph(sg)
-			for s in sccs:
+			filter_sccs = [x for x in sccs if len(x)>1]
+			for s in filter_sccs:
 				scc_g = sg.subgraph(s).copy()
 				if scc_g.number_of_nodes() > scc_size_limit:
 					sg_edges_between_subgraphs, sg_subgraphs = cut_to_limit(scc_g)
@@ -202,10 +206,103 @@ def cut_to_limit(graph):
 				else:
 					collect_subgraphs.append(scc_g)
 		else:
-			collect_subgraphs.append(sg)
+			sccs = compute_scc_from_graph(sg)
+			filter_sccs = [x for x in sccs if len(x)>1]
+			for s in filter_sccs:
+				scc_g = sg.subgraph(s).copy()
+				collect_subgraphs.append(scc_g)
 	all_edges_to_remove = edges_between_subgraphs + collect_subgraphs_removed_edges
 	# print ('there are in total ', len (all_edges_to_remove), ' removed during graph partitioning')
 	return all_edges_to_remove, collect_subgraphs # also need to return the removed edges
+
+
+def cut_to_limit2(graph):
+	print ('tocut: there are in total ', graph.number_of_nodes(), ' nodes with ', graph.number_of_edges())
+
+	if graph.number_of_nodes() < scc_size_limit:
+		return [], [graph]
+
+	graph = nx.DiGraph(graph)
+
+	best_source_node = None
+	max_outdegree = 0
+	best_target_node = None
+	max_indegree = 0
+
+	for n in graph.nodes():
+		out_degree = graph.out_degree(n)
+		in_degree = graph.in_degree(n)
+		if out_degree > max_outdegree:
+			best_source_node = n
+			max_outdegree = out_degree
+		if in_degree > max_indegree and n != best_source_node:
+			best_target_node = n
+			max_indegree = in_degree
+
+	o = Optimize()
+	count_clause = 0
+	# print ('found best_source_node = ', best_source_node, ' best_target_node = ', best_target_node )
+	for path in nx.all_simple_paths(G=graph, source = best_source_node, target = best_target_node, cutoff= path_size_limit):
+
+		# print ('\t path = ', path)
+		clause = False #
+		for i in range(len(path) - 1):
+			j = i +1
+
+			left = path[i]
+			right = path[j]
+			encode_string = '<'+str(left) + '\t' + str(right) +'>'
+
+			if (left, right) not in encode:
+				encode[(left, right)] = Bool(str(encode_string))
+			clause = Or (clause, Not(encode[(left, right)]))
+
+		o.add (clause)
+		count_clause += 1
+		if count_clause >= num_clause_limit :
+			break
+
+
+	# print ('there are in total: ', count_clause, 'clauses / path between the source & target')
+
+	# when there is no weight specified.
+	for e in encode.values():
+		o.add_soft(e, 1)
+	# print ('ending encode length ', len(encode.keys()))
+	# print ('all clauses encoded', flush = True)
+	identified_edges = []
+	if o.check() == 'unknown':
+		print ('WhAT!!!')
+		return [],[]
+	else:
+		# print ('start decoding')
+		# print ('>encode length ', len(encode.keys()))
+		m = o.model()
+		for arc in encode.keys():
+			(left, right) = arc
+			if m.evaluate(encode[arc]) == False:
+				identified_edges.append(arc)
+
+	graph.remove_edges_from(identified_edges)
+
+	collect_subgraphs = []
+	collect_subgraphs_removed_edges = []
+	sccs = compute_scc_from_graph(graph)
+	filter_sccs = [x for x in sccs if len(x)>1]
+	for s in filter_sccs:
+		scc_g = graph.subgraph(s).copy()
+		if scc_g.number_of_nodes() > scc_size_limit:
+			sg_edges_between_subgraphs, sg_subgraphs = cut_to_limit(scc_g)
+			collect_subgraphs += sg_subgraphs
+			collect_subgraphs_removed_edges += sg_edges_between_subgraphs
+		else:
+			collect_subgraphs.append(scc_g)
+
+	all_edges_to_remove = collect_subgraphs_removed_edges + identified_edges
+	# print ('there are in total ', len (all_edges_to_remove), ' removed during graph partitioning')
+	return all_edges_to_remove, collect_subgraphs # also need to return the removed edges
+
+
 
 
 def obtain_sccs():
@@ -214,9 +311,11 @@ def obtain_sccs():
 	coll_to_remove = []
 	coll_to_add = []
 	coll_edges_removed = []
+	print ('start cutting')
 	for g in scc_graphs:
 		if g.number_of_nodes() > scc_size_limit:
-			removed_edges, gs = cut_to_limit (g)
+			# removed_edges, gs = cut_to_limit (g)
+			removed_edges, gs = cut_to_limit2 (g)
 			coll_edges_removed += removed_edges
 			coll_to_add += gs
 			coll_to_remove.append(g)
@@ -229,8 +328,110 @@ def obtain_sccs():
 	except Exception as e:
 		print ('remove & append')
 
-	print ('total edges removed: ', len (coll_edges_removed))
+	print ('total edges removed after cutting: ', len (coll_edges_removed))
 	return scc_graphs, coll_edges_removed
+
+
+
+def obtained_edges_to_remove_using_SMT (sg):
+	global num_clause_limit
+
+	count = 0
+	collect_cycles = []
+	encode = {}
+	if len(sg.nodes) == 2:
+		for (l,r) in sg.edges():
+			collect_cycles.append([l,r])
+		count+=2
+	else:
+
+# strategy 1:  each edge and their counter corresponding cycle !
+		edges_to_visit = set(sg.edges())
+		while (len(edges_to_visit) != 0 and count < num_clause_limit):
+			(l,r) =  edges_to_visit.pop()
+			c = nx.shortest_path(G = sg, source = r, target=l)
+			cycle_edge_set = set()
+			for i in range(len(c) -1):
+				j = i+1
+				if (c[i], c[j]) in edges_to_visit:
+					cycle_edge_set.add((c[i], c[j]))
+			collect_cycles.append(c)
+
+			count += 1
+			edges_to_visit = edges_to_visit.difference(cycle_edge_set)
+
+# strategy 2: obtain a random pair and each l2r , r2l
+		# while count < num_clause_limit:
+		# 	l = random.choice(list(sg.nodes()))
+		# 	r = random.choice(list(sg.nodes()))
+		#
+		# 	if l != r:
+		# 		l2r = nx.shortest_path(G = sg, source = l, target = r)
+		# 		r2l = nx.shortest_path(G = sg, source = r, target = l)
+		# 		# print ('l2r: ', l2r)
+		# 		# print ('r2l: ', r2l)
+		# 		c = l2r[:-1] + r2l[:-1]
+		# 		# print ('l2r2l: ',c, flush=True)
+		# 		collect_cycles.append(c)
+		# 		count += 1
+
+# strategy 3: all path from big outgoing hubs to incoming hubs, and back.
+
+
+
+
+
+
+
+
+
+
+	o = Optimize()
+
+	for cycle in collect_cycles:
+		# print ('now encode  cycle: ', cycle )
+		clause = False #
+		for i in range(len(cycle)):
+			j = i +1
+			if j == len(cycle):
+				j =0
+			# i and j
+			left = cycle[i]
+			right = cycle[j]
+			encode_string = '<'+str(left) + '\t' + str(right) +'>'
+
+			if (left, right) not in encode:
+				encode[(left, right)] = Bool(str(encode_string))
+
+			#propositional variable
+			p = encode[(left, right)]
+			# append the negotiation of this propositional variable
+			clause = Or(clause, Not(p))
+		o.add (clause)
+
+	# when there is no weight specified.
+	for e in encode.values():
+		o.add_soft(e, 1)
+	# print ('ending encode length ', len(encode.keys()))
+	# print ('all clauses encoded', flush = True)
+	identified_edges = []
+	if o.check() == 'unknown':
+		print ('WhAT!!!')
+		num_clause_limit -= 20
+		print ('reduce clause limit to ', num_clause_limit)
+		return []
+	else:
+		# print ('start decoding')
+		# print ('>encode length ', len(encode.keys()))
+		m = o.model()
+		for arc in encode.keys():
+			(left, right) = arc
+			if m.evaluate(encode[arc]) == False:
+				identified_edges.append(arc)
+
+	return identified_edges
+
+
 
 
 def main ():
@@ -239,12 +440,34 @@ def main ():
 
 	start = time.time()
 	# ==============
+	all_removed_edges = []
+	graphs_obtained, edges_removed_in_cutting = obtain_sccs()
+	all_removed_edges += edges_removed_in_cutting
 
-	graphs_obtained, edges_removed = obtain_sccs()
+	# now resolve each graph (instead of SCC)
+	round = 1
+	while len(graphs_obtained) != 0:
+		print ('this is round ', round)
+		round += 1
+		graphs_obtained = sorted(graphs_obtained, key=(lambda g: g.number_of_nodes()), reverse=True)
+		print ('there are still ', len (graphs_obtained), ' graphs to be processed')
+		if len (graphs_obtained)> 20:
+			print ('the biggest one has       : ', graphs_obtained[0].number_of_nodes(), ' with ' ,
+	 												graphs_obtained[0].number_of_edges(), )
+			print ('the second biggest one has: ', graphs_obtained[1].number_of_nodes(), ' with ' ,
+													graphs_obtained[1].number_of_edges(), )
 
-	# cuts, part_vert  = pymetis.part_graph(num_partitions, adjacency=adjacency)
+		for g in graphs_obtained:
+			edges_removed_by_SMT = obtained_edges_to_remove_using_SMT (g)
+			g.remove_edges_from(edges_removed_by_SMT)
+			sccs = compute_scc_from_graph(g)
+			filter_sccs = [x for x in sccs if len(x)>1]
+			for s in filter_sccs:
+				graphs_obtained.append(g.subgraph(s).copy())
+			graphs_obtained.remove(g)
+			all_removed_edges += edges_removed_by_SMT
 
-
+	print ('there are in total ', len (all_removed_edges), 'edges removed')
 	# ===============
 	end = time.time()
 	hours, rem = divmod(end-start, 3600)
