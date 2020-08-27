@@ -41,11 +41,11 @@ inv = 'http://www.w3.org/2002/07/owl#inverseOf'
 # is_eq_to = "http://www.w3.org/2002/07/owl#:equivalentProperty"
 	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
 	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
-    #
-    #
+	#
+	#
 	# subject:  http://www.cyc.com/2003/04/01/cyc#TransitiveBinaryPredicate
 	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
-    # subject:  http://sw.opencyc.org/concept/Mx4rnhSeOBSXQdiB19IvbH2fDg
+	# subject:  http://sw.opencyc.org/concept/Mx4rnhSeOBSXQdiB19IvbH2fDg
 	# predicate:   http://www.w3.org/2002/07/owl#sameAs
 
 # print('as subject:')
@@ -75,15 +75,15 @@ inv = 'http://www.w3.org/2002/07/owl#inverseOf'
 
 	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
 	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
-    #
-    #
+	#
+	#
 	# subject:  http://www.cyc.com/2003/04/01/cyc#TransitiveBinaryPredicate
 	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
-    #
-    #
+	#
+	#
 	# subject:  http://sw.opencyc.org/concept/Mx4rnhSeOBSXQdiB19IvbH2fDg
 	# predicate:   http://www.w3.org/2002/07/owl#sameAs
-    #
+	#
 
 
 #
@@ -113,48 +113,48 @@ inv_collect = set()
 triples, cardinality = hdt.search_triples("", type, t)
 print ('There are ', cardinality, 'type of owl:transitive properties')
 for (s,p ,o) in triples:
-    trans_collect.add(str(s))
+	trans_collect.add(str(s))
 
 # and another http://www.cyc.com/2003/04/01/cyc#EquivalenceRelation
 cyc_eq = 'http://www.cyc.com/2003/04/01/cyc#EquivalenceRelation'
 triples, cardinality = hdt.search_triples("", type, cyc_eq)
 print ('There are ', cardinality, 'type of cyc#eq properties')
 for (s,p ,o) in triples:
-    trans_collect.add(str(s))
+	trans_collect.add(str(s))
 
 print ('So in total that is ', len(trans_collect))
 
 
 record = 0
 while len(trans_collect) != record :
-    record = len(trans_collect)
-    found_subp = set()
-    for t in trans_collect:
-        triples, cardinality = hdt.search_triples("", subPropertyOf, t)
-        for (s,p,o) in triples:
-            # print('new:',s,p,o)
-            found_subp.add(str(s))
-    trans_collect = trans_collect.union(found_subp)
+	record = len(trans_collect)
+	found_subp = set()
+	for t in trans_collect:
+		triples, cardinality = hdt.search_triples("", subPropertyOf, t)
+		for (s,p,o) in triples:
+			# print('new:',s,p,o)
+			found_subp.add(str(s))
+	trans_collect = trans_collect.union(found_subp)
 
 print ('now there are ', len(trans_collect), 'type of owl:transitive properties')
 
 for s in trans_collect:
-    #print ('property: ', s)
-    triples1, cardinality1 = hdt.search_triples(s ,inv, '')
+	#print ('property: ', s)
+	triples1, cardinality1 = hdt.search_triples(s ,inv, '')
 
-    for (s1,p1,o1) in triples1:
-        #print ('\t it has inverse: ', o1)
-        inv_collect.add(str(o1))
+	for (s1,p1,o1) in triples1:
+		#print ('\t it has inverse: ', o1)
+		inv_collect.add(str(o1))
 
 
-    triples2, cardinality2 = hdt.search_triples('',inv, s)
+	triples2, cardinality2 = hdt.search_triples('',inv, s)
 
-    for (s2,p2,o2) in triples2:
-        #print ('\t it has inverse: ', s2)
-        inv_collect.add(str(s2))
+	for (s2,p2,o2) in triples2:
+		#print ('\t it has inverse: ', s2)
+		inv_collect.add(str(s2))
 
-    #print('count inverse: ', len(inv_collect))
-    # total_inverse += len(inv_collect)
+	#print('count inverse: ', len(inv_collect))
+	# total_inverse += len(inv_collect)
 
 
 print('======')
@@ -166,13 +166,13 @@ print ('total inverse', len (inv_collect))
 # count how many triples are there in total
 count_triples_trans = 0
 for p in trans_collect:
-    triples, cardinality = hdt.search_triples("", p, "")
-    count_triples_trans += cardinality
+	triples, cardinality = hdt.search_triples("", p, "")
+	count_triples_trans += cardinality
 
 count_triples_inv = 0
 for p in inv_collect:
-    triples, cardinality = hdt.search_triples("", p, "")
-    count_triples_inv += cardinality
+	triples, cardinality = hdt.search_triples("", p, "")
+	count_triples_inv += cardinality
 
 print('count_triples_trans: ', count_triples_trans)
 print('count_triples_inv: ', count_triples_inv)
@@ -214,12 +214,12 @@ ct = {}
 
 count = 0
 for p in trans_collect:
-    t_triples, t_cardinality = hdt.search_triples("", p, "")
-    if t_cardinality > 1000000:
+	t_triples, t_cardinality = hdt.search_triples("", p, "")
+	if t_cardinality > 1000000:
 		trans_collect_large.append(p)
-        print ('trans: ', p, ' : ', t_cardinality)
-        ct[p] = t_cardinality
-        count += 1
+		print ('trans: ', p, ' : ', t_cardinality)
+		ct[p] = t_cardinality
+		count += 1
 
 print ('trans: count over million', count)
 
