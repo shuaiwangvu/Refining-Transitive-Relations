@@ -17,9 +17,7 @@ import tldextract
 import json
 import random
 from tarjan import tarjan
-# from equiClass import equiClassManager
-# import random
-
+from collections import Counter
 
 PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
 hdt = HDTDocument(PATH_LOD)
