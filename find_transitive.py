@@ -226,10 +226,7 @@ print ('trans: count over million: ', count)
 
 print ('now print their SCC info')
 
-trans_collect_large = ["http://rdfs.org/ns/void#classPartition",
-"http://rdfs.org/ns/void#inDataset",
-"http://www.geonames.org/ontology#parentCountry",
-"http://purl.org/dc/terms/extent",
+trans_collect_large = [
 "http://www.w3.org/ns/prov#wasDerivedFrom",
 "http://dbpedia.org/ontology/genus",
 "http://purl.org/ontology/mo/release",
