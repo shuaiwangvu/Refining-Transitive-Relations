@@ -222,15 +222,26 @@ for p in trans_collect:
 		ct[p] = t_cardinality
 		count += 1
 
-print ('trans: count over million', count)
+print ('trans: count over million: ', count)
 
 
 
-print ('print their SCC info')
+print ('now print their SCC info')
 
-
+trans_collect_large = ["http://rdfs.org/ns/void#classPartition",
+"http://rdfs.org/ns/void#inDataset",
+"http://www.geonames.org/ontology#parentCountry",
+"http://purl.org/dc/terms/extent",
+"http://www.w3.org/ns/prov#wasDerivedFrom",
+"http://dbpedia.org/ontology/genus",
+"http://purl.org/ontology/mo/release",
+"http://www.w3.org/2006/time#intervalContains",
+"http://dbpedia.org/ontology/isPartOf",
+"http://www.openarchives.org/ore/terms/aggregates",
+"http://www.w3.org/2004/02/skos/core#inScheme"]
 
 def print_SCC_info(p):
+	print (p)
 	graph = nx.DiGraph()
 	t_triples, t_cardinality = hdt.search_triples("", p, "")
 	for (l, p, r) in t_triples:
