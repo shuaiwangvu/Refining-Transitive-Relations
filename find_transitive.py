@@ -233,7 +233,7 @@ def print_SCC_info(p):
 	graph = nx.DiGraph()
 	t_triples, t_cardinality = hdt.search_triples("", p, "")
 	for (l, p, r) in t_triples:
-		g.add_edge(l,r)
+		graph.add_edge(l,r)
 
 	mydict = {}
 	for n in graph.nodes:
