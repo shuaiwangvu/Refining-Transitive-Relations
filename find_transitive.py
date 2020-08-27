@@ -89,23 +89,23 @@ inv = 'http://www.w3.org/2002/07/owl#inverseOf'
 #
 
 
-
-triples, cardinality = hdt.search_triples(t, "", "")
-print ('There are ', cardinality, ' owl:transitive properties')
-for (s,p ,o) in triples:
-    print ('owl:transitive property: ', p, o)
-
-
-triples, cardinality = hdt.search_triples("", subPropertyOf, t)
-print ('There are ', cardinality, 'subPropertyOf of owl:transitive properties')
-for (s,p ,o) in triples:
-    print ('subPropertyOf: ', s)
-
-
-triples, cardinality = hdt.search_triples("", subClassOf, t)
-print ('There are ', cardinality, 'subclass of owl:transitive properties')
-for (s,p ,o) in triples:
-    print ('subClassOf: ', s)
+#
+# triples, cardinality = hdt.search_triples(t, "", "")
+# print ('There are ', cardinality, ' owl:transitive properties')
+# for (s,p ,o) in triples:
+#     print ('owl:transitive property: ', p, o)
+#
+#
+# triples, cardinality = hdt.search_triples("", subPropertyOf, t)
+# print ('There are ', cardinality, 'subPropertyOf of owl:transitive properties')
+# for (s,p ,o) in triples:
+#     print ('subPropertyOf: ', s)
+#
+#
+# triples, cardinality = hdt.search_triples("", subClassOf, t)
+# print ('There are ', cardinality, 'subclass of owl:transitive properties')
+# for (s,p ,o) in triples:
+#     print ('subClassOf: ', s)
 
 trans_collect = set()
 inv_collect = set()
@@ -207,41 +207,78 @@ print ('***** end *****')
 # print ('==========================\n\n')
 # print ('as object:')
 
+
+trans_collect_large = []
+
 ct = {}
 
 count = 0
 for p in trans_collect:
     t_triples, t_cardinality = hdt.search_triples("", p, "")
     if t_cardinality > 1000000:
+		trans_collect_large.append(p)
         print ('trans: ', p, ' : ', t_cardinality)
         ct[p] = t_cardinality
         count += 1
 
 print ('trans: count over million', count)
 
-count = 0
-for p in inv_collect:
-    t_triples, t_cardinality = hdt.search_triples("", p, "")
-    if t_cardinality > 1000000:
-        ct[p] = t_cardinality
-        print('inv: ', p, ' : ', t_cardinality)
-        count += 1
 
-print ('inv: count over million', count)
 
-sort_ct = sorted(ct.items(), key=lambda x: x[1], reverse=True)
-for p in sort_ct:
-    print (p)
+print ('print their SCC info')
 
 
 
-print (' ....... type ........')
-triples, cardinality = hdt.search_triples(type, '', '')
-print ('There are ', cardinality, ' properties for TYPE')
-for (s, p, o) in triples:
-    print ('\tpredicate:  ', p)
-    print ('\tobject: ', o)
-    print ('\n')
+def print_SCC_info(p):
+	g = DiGraph()
+	t_triples, t_cardinality = hdt.search_triples("", p, "")
+	for (l, p, r) in t_triples:
+		g.add_edge(l,r)
+
+	mydict = {}
+	for n in graph.nodes:
+		collect_succssor = []
+		for s in graph.successors(n):
+			collect_succssor.append(s)
+		mydict[n] = collect_succssor
+	scc = tarjan(mydict)
+
+	print ('# Connected Component        : ', len(scc))
+	filter_scc = [x for x in scc if len(x)>1]
+	print('# Connected Component Filtered: ', len(filter_scc))
+	ct = Counter()
+	for f in filter_scc:
+		ct[len(f)] += 1
+	print ('SCC info', ct)
+
+
+for p in trans_collect_large:
+	print_SCC_info(p)
+
+#
+# count = 0
+# for p in inv_collect:
+#     t_triples, t_cardinality = hdt.search_triples("", p, "")
+#     if t_cardinality > 1000000:
+#         ct[p] = t_cardinality
+#         print('inv: ', p, ' : ', t_cardinality)
+#         count += 1
+#
+# print ('inv: count over million', count)
+#
+# sort_ct = sorted(ct.items(), key=lambda x: x[1], reverse=True)
+# for p in sort_ct:
+#     print (p)
+#
+#
+#
+# print (' ....... type ........')
+# triples, cardinality = hdt.search_triples(type, '', '')
+# print ('There are ', cardinality, ' properties for TYPE')
+# for (s, p, o) in triples:
+#     print ('\tpredicate:  ', p)
+#     print ('\tobject: ', o)
+#     print ('\n')
 
 
 # triples, cardinality = hdt.search_triples("", "", s)
