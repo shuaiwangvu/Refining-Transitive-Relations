@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 import tldextract
 import json
 import random
+from tarjan import tarjan
 # from equiClass import equiClassManager
 # import random
 
