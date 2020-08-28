@@ -76,7 +76,7 @@ def compute_SCC_graphs(p):
 	for s in filter_scc:
 		g = graph.subgraph(s).copy()
 		scc_graphs.append(g)
-	return sccs, scc_graphs
+	return filter_scc, scc_graphs
 
 def compute_alpha_beta (scc_graphs):
 	num_all_scc_edges = 0
@@ -127,8 +127,8 @@ def compute_gamma_delta (sccs):
 	gamma = 0
 	delta = 0
 	for s in ct.keys():
-		gamma += math.log(ct[s]) / math.log(s)
-		delta += math.log(s) / math.log(ct[s])
+		gamma += math.log(ct[s]) / s
+		delta += math.log(s) / ct[s]
 
 	return (gamma, delta)
 
