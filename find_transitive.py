@@ -251,6 +251,7 @@ def print_SCC_info(p):
 		graph.remove_nodes_from(collect_nodes_remove)
 
 		print ('now the amount of triples : ', graph.number_of_edges())
+		print ('now the amount of nodes : ', graph.number_of_nodes())
 
 
 		mydict = {}
@@ -261,14 +262,15 @@ def print_SCC_info(p):
 			mydict[n] = collect_succssor
 		scc = tarjan(mydict)
 
-		# print ('# Connected Component        : ', len(scc))
+
+
 		filter_scc = [x for x in scc if len(x)>1]
-		if len(filter_scc) > 5:
-			print('# Connected Component Filtered: ', len(filter_scc))
-			ct = Counter()
-			for f in filter_scc:
-				ct[len(f)] += 1
-			print ('SCC info', ct)
+		# if len(filter_scc) > 5:
+		print('# Connected Component Filtered: ', len(filter_scc))
+		ct = Counter()
+		for f in filter_scc:
+			ct[len(f)] += 1
+		print ('SCC info', ct)
 
 
 	except Exception as e:
