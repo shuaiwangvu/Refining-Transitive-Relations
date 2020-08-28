@@ -226,15 +226,9 @@ print ('trans: count over million: ', count)
 
 print ('now print their SCC info')
 
-# trans_collect_large = [
-#
-# "http://dbpedia.org/ontology/genus",
-# "http://purl.org/ontology/mo/release",
-# "http://www.w3.org/2006/time#intervalContains",
-# "http://dbpedia.org/ontology/isPartOf",
-# "http://www.openarchives.org/ore/terms/aggregates",
-# "http://www.w3.org/2004/02/skos/core#inScheme",
-# "http://www.w3.org/ns/prov#wasDerivedFrom"]
+trans_collect_large = [
+"http://dbpedia.org/ontology/successor",
+"http://www.w3.org/ns/prov#wasDerivedFrom"]
 
 def print_SCC_info(p):
 	print (p)
