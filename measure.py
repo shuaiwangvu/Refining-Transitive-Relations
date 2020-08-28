@@ -22,7 +22,7 @@ import random
 from tarjan import tarjan
 from collections import Counter
 from bidict import bidict
-
+import math
 PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
 hdt = HDTDocument(PATH_LOD)
 
@@ -41,7 +41,7 @@ c2=[
 c3 =[
 "http://www.w3.org/2000/01/rdf-schema#subClassOf",
 "http://www.w3.org/2004/02/skos/core#broader",
-"http://www.w3.org/2004/02/skos/core#narrower",
+# "http://www.w3.org/2004/02/skos/core#narrower",
 "http://purl.org/dc/terms/hasPart",
 "http://purl.org/dc/terms/isPartOf",
 "http://dbpedia.org/ontology/isPartOf"]
@@ -120,9 +120,27 @@ def compute_alpha_beta (scc_graphs):
 
 	return (alpha, beta)
 
+def compute_gamma_delta (sccs):
+	ct = Counter()
+	for f in sccs:
+		ct[len(f)] += 1
+	gamma = 0
+	delta = 0
+	for s in ct.keys:
+		gamma += math.log(s) / math.log(ct[s])
+		delta += math.log(ct[s]) / math.log(s)
+
+	return (gamma, delta)
+
+
 # now we deal with each predicate
 for p in c:
 	print ('now dealing with p = ', p)
-	scc, scc_graphs = compute_SCC_graphs(p)
+	sccs, scc_graphs = compute_SCC_graphs(p)
+
 	(alpha, beta) = compute_alpha_beta(scc_graphs)
 	print ('alpha = ', alpha, ' beta =', beta)
+
+	(gamma, delta) = compute_gamma_delta(sccs)
+	print ('gamma = ', gamma, ' delta ', delta)
+	print ('\n\n')
