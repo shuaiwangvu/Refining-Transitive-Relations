@@ -11,10 +11,10 @@ import pickle
 import time
 import networkx as nx
 from networkx.algorithms import community
-import pymetis
+# import pymetis
 import sys
 import csv
-from z3 import *
+# from z3 import *
 import matplotlib.pyplot as plt
 import tldextract
 import json
@@ -71,7 +71,7 @@ def compute_SCC_graphs(p):
 	for f in filter_scc:
 		ct[len(f)] += 1
 	print ('SCC info: ', ct)
-	# obtain the corresponding scc graphs 
+	# obtain the corresponding scc graphs
 	scc_graphs = []
 	for s in filter_scc:
 		g = graph.subgraph(s).copy()
@@ -86,7 +86,7 @@ def compute_alpha_beta (scc_graphs):
 	resulting_graph  = nx.DiGraph() # the resuling graph after computing SCC
 
 	for s in scc_graphs:
-		resulting_graph.add_edges_from(s.graph.edges())
+		resulting_graph.add_edges_from(s.subgraph(s).edges()) 
 		num_all_edges += s.number_of_edges()
 		edges_to_remove = []
 		for (l,r) in s.edges():
