@@ -227,7 +227,7 @@ print ('trans: count over million: ', count)
 print ('now print their SCC info')
 
 trans_collect_large = [
-"http://dbpedia.org/ontology/successor",
+# "http://dbpedia.org/ontology/successor",
 "http://www.w3.org/ns/prov#wasDerivedFrom"]
 
 def print_SCC_info(p):
