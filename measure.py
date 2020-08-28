@@ -126,9 +126,9 @@ def compute_gamma_delta (sccs):
 		ct[len(f)] += 1
 	gamma = 0
 	delta = 0
-	for s in ct.keys:
-		gamma += math.log(s) / math.log(ct[s])
-		delta += math.log(ct[s]) / math.log(s)
+	for s in ct.keys():
+		gamma += math.log(ct[s]) / math.log(s)
+		delta += math.log(s) / math.log(ct[s])
 
 	return (gamma, delta)
 
