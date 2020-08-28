@@ -241,10 +241,15 @@ def print_SCC_info(p):
 	for (l, p, r) in t_triples:
 		graph.add_edge(l,r)
 
+	collect_nodes_remove= []
 	for n in graph.nodes():
 		if graph.in_degree(n) == 0 or graph.out_degree(n) == 0:
-			graph.remove_node(n)
+			collect_nodes_remove.append(n)
+
+	graph.remove_nodes_from(collect_nodes_remove)
+
 	print ('now the amount of triples : ', graph.number_of_edges())
+
 
 	mydict = {}
 	for n in graph.nodes:
