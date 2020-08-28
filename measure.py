@@ -79,15 +79,15 @@ def compute_SCC_graphs(p):
 	return sccs, scc_graphs
 
 def compute_alpha_beta (scc_graphs):
-	num_all_edges = 0
+	num_all_scc_edges = 0
 	num_of_size_two_cycle_edges = 0
 	num_edges_left_in_new_SCC = 0
 
 	resulting_graph  = nx.DiGraph() # the resuling graph after computing SCC
 
 	for s in scc_graphs:
-		resulting_graph.add_edges_from(s.subgraph(s).edges()) 
-		num_all_edges += s.number_of_edges()
+		resulting_graph.add_edges_from(s.subgraph(s).edges())
+		num_all_scc_edges += s.number_of_edges()
 		edges_to_remove = []
 		for (l,r) in s.edges():
 			if (r,l) in s.edges():
@@ -112,8 +112,12 @@ def compute_alpha_beta (scc_graphs):
 	for f in filter_scc:
 		num_edges_left_in_new_SCC += resulting_graph.subgraph(f).number_of_edges()
 
-	alpha = num_of_size_two_cycle_edges / num_all_edges
-	beta = num_edges_left_in_new_SCC / num_all_edges
+	print ('num_all_edges               = ', num_all_scc_edges )
+	print ('num_of_size_two_cycle_edges = ',  num_of_size_two_cycle_edges )
+	print ('num_edges_left_in_new_SCC   = ', num_edges_left_in_new_SCC )
+
+	alpha = num_of_size_two_cycle_edges / num_all_scc_edges
+	beta = num_edges_left_in_new_SCC / num_all_scc_edges
 
 	return (alpha, beta)
 
