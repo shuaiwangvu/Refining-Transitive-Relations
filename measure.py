@@ -39,11 +39,11 @@ c2=[
 "http://dbpedia.org/ontology/parent"]
 
 c3 =[
-"http://purl.org/dc/terms/hasPart",
-"http://purl.org/dc/terms/isPartOf",
 "http://www.w3.org/2000/01/rdf-schema#subClassOf",
 "http://www.w3.org/2004/02/skos/core#broader",
 "http://www.w3.org/2004/02/skos/core#narrower",
+"http://purl.org/dc/terms/hasPart",
+"http://purl.org/dc/terms/isPartOf",
 "http://dbpedia.org/ontology/isPartOf"]
 
 c = c1 + c2 + c3
