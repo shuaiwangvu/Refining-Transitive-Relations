@@ -94,9 +94,8 @@ def compute_alpha_beta (scc_graphs):
 				edges_to_remove.add((l,r))
 				edges_to_remove.add((r,l))
 
-	num_of_size_two_cycle_edges = len (edges_to_remove)
-
-	resulting_graph.remove_edges_from(list(edges_to_remove))
+		num_of_size_two_cycle_edges += len (edges_to_remove)
+		resulting_graph.remove_edges_from(list(edges_to_remove))
 
 	# now compute the SCCs for this new graph
 	mydict = {}
@@ -107,7 +106,7 @@ def compute_alpha_beta (scc_graphs):
 		mydict[n] = collect_succssor
 
 	sccs = tarjan(mydict)
-	filter_scc = [x for x in sccs if len(x)>1] 
+	filter_scc = [x for x in sccs if len(x)>1]
 
 	for f in filter_scc:
 		num_edges_left_in_new_SCC += resulting_graph.subgraph(f).number_of_edges()
