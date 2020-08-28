@@ -230,6 +230,9 @@ trans_collect_large = [
 # "http://dbpedia.org/ontology/successor",
 "http://www.w3.org/ns/prov#wasDerivedFrom"]
 
+
+
+
 def print_SCC_info(p):
 	print (p)
 	graph = nx.DiGraph()
@@ -237,6 +240,11 @@ def print_SCC_info(p):
 	print ("amount of triples: ", t_cardinality)
 	for (l, p, r) in t_triples:
 		graph.add_edge(l,r)
+
+	for n in graph.nodes():
+		if graph.in_degree(n) == 0 or graph.out_degree(n) == 0:
+			graph.remove_node(n)
+	
 
 	mydict = {}
 	for n in graph.nodes:
