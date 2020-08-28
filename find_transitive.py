@@ -214,7 +214,7 @@ ct = {}
 count = 0
 for p in trans_collect:
 	t_triples, t_cardinality = hdt.search_triples("", p, "")
-	if t_cardinality <= 100000 and t_cardinality > 10000: # between 0.1 m and 1m
+	if t_cardinality <= 10000 and t_cardinality > 1000: # between 0.1 m and 1m
 		trans_collect_large.append(p)
 		print ('trans: ', p, ' : ', t_cardinality)
 		ct[p] = t_cardinality
