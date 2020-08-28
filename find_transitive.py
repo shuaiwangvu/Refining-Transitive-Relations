@@ -214,7 +214,7 @@ ct = {}
 count = 0
 for p in trans_collect:
 	t_triples, t_cardinality = hdt.search_triples("", p, "")
-	if t_cardinality <= 1000000 and t_cardinality > 100000: # between 0.1 m and 1m
+	if t_cardinality <= 100000 and t_cardinality > 10000: # between 0.1 m and 1m
 		trans_collect_large.append(p)
 		print ('trans: ', p, ' : ', t_cardinality)
 		ct[p] = t_cardinality
@@ -252,13 +252,14 @@ def print_SCC_info(p):
 		mydict[n] = collect_succssor
 	scc = tarjan(mydict)
 
-	print ('# Connected Component        : ', len(scc))
+	# print ('# Connected Component        : ', len(scc))
 	filter_scc = [x for x in scc if len(x)>1]
-	print('# Connected Component Filtered: ', len(filter_scc))
-	ct = Counter()
-	for f in filter_scc:
-		ct[len(f)] += 1
-	print ('SCC info', ct)
+	if len(filter_scc) > 5:
+		print('# Connected Component Filtered: ', len(filter_scc))
+		ct = Counter()
+		for f in filter_scc:
+			ct[len(f)] += 1
+		print ('SCC info', ct)
 
 print ('there are in total : ', len(trans_collect_large ))
 for p in trans_collect_large:
