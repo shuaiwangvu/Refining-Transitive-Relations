@@ -240,6 +240,7 @@ def print_SCC_info(p):
 	print (p)
 	graph = nx.DiGraph()
 	t_triples, t_cardinality = hdt.search_triples("", p, "")
+	print ("amount of triples: ", t_cardinality)
 	for (l, p, r) in t_triples:
 		graph.add_edge(l,r)
 
@@ -259,11 +260,11 @@ def print_SCC_info(p):
 		ct[len(f)] += 1
 	print ('SCC info', ct)
 
-
+print ('there are in total : ', len(trans_collect_large ))
 for p in trans_collect_large:
 	print ('p = ', p)
-	print('Do you want to study this predicate ? (y/n):')
-	x = input()
+	# print('Do you want to study this predicate ? (y/n):')
+	# x = input()
 	if x == 'y':
 		print_SCC_info(p)
 	else:
