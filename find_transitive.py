@@ -252,22 +252,29 @@ def print_SCC_info(p):
 	# print ('now the amount of triples : ', graph.number_of_edges())
 	#
 	#
-	mydict = {}
-	for n in graph.nodes:
-		collect_succssor = []
-		for s in graph.successors(n):
-			collect_succssor.append(s)
-		mydict[n] = collect_succssor
-	scc = tarjan(mydict)
+	try:
 
-	# print ('# Connected Component        : ', len(scc))
-	filter_scc = [x for x in scc if len(x)>1]
-	if len(filter_scc) > 5:
-		print('# Connected Component Filtered: ', len(filter_scc))
-		ct = Counter()
-		for f in filter_scc:
-			ct[len(f)] += 1
-		print ('SCC info', ct)
+		mydict = {}
+		for n in graph.nodes:
+			collect_succssor = []
+			for s in graph.successors(n):
+				collect_succssor.append(s)
+			mydict[n] = collect_succssor
+		scc = tarjan(mydict)
+
+		# print ('# Connected Component        : ', len(scc))
+		filter_scc = [x for x in scc if len(x)>1]
+		if len(filter_scc) > 5:
+			print('# Connected Component Filtered: ', len(filter_scc))
+			ct = Counter()
+			for f in filter_scc:
+				ct[len(f)] += 1
+			print ('SCC info', ct)
+
+
+	except Exception as e:
+		print ('oh there is an error: ', e)
+
 
 print ('there are in total : ', len(trans_collect_large ))
 for p in trans_collect_large:
