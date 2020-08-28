@@ -265,10 +265,10 @@ for p in trans_collect_large:
 	print ('p = ', p)
 	# print('Do you want to study this predicate ? (y/n):')
 	# x = input()
-	if x == 'y':
-		print_SCC_info(p)
-	else:
-		print ('next\n')
+	# if x == 'y':
+	print_SCC_info(p)
+	# else:
+		# print ('next\n')
 
 #
 # count = 0
