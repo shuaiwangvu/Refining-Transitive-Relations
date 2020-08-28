@@ -214,7 +214,7 @@ ct = {}
 count = 0
 for p in trans_collect:
 	t_triples, t_cardinality = hdt.search_triples("", p, "")
-	if t_cardinality > 1000000:
+	if t_cardinality <= 1000000 and t_cardinality > 100000: # between 0.1 m and 1m
 		trans_collect_large.append(p)
 		print ('trans: ', p, ' : ', t_cardinality)
 		ct[p] = t_cardinality
@@ -226,15 +226,15 @@ print ('trans: count over million: ', count)
 
 print ('now print their SCC info')
 
-trans_collect_large = [
-
-"http://dbpedia.org/ontology/genus",
-"http://purl.org/ontology/mo/release",
-"http://www.w3.org/2006/time#intervalContains",
-"http://dbpedia.org/ontology/isPartOf",
-"http://www.openarchives.org/ore/terms/aggregates",
-"http://www.w3.org/2004/02/skos/core#inScheme",
-"http://www.w3.org/ns/prov#wasDerivedFrom"]
+# trans_collect_large = [
+#
+# "http://dbpedia.org/ontology/genus",
+# "http://purl.org/ontology/mo/release",
+# "http://www.w3.org/2006/time#intervalContains",
+# "http://dbpedia.org/ontology/isPartOf",
+# "http://www.openarchives.org/ore/terms/aggregates",
+# "http://www.w3.org/2004/02/skos/core#inScheme",
+# "http://www.w3.org/ns/prov#wasDerivedFrom"]
 
 def print_SCC_info(p):
 	print (p)
@@ -261,7 +261,13 @@ def print_SCC_info(p):
 
 
 for p in trans_collect_large:
-	print_SCC_info(p)
+	print ('p = ', p)
+	print('Do you want to study this predicate ? (y/n):')
+	x = input()
+	if x == 'y':
+		print_SCC_info(p)
+	else:
+		print ('next\n')
 
 #
 # count = 0
