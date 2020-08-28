@@ -227,8 +227,8 @@ print ('trans: count over million: ', count)
 print ('now print their SCC info')
 
 trans_collect_large = [
-"http://dbpedia.org/ontology/order",
-"http://dbpedia.org/ontology/family",
+# "http://dbpedia.org/ontology/order",
+# "http://dbpedia.org/ontology/family",
 "http://www.geonames.org/ontology#parentADM1"]
 
 
@@ -250,8 +250,8 @@ def print_SCC_info(p):
 	graph.remove_nodes_from(collect_nodes_remove)
 
 	print ('now the amount of triples : ', graph.number_of_edges())
-
-
+	#
+	#
 	mydict = {}
 	for n in graph.nodes:
 		collect_succssor = []
