@@ -41,13 +41,23 @@ c2=[
 c3 =[
 "http://www.w3.org/2000/01/rdf-schema#subClassOf",
 "http://www.w3.org/2004/02/skos/core#broader",
-# "http://www.w3.org/2004/02/skos/core#narrower",
+"http://www.w3.org/2004/02/skos/core#narrower",
 "http://purl.org/dc/terms/hasPart",
 "http://purl.org/dc/terms/isPartOf",
-"http://dbpedia.org/ontology/isPartOf"]
+"http://dbpedia.org/ontology/isPartOf"
+]
 
-c = c1 + c2 + c3
+predicate_to_study = c1 +c2 +c3
 
+
+def get_domain_and_label(t):
+	domain = tldextract.extract(t).domain
+	name1 = t.rsplit('/', 1)[-1]
+	name2 = t.rsplit('#', 1)[-1]
+	if len(name2) < len(name1):
+		return (domain, name2)
+	else:
+		return (domain, name1)
 
 
 
@@ -126,6 +136,10 @@ def compute_gamma_delta (sccs):
 		ct[len(f)] += 1
 	gamma = 0
 	delta = 0
+
+	for s in ct.keys():
+		ct[s] = ct[s]/ len (scc)
+
 	for s in ct.keys():
 		gamma += math.log10(ct[s]) / s
 		delta += math.log10(s) / ct[s]
@@ -133,8 +147,15 @@ def compute_gamma_delta (sccs):
 	return (gamma, delta)
 
 
+file_name_reduced = 'measure_output'
+outputfile_reduced =  open(file_name_reduced, 'w', newline='')
+writer_reduced = csv.writer(outputfile_reduced, delimiter='\t')
+
+
+
 # now we deal with each predicate
-for p in c:
+measures = {}
+for p in predicate_to_study:
 	print ('now dealing with p = ', p)
 	sccs, scc_graphs = compute_SCC_graphs(p)
 
@@ -144,3 +165,5 @@ for p in c:
 	(gamma, delta) = compute_gamma_delta(sccs)
 	print ('gamma = ', gamma, ' delta ', delta)
 	print ('\n\n')
+	measures [p] = (alpha, beta, gamma, delta)
+	writer_reduced.writerow([p, alpha, beta, gamma, delta])
