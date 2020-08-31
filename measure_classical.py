@@ -75,7 +75,7 @@ def get_domain_and_label(t):
 
 
 
-def compute_graphs(p):
+def compute_and_measure_graphs(p):
 	graph = nx.DiGraph()
 	t_triples, t_cardinality = hdt.search_triples("", p, "")
 	print ("amount of triples: ", t_cardinality)
@@ -121,7 +121,7 @@ writer_reduced = csv.writer(outputfile_reduced, delimiter='\t')
 measures = {}
 for p in predicate_to_study:
 	print ('now dealing with p = ', p)
-	avc, trans, pearson, reaching = compute_avc_graphs(p)
+	avc, trans, pearson, reaching = compute_and_measure_graphs(p)
 
 	print ('avc:     ', avc)
 	print ('trans:   ', trans)
