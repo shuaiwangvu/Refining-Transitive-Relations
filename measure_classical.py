@@ -39,11 +39,11 @@ c2=[
 "http://dbpedia.org/ontology/parent"]
 
 c3 =[
-# "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+"http://www.w3.org/2000/01/rdf-schema#subClassOf",
 "http://www.w3.org/2004/02/skos/core#broader",
 "http://www.w3.org/2004/02/skos/core#narrower",
 "http://purl.org/dc/terms/hasPart",
-# "http://purl.org/dc/terms/isPartOf",
+"http://purl.org/dc/terms/isPartOf",
 "http://dbpedia.org/ontology/isPartOf"
 ]
 
@@ -116,6 +116,9 @@ outputfile_reduced =  open(file_name_reduced, 'w', newline='')
 writer_reduced = csv.writer(outputfile_reduced, delimiter='\t')
 
 
+file =  open('measures_classical.csv', 'w', newline='')
+writer = csv.writer(file)
+writer.writerow([ "Pelation", "AvC", "Trans", "Pearson", "Reaching"])
 
 # now we deal with each predicate
 measures = {}
@@ -127,3 +130,4 @@ for p in predicate_to_study:
 	print ('trans:   ', trans)
 	print ('pearson: ', pearson)
 	print ('reaching:', reaching)
+	writer.writerow([ p, avc, trans, pearson, reaching])
