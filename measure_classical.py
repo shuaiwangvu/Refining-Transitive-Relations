@@ -39,11 +39,11 @@ c2=[
 "http://dbpedia.org/ontology/parent"]
 
 c3 =[
-"http://www.w3.org/2000/01/rdf-schema#subClassOf",
+# "http://www.w3.org/2000/01/rdf-schema#subClassOf",
 "http://www.w3.org/2004/02/skos/core#broader",
 "http://www.w3.org/2004/02/skos/core#narrower",
 "http://purl.org/dc/terms/hasPart",
-"http://purl.org/dc/terms/isPartOf",
+# "http://purl.org/dc/terms/isPartOf",
 "http://dbpedia.org/ontology/isPartOf"
 ]
 
@@ -75,7 +75,7 @@ def get_domain_and_label(t):
 
 
 
-def compute_avc_graphs(p):
+def compute_graphs(p):
 	graph = nx.DiGraph()
 	t_triples, t_cardinality = hdt.search_triples("", p, "")
 	print ("amount of triples: ", t_cardinality)
@@ -83,7 +83,11 @@ def compute_avc_graphs(p):
 		graph.add_edge(l,r)
 
 	avc = nx.average_clustering(graph) # average clustering coefficient
-	return avc
+	trans = nx.transitivity(graph)
+	pearson = nx.degree_pearson_correlation_coefficient(graph)
+	reaching = nx.global_reaching_centrality(graph)
+
+	return avc, trans, pearson, reaching
 
 	# compute SCC
 	# mydict = {}
@@ -117,6 +121,9 @@ writer_reduced = csv.writer(outputfile_reduced, delimiter='\t')
 measures = {}
 for p in predicate_to_study:
 	print ('now dealing with p = ', p)
-	avc = compute_avc_graphs(p)
+	avc, trans, pearson, reaching = compute_avc_graphs(p)
 
-	print ('avc: ', avc)
+	print ('avc:     ', avc)
+	print ('trans:   ', trans)
+	print ('pearson: ', pearson)
+	print ('reaching:', reaching)
