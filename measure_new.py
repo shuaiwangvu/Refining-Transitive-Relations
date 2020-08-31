@@ -51,7 +51,21 @@ predicate_to_study = c1 +c2 +c3
 
 
 def get_domain_and_label(t):
-	domain = tldextract.extract(t).domain
+	# domain = tldextract.extract(t).domain
+	domain =  None
+	if 'dbpedia' in t:
+		domain = 'dbo'
+	elif 'skos' in t:
+		domain = 'skos'
+	elif 'dc' in t:
+		domain = 'dc'
+	elif 'rdf-schema' in t:
+		domain = 'rdfs'
+	elif 'sioc' in t:
+		domain = 'sioc'
+	else:
+		domain = tldextract.extract(t).domain
+
 	name1 = t.rsplit('/', 1)[-1]
 	name2 = t.rsplit('#', 1)[-1]
 	if len(name2) < len(name1):
