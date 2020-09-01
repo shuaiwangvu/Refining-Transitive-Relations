@@ -124,7 +124,8 @@ writer.writerow([ "Pelation", "AvC", "Trans", "Pearson", "Reaching"])
 measures = {}
 for p in predicate_to_study:
 	print ('now dealing with p = ', p)
-	avc, trans, pearson, reaching = compute_and_measure_graphs(p)
+	trans = compute_and_measure_graphs(p)
+	# avc, trans, pearson, reaching = compute_and_measure_graphs(p)
 
 	# print ('avc:     ', avc)
 	print ('trans:   ', trans)
