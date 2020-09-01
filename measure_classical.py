@@ -81,7 +81,7 @@ def compute_and_measure_graphs(p):
 	print ("amount of triples: ", t_cardinality)
 	for (l, p, r) in t_triples:
 		if p == "http://www.w3.org/2000/01/rdf-schema#subClassOf":
-			graph.add_edge(l,r)
+			graph.add_edge(r,l)
 
 	# avc = nx.average_clustering(graph) # average clustering coefficient
 	# trans = nx.transitivity(graph)
