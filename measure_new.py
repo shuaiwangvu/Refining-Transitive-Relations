@@ -82,6 +82,7 @@ def compute_SCC_graphs(p):
 	for (l, p, r) in t_triples:
 		graph.add_edge(l,r)
 	# compute SCC
+	start = time.time()
 	mydict = {}
 	for n in graph.nodes:
 		collect_succssor = []
@@ -97,12 +98,24 @@ def compute_SCC_graphs(p):
 		ct[len(f)] += 1
 	print ('SCC info by tarjan : ', ct)
 
+	end = time.time()
+	hours, rem = divmod(end-start, 3600)
+	minutes, seconds = divmod(rem, 60)
+	print("Time taken Tarjan: {:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
+
+	start = time.time()
+
 	nx_sccs = nx.strongly_connected_components(graph)
 	filter_nx_sccs = [x for x in nx_sccs if len(x)>1]
 	nx_ct = Counter()
 	for f in filter_nx_sccs:
 		nx_ct[len(f)] += 1
+
 	print ('SCC info by original nx : ', nx_ct)
+	end = time.time()
+	hours, rem = divmod(end-start, 3600)
+	minutes, seconds = divmod(rem, 60)
+	print("Time taken Tarjan: {:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
 
 
 	# obtain the corresponding scc graphs
