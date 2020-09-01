@@ -84,10 +84,10 @@ def compute_and_measure_graphs(p):
 
 	# avc = nx.average_clustering(graph) # average clustering coefficient
 	# trans = nx.transitivity(graph)
-	pearson = nx.degree_pearson_correlation_coefficient(graph)
-	# reaching = nx.global_reaching_centrality(graph)
+	# pearson = nx.degree_pearson_correlation_coefficient(graph)
+	reaching = nx.global_reaching_centrality(graph)
 
-	return pearson
+	return reaching
 
 	# compute SCC
 	# mydict = {}
@@ -129,6 +129,6 @@ for p in predicate_to_study:
 
 	# print ('avc:     ', avc)
 	# print ('trans:   ', trans)
-	print ('pearson: ', pearson)
-	# print ('reaching:', reaching)
+	# print ('pearson: ', pearson)
+	print ('reaching:', reaching)
 	# writer.writerow([ p, avc, trans, pearson, reaching])
