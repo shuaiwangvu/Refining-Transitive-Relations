@@ -88,13 +88,23 @@ def compute_SCC_graphs(p):
 		for s in graph.successors(n):
 			collect_succssor.append(s)
 		mydict[n] = collect_succssor
+
 	sccs = tarjan(mydict)
 	filter_scc = [x for x in sccs if len(x)>1]
 	# compute the counter for ths filtered SCC
 	ct = Counter()
 	for f in filter_scc:
 		ct[len(f)] += 1
-	print ('SCC info: ', ct)
+	print ('SCC info by tarjan : ', ct)
+
+	nx_sccs = nx.strongly_connected_components(graph)
+	filter_nx_sccs = [x for x in nx_sccs if len(x)>1]
+	nx_ct = Counter()
+	for f in filter_nx_sccs:
+		nx_ct[len(f)] += 1
+	print ('SCC info by original nx : ', nx_ct)
+
+
 	# obtain the corresponding scc graphs
 	scc_graphs = []
 	for s in filter_scc:
