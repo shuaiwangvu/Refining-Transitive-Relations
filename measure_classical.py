@@ -82,12 +82,12 @@ def compute_and_measure_graphs(p):
 	for (l, p, r) in t_triples:
 		graph.add_edge(l,r)
 
-	avc = nx.average_clustering(graph) # average clustering coefficient
+	# avc = nx.average_clustering(graph) # average clustering coefficient
 	trans = nx.transitivity(graph)
-	pearson = nx.degree_pearson_correlation_coefficient(graph)
-	reaching = nx.global_reaching_centrality(graph)
+	# pearson = nx.degree_pearson_correlation_coefficient(graph)
+	# reaching = nx.global_reaching_centrality(graph)
 
-	return avc, trans, pearson, reaching
+	return trans
 
 	# compute SCC
 	# mydict = {}
@@ -126,8 +126,8 @@ for p in predicate_to_study:
 	print ('now dealing with p = ', p)
 	avc, trans, pearson, reaching = compute_and_measure_graphs(p)
 
-	print ('avc:     ', avc)
+	# print ('avc:     ', avc)
 	print ('trans:   ', trans)
-	print ('pearson: ', pearson)
-	print ('reaching:', reaching)
-	writer.writerow([ p, avc, trans, pearson, reaching])
+	# print ('pearson: ', pearson)
+	# print ('reaching:', reaching)
+	# writer.writerow([ p, avc, trans, pearson, reaching])
