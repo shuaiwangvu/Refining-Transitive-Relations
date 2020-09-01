@@ -115,8 +115,21 @@ def compute_SCC_graphs(p):
 	end = time.time()
 	hours, rem = divmod(end-start, 3600)
 	minutes, seconds = divmod(rem, 60)
-	print("Time taken Tarjan: {:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
+	print("Time taken original: {:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
 
+	start = time.time()
+
+	nx_sccs = nx.kosaraju_strongly_connected_components(graph)
+	filter_nx_sccs = [x for x in nx_sccs if len(x)>1]
+	nx_ct = Counter()
+	for f in filter_nx_sccs:
+		nx_ct[len(f)] += 1
+
+	print ('SCC info by original nx : ', nx_ct)
+	end = time.time()
+	hours, rem = divmod(end-start, 3600)
+	minutes, seconds = divmod(rem, 60)
+	print("Time taken kosaraju: {:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
 
 	# obtain the corresponding scc graphs
 	scc_graphs = []
