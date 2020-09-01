@@ -80,7 +80,8 @@ def compute_and_measure_graphs(p):
 	t_triples, t_cardinality = hdt.search_triples("", p, "")
 	print ("amount of triples: ", t_cardinality)
 	for (l, p, r) in t_triples:
-		graph.add_edge(l,r)
+		if p == "http://www.w3.org/2000/01/rdf-schema#subClassOf":
+			graph.add_edge(l,r)
 
 	# avc = nx.average_clustering(graph) # average clustering coefficient
 	# trans = nx.transitivity(graph)
