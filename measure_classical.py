@@ -47,7 +47,7 @@ c3 =[
 "http://purl.org/dc/terms/isPartOf"
 ]
 
-predicate_to_study = c2 +c1 +c3
+predicate_to_study = c3 +c1 +c2
 
 
 def get_domain_and_label(t):
