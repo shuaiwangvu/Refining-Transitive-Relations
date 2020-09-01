@@ -47,7 +47,7 @@ c3 =[
 "http://purl.org/dc/terms/isPartOf"
 ]
 
-predicate_to_study = c1 +c2 +c3
+predicate_to_study = c2 +c1 +c3
 
 
 def get_domain_and_label(t):
@@ -124,7 +124,7 @@ writer.writerow([ "Pelation", "AvC", "Trans", "Pearson", "Reaching"])
 measures = {}
 for p in predicate_to_study:
 	print ('now dealing with p = ', p)
-	pearson = compute_and_measure_graphs(p)
+	reaching = compute_and_measure_graphs(p)
 	# avc, trans, pearson, reaching = compute_and_measure_graphs(p)
 
 	# print ('avc:     ', avc)
