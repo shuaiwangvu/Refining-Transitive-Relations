@@ -43,8 +43,8 @@ c3 =[
 "http://www.w3.org/2004/02/skos/core#broader",
 "http://www.w3.org/2004/02/skos/core#narrower",
 "http://purl.org/dc/terms/hasPart",
-"http://purl.org/dc/terms/isPartOf",
-"http://dbpedia.org/ontology/isPartOf"
+"http://dbpedia.org/ontology/isPartOf",
+"http://purl.org/dc/terms/isPartOf"
 ]
 
 predicate_to_study = c1 +c2 +c3
@@ -83,11 +83,11 @@ def compute_and_measure_graphs(p):
 		graph.add_edge(l,r)
 
 	# avc = nx.average_clustering(graph) # average clustering coefficient
-	trans = nx.transitivity(graph)
-	# pearson = nx.degree_pearson_correlation_coefficient(graph)
+	# trans = nx.transitivity(graph)
+	pearson = nx.degree_pearson_correlation_coefficient(graph)
 	# reaching = nx.global_reaching_centrality(graph)
 
-	return trans
+	return pearson
 
 	# compute SCC
 	# mydict = {}
@@ -124,11 +124,11 @@ writer.writerow([ "Pelation", "AvC", "Trans", "Pearson", "Reaching"])
 measures = {}
 for p in predicate_to_study:
 	print ('now dealing with p = ', p)
-	trans = compute_and_measure_graphs(p)
+	pearson = compute_and_measure_graphs(p)
 	# avc, trans, pearson, reaching = compute_and_measure_graphs(p)
 
 	# print ('avc:     ', avc)
-	print ('trans:   ', trans)
-	# print ('pearson: ', pearson)
+	# print ('trans:   ', trans)
+	print ('pearson: ', pearson)
 	# print ('reaching:', reaching)
 	# writer.writerow([ p, avc, trans, pearson, reaching])
