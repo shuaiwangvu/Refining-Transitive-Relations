@@ -18,7 +18,7 @@ import json
 # import random
 # from equiClass import equiClassManager
 import random
-from tarjan import tarjan
+# from tarjan import tarjan
 from collections import Counter
 from bidict import bidict
 
@@ -29,47 +29,46 @@ subclass_file = "subclass_edgelist.gz"
 subclass_weight = "subclass_edgelist_weight_reduced.gz"
 broader_weight = "broader_edgelist_weight_reduced.gz"
 
-graph = nx.DiGraph()
+# graph = nx.DiGraph()
 collect_nodes = set()
 can_remove = set()
 weight = {}
 
 scc_size_limit = 2000
+num_clause_limit = 200
+path_size_limit = 20
 
 timeout = 1000 * 60 * 1
 o = Optimize()
 o.set("timeout", timeout)
 print('timeout = ',timeout/1000/60, 'mins')
 
-num_clause_limit = 4000
-encode = {}
 
-path_size_limit = 20
 
-edges_to_remove = []
+# edges_to_remove = []
 
-d = {}
+# d = {}
 
 #
-
-def compute_scc_from_graph(g):
-	dict = {}
-	for n in g.nodes:
-		collect_succssor = []
-		for s in g.successors(n):
-			collect_succssor.append(s)
-		dict[n] = collect_succssor
-	return tarjan(dict)
+#
+# def compute_scc_from_graph(g):
+# 	dict = {}
+# 	for n in g.nodes:
+# 		collect_succssor = []
+# 		for s in g.successors(n):
+# 			collect_succssor.append(s)
+# 		dict[n] = collect_succssor
+# 	return tarjan(dict)
 
 
 def obtain_scc_graph ():
-	global collect_nodes
-	global can_remove
-	global d
+	# global collect_nodes
+	# global can_remove
+	# global d
 
-	print ('init the graph') 
-
-	with gzip.open(path + subclass_file, "rt") as f:
+	print ('init the graph')
+	graph = nx.DiGraph()
+	with gzip.open(path + broader_file, "rt") as f:
 
 		line = f.readline()
 		while line:
@@ -78,15 +77,18 @@ def obtain_scc_graph ():
 			t = int(row[1])
 			# print (s,t)
 			if s != t:
-				d.setdefault(s,[]).append(t)
+				graph.add_edge(s, t)
+				# d.setdefault(s,[]).append(t)
 			line = f.readline()
-	sccs = tarjan(d)
+	# sccs = tarjan(d)
+	sccs = nx.strongly_connected_components(graph)
+
 	filter_sccs = [x for x in sccs if len(x)>1]
-	filter_sccs =  sorted (filter_sccs, key=(lambda x: len(x)), reverse=False)
-	G = nx.DiGraph(d)
+	# filter_sccs =  sorted (filter_sccs, key=(lambda x: len(x)), reverse=True)
+	# G = nx.DiGraph(d)
 	collect_scc_graph = []
 	for f in filter_sccs:
-		graph_f = G.subgraph(f).copy()
+		graph_f = graph.subgraph(f).copy()
 		collect_scc_graph.append(graph_f)
 
 	return collect_scc_graph
@@ -195,7 +197,7 @@ def cut_to_limit(graph):
 			# collect_subgraphs += sg_subgraphs
 			# collect_subgraphs_removed_edges += sg_edges_between_subgraphs
 			#TODO: use the SCC instead!
-			sccs = compute_scc_from_graph(sg)
+			sccs = nx.strongly_connected_components(sg)
 			filter_sccs = [x for x in sccs if len(x)>1]
 			for s in filter_sccs:
 				scc_g = sg.subgraph(s).copy()
@@ -206,7 +208,7 @@ def cut_to_limit(graph):
 				else:
 					collect_subgraphs.append(scc_g)
 		else:
-			sccs = compute_scc_from_graph(sg)
+			sccs = nx.strongly_connected_components(sg)
 			filter_sccs = [x for x in sccs if len(x)>1]
 			for s in filter_sccs:
 				scc_g = sg.subgraph(s).copy()
@@ -217,6 +219,7 @@ def cut_to_limit(graph):
 
 
 def cut_to_limit2(graph):
+	encode = {}
 	print ('tocut: there are in total ', graph.number_of_nodes(), ' nodes with ', graph.number_of_edges())
 
 	if graph.number_of_nodes() < scc_size_limit:
@@ -287,12 +290,12 @@ def cut_to_limit2(graph):
 
 	collect_subgraphs = []
 	collect_subgraphs_removed_edges = []
-	sccs = compute_scc_from_graph(graph)
+	sccs = nx.strongly_connected_components(graph)
 	filter_sccs = [x for x in sccs if len(x)>1]
 	for s in filter_sccs:
 		scc_g = graph.subgraph(s).copy()
 		if scc_g.number_of_nodes() > scc_size_limit:
-			sg_edges_between_subgraphs, sg_subgraphs = cut_to_limit(scc_g)
+			sg_edges_between_subgraphs, sg_subgraphs = cut_to_limit2(scc_g)
 			collect_subgraphs += sg_subgraphs
 			collect_subgraphs_removed_edges += sg_edges_between_subgraphs
 		else:
@@ -308,14 +311,30 @@ def cut_to_limit2(graph):
 def obtain_sccs():
 	scc_graphs = obtain_scc_graph()
 
+	# print ('start plt: ', scc_graphs[4].number_of_nodes())
+	# plt.figure()
+	# nx.draw_kamada_kawai(scc_graphs[4])
+	# plt.show()
+
+	# how many such nodes have only one in, one out degree?
+	# count = 0
+	# g = scc_graphs[0]
+	# for n in g.nodes():
+	# 	if g.out_degree(n) == 1 and g.in_degree(n) == 1:
+	# 		count += 1
+	# print ('count = ', count, ' that amounts to ', count/g.number_of_nodes())
+
+
 	coll_to_remove = []
 	coll_to_add = []
 	coll_edges_removed = []
 	print ('start cutting')
 	for g in scc_graphs:
+		# print ('clustering : ', nx.average_clustering(G= g))
+
 		if g.number_of_nodes() > scc_size_limit:
-			# removed_edges, gs = cut_to_limit (g)
-			removed_edges, gs = cut_to_limit2 (g)
+			removed_edges, gs = cut_to_limit (g)
+			# removed_edges, gs = cut_to_limit2 (g)
 			coll_edges_removed += removed_edges
 			coll_to_add += gs
 			coll_to_remove.append(g)
@@ -340,12 +359,14 @@ def obtained_edges_to_remove_using_SMT (sg):
 	collect_cycles = []
 	encode = {}
 	if len(sg.nodes) == 2:
-		for (l,r) in sg.edges():
-			collect_cycles.append([l,r])
-		count+=2
+		# [left, right] =  random.choice(list(sg.edges()))
+		# return [(left, right)]
+		[l ,r] = list(sg.nodes())
+		collect_cycles.append([l,r])
+		count+=1
 	else:
 
-# strategy 1:  each edge and their counter corresponding cycle !
+# strategy 1: focus on edges: each edge and their counter corresponding cycle !
 		edges_to_visit = set(sg.edges())
 		while (len(edges_to_visit) != 0 and count < num_clause_limit):
 			(l,r) =  edges_to_visit.pop()
@@ -360,8 +381,10 @@ def obtained_edges_to_remove_using_SMT (sg):
 			count += 1
 			edges_to_visit = edges_to_visit.difference(cycle_edge_set)
 
-# strategy 2: obtain a random pair and each l2r , r2l
-		# while count < num_clause_limit:
+# strategy 2: focus on nodes: obtain a random pair and each l2r , r2l
+		# collect_nodes_visited_set = set()
+		# pct_covered = 0
+		# while count < num_clause_limit and pct_covered <= 0.8:
 		# 	l = random.choice(list(sg.nodes()))
 		# 	r = random.choice(list(sg.nodes()))
 		#
@@ -373,16 +396,19 @@ def obtained_edges_to_remove_using_SMT (sg):
 		# 		c = l2r[:-1] + r2l[:-1]
 		# 		# print ('l2r2l: ',c, flush=True)
 		# 		collect_cycles.append(c)
+		# 		collect_nodes_visited_set = collect_nodes_visited_set.union(set(c))
 		# 		count += 1
+		# 		# TODO: But is this representative enough? YES: it covers over 99% when there are 4000 clauses for 2000 size limit on nodes
+		# 		pct_covered = len(collect_nodes_visited_set)/sg.number_of_nodes()
+		#
+		# if sg.number_of_nodes() > 200:
+		# 	print (' sg nodes: ', sg.number_of_nodes(), count, ' covers ', pct_covered)
 
-# strategy 3: all path from big outgoing hubs to incoming hubs, and back.
-
-
-
-
-
-
-
+		# st_nodes = set(sg.nodes())
+		# remain_nodes = st_nodes.difference(collect_nodes_visited_set)
+		# print ('total: ', len (st_nodes), ' remain:', len (remain_nodes))
+		# print ('covered:', len (collect_nodes_visited_set), ' = ',
+		# 		len(collect_nodes_visited_set)/len(st_nodes))
 
 
 
@@ -435,8 +461,8 @@ def obtained_edges_to_remove_using_SMT (sg):
 
 
 def main ():
-	global graph
-	global edges_to_remove
+	# global graph
+	# global edges_to_remove
 
 	start = time.time()
 	# ==============
@@ -450,23 +476,30 @@ def main ():
 		print ('this is round ', round)
 		round += 1
 		graphs_obtained = sorted(graphs_obtained, key=(lambda g: g.number_of_nodes()), reverse=True)
-		print ('there are still ', len (graphs_obtained), ' graphs to be processed')
+		# print ('there are still ', len (graphs_obtained), ' graphs to be processed')
+
 		if len (graphs_obtained)> 20:
 			print ('the biggest one has       : ', graphs_obtained[0].number_of_nodes(), ' with ' ,
 	 												graphs_obtained[0].number_of_edges(), )
 			print ('the second biggest one has: ', graphs_obtained[1].number_of_nodes(), ' with ' ,
 													graphs_obtained[1].number_of_edges(), )
-
+		new_graphs_to_work_on = []
 		for g in graphs_obtained:
 			edges_removed_by_SMT = obtained_edges_to_remove_using_SMT (g)
 			g.remove_edges_from(edges_removed_by_SMT)
-			sccs = compute_scc_from_graph(g)
+			sccs = nx.strongly_connected_components(g)
 			filter_sccs = [x for x in sccs if len(x)>1]
 			for s in filter_sccs:
-				graphs_obtained.append(g.subgraph(s).copy())
-			graphs_obtained.remove(g)
+				if g.number_of_nodes() > 200 and len (s) > 30:
+					print ('\tit was decomposed to: ', len (s))
+				new_graphs_to_work_on.append(g.subgraph(s).copy())
+			# graphs_obtained.remove(g)
+			# graphs_to_remove.append(g)
 			all_removed_edges += edges_removed_by_SMT
+		# for g in graphs_to_remove:
+			# graphs_obtained.remove(g)
 
+		graphs_obtained = new_graphs_to_work_on
 	print ('there are in total ', len (all_removed_edges), 'edges removed')
 	# ===============
 	end = time.time()
