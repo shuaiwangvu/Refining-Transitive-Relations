@@ -176,6 +176,7 @@ measures = {}
 for p in predicate_to_study:
 	print ('now dealing with p = ', p)
 	sccs, scc_graphs = compute_SCC_graphs(p)
+	print ('total SCCs', len(sccs))
 	biggest = 0
 	for s in sccs:
 		if biggest < len(s):
