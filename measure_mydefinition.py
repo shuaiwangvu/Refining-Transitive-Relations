@@ -176,7 +176,7 @@ for p in predicate_to_study:
 	sccs, scc_graphs = compute_SCC_graphs(p)
 	biggest = 0
 	for s in sccs:
-		if biggest > len(s):
+		if biggest < len(s):
 			biggest = len(s)
 	print ('maxSCC = ', biggest)
 
