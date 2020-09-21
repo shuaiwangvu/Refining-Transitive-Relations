@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 import tldextract
 import json
 import random
-from tarjan import tarjan
+# from tarjan import tarjan
 from collections import Counter
 from bidict import bidict
 import math
@@ -128,14 +128,15 @@ def compute_alpha_beta (scc_graphs):
 		resulting_graph.remove_edges_from(list(edges_to_remove))
 
 	# now compute the SCCs for this new graph
-	mydict = {}
-	for n in resulting_graph.nodes:
-		collect_succssor = []
-		for s in resulting_graph.successors(n):
-			collect_succssor.append(s)
-		mydict[n] = collect_succssor
-
-	sccs = tarjan(mydict)
+	# mydict = {}
+	# for n in resulting_graph.nodes:
+	# 	collect_succssor = []
+	# 	for s in resulting_graph.successors(n):
+	# 		collect_succssor.append(s)
+	# 	mydict[n] = collect_succssor
+	#
+	# sccs = tarjan(mydict)
+	sccs = nx.strongly_connected_components(resulting_graph)
 	filter_scc = [x for x in sccs if len(x)>1]
 
 	for f in filter_scc:
