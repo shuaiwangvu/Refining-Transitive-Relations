@@ -50,8 +50,8 @@ c3 =[
 "http://dbpedia.org/ontology/isPartOf"
 ]
 
-# predicate_to_study = c1 +c2 +c3
-predicate_to_study = c3[-2:]
+predicate_to_study = c1 +c2 +c3
+# predicate_to_study = c3[-2:]
 
 
 def get_domain_and_label(t):
@@ -176,6 +176,7 @@ measures = {}
 for p in predicate_to_study:
 	print ('now dealing with p = ', p)
 	sccs, scc_graphs = compute_SCC_graphs(p)
+	print ('total SCCs', len(sccs))
 	biggest = 0
 	for s in sccs:
 		if biggest < len(s):
