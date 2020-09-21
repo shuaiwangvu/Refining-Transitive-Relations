@@ -50,7 +50,8 @@ c3 =[
 "http://dbpedia.org/ontology/isPartOf"
 ]
 
-predicate_to_study = c1 +c2 +c3
+# predicate_to_study = c1 +c2 +c3
+predicate_to_study = c3[-2:]
 
 
 def get_domain_and_label(t):
