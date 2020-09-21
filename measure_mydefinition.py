@@ -100,11 +100,12 @@ def compute_SCC_graphs(p):
 
 
 	# obtain the corresponding scc graphs
+
 	scc_graphs = []
-	for s in filter_scc:
+	for s in filter_nx_sccs:
 		g = graph.subgraph(s).copy()
 		scc_graphs.append(g)
-	return filter_scc, scc_graphs
+	return filter_nx_sccs, scc_graphs
 
 def compute_alpha_beta (scc_graphs):
 	num_all_scc_edges = 0
@@ -173,12 +174,12 @@ measures = {}
 for p in predicate_to_study:
 	print ('now dealing with p = ', p)
 	sccs, scc_graphs = compute_SCC_graphs(p)
-	print ('#SCC', len(scc))
 	biggest = 0
 	for s in sccs:
-		if len (s) > biggest:
+		if biggest > len(s):
 			biggest = len(s)
-	print ('maxSCC', biggest)
+	print ('maxSCC = ', biggest)
+
 
 	(alpha, beta) = compute_alpha_beta(scc_graphs)
 	print ('alpha = ', alpha, ' beta =', beta)
