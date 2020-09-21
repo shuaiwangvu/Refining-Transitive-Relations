@@ -27,6 +27,9 @@ PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
 hdt = HDTDocument(PATH_LOD)
 
 
+
+
+
 c1=[
 "http://dbpedia.org/ontology/predecessor",
 "http://dbpedia.org/ontology/successor",
@@ -170,6 +173,12 @@ measures = {}
 for p in predicate_to_study:
 	print ('now dealing with p = ', p)
 	sccs, scc_graphs = compute_SCC_graphs(p)
+	print ('#SCC', len(scc))
+	biggest = 0
+	for s in sccs:
+		if len (s) > biggest:
+			biggest = len(s)
+	print ('maxSCC', biggest)
 
 	(alpha, beta) = compute_alpha_beta(scc_graphs)
 	print ('alpha = ', alpha, ' beta =', beta)
