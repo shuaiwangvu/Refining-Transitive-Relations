@@ -343,14 +343,22 @@ for p in trans_collect_large:
 #     collect_reflexive_properties.add(s)
 #
 #
-triples, cardinality = hdt.search_triples("", "", iR)
-print ('There are ', cardinality, ' irreflexive properties')
-collect_irreflexive_properties = set()
+# triples, cardinality = hdt.search_triples("", "", iR)
+# print ('There are ', cardinality, ' irreflexive properties')
+# collect_irreflexive_properties = set()
+# for (s, p, o) in triples:
+# 	# print ('\tsubject: ', s)
+# 	# print ('\tpredicate:  ', p)
+# 	# print ('\n')
+# 	collect_irreflexive_properties.add(s)
+
+
+triples, cardinality = hdt.search_triples("", type, iR)
+
 for (s, p, o) in triples:
-	print ('\tsubject: ', s)
-	print ('\tpredicate:  ', p)
-	print ('\n')
-	collect_irreflexive_properties.add(s)
+	triples, cardinality = hdt.search_triples(s, type, t)
+	print ('Transitive and irreflexive ===> ', s)
+
 #
 #
 #
