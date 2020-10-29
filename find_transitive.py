@@ -277,15 +277,15 @@ def print_SCC_info(p):
 		print ('oh there is an error: ', e)
 
 
-print ('there are in total : ', len(trans_collect_large ))
-for p in trans_collect_large:
-	print ('p = ', p)
-	# print('Do you want to study this predicate ? (y/n):')
-	# x = input()
-	# if x == 'y':
-	print_SCC_info(p)
-	# else:
-		# print ('next\n')
+# print ('there are in total : ', len(trans_collect_large ))
+# for p in trans_collect_large:
+# 	print ('p = ', p)
+# 	# print('Do you want to study this predicate ? (y/n):')
+# 	# x = input()
+# 	# if x == 'y':
+# 	print_SCC_info(p)
+# 	# else:
+# 		# print ('next\n')
 
 #
 # count = 0
@@ -354,14 +354,14 @@ for p in trans_collect_large:
 
 
 triples, cardinality = hdt.search_triples("", type, iR)
-
+print ('iR: ', cardinality)
 for (s, p, o) in triples:
 	triples, cardinality = hdt.search_triples(s, type, t)
 	if cardinality >0 :
 		print ('Transitive and irreflexive ===> ', s)
 
 triples, cardinality = hdt.search_triples("", type, r)
-
+print ('r: ', cardinality)
 for (s, p, o) in triples:
 	triples, cardinality = hdt.search_triples(s, type, t)
 	if cardinality >0 :
