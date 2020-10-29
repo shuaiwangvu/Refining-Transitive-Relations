@@ -357,7 +357,8 @@ triples, cardinality = hdt.search_triples("", type, iR)
 
 for (s, p, o) in triples:
 	triples, cardinality = hdt.search_triples(s, type, t)
-	print ('Transitive and irreflexive ===> ', s)
+	if cardinality >1:
+		print ('Transitive and irreflexive ===> ', s)
 
 #
 #
