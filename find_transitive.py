@@ -356,15 +356,15 @@ def print_SCC_info(p):
 triples, cardinality = hdt.search_triples("", type, iR)
 print ('iR: ', cardinality)
 for (s, p, o) in triples:
-	triples, cardinality = hdt.search_triples(s, type, t)
-	if cardinality >0 :
+	# triples, cardinality = hdt.search_triples(s, "", t)
+	if s in trans_collect:
 		print ('Transitive and irreflexive ===> ', s)
 
 triples, cardinality = hdt.search_triples("", type, r)
 print ('r: ', cardinality)
 for (s, p, o) in triples:
-	triples, cardinality = hdt.search_triples(s, type, t)
-	if cardinality >0 :
+	# triples, cardinality = hdt.search_triples(s, type, t)
+	if s in trans_collect:
 		print ('Transitive and reflexive ===> ', s)
 
 
