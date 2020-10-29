@@ -353,12 +353,12 @@ for p in trans_collect_large:
 # 	collect_irreflexive_properties.add(s)
 
 
-triples, cardinality = hdt.search_triples("", type, iR)
+triples, cardinality = hdt.search_triples("", type, r)
 
 for (s, p, o) in triples:
 	triples, cardinality = hdt.search_triples(s, type, t)
 	if cardinality >1:
-		print ('Transitive and irreflexive ===> ', s)
+		print ('Transitive and reflexive ===> ', s)
 
 #
 #
