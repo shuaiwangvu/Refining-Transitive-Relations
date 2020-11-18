@@ -445,13 +445,13 @@ for p in trans_collect:
 		_, antiS_cardinality = hdt.search_triples("", p, "")
 		count_antiS_triple += antiS_cardinality
 
-	-, aS_cardinality = hdt.search_triples(p, t, aS)
+	_, aS_cardinality = hdt.search_triples(p, t, aS)
 	if aS_cardinality > 1:
 		count_aS += 1
 		_, aS_cardinality = hdt.search_triples("", p, "")
 		count_aS_triple += aS_cardinality
 
-	-, r_cardinality = hdt.search_triples(p, t, r)
+	_, r_cardinality = hdt.search_triples(p, t, r)
 	if r_cardinality > 1:
 		count_r += 1
 		_, r_cardinality = hdt.search_triples("", p, "")
