@@ -23,6 +23,7 @@ PATH_LOD = "/scratch/wbeek/data/LOD-a-lot/data.hdt"
 hdt = HDTDocument(PATH_LOD)
 t = "http://www.w3.org/2002/07/owl#TransitiveProperty"
 s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
+antiS = "http://www.w3.org/2002/07/owl#AntisymmetricProperty" # not sure about this one
 aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
 r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
 iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
@@ -133,40 +134,28 @@ print ('there are in total ', count_trans_rel_triples, ' triples among these  2,
 triples, cardinality = hdt.search_triples("", "", "")
 print ('that gives ', count_trans_rel_triples/ cardinality , ' overall')
 
+print ('=========================================================================')
 
-#
-# record = 0
-# while len(trans_collect) != record :
-# 	record = len(trans_collect)
-# 	found_subp = set()
-# 	for t in trans_collect:
-# 		triples, cardinality = hdt.search_triples("", subPropertyOf, t)
-# 		for (s,p,o) in triples:
-# 			# print('new:',s,p,o)
-# 			found_subp.add(str(s))
-# 	trans_collect = trans_collect.union(found_subp)
-#
-# print ('now there are ', len(trans_collect), 'type of owl:transitive properties')
-#
-# for s in trans_collect:
-# 	#print ('property: ', s)
-# 	triples1, cardinality1 = hdt.search_triples(s ,inv, '')
-#
-# 	for (s1,p1,o1) in triples1:
-# 		#print ('\t it has inverse: ', o1)
-# 		inv_collect.add(str(o1))
-#
-#
-# 	triples2, cardinality2 = hdt.search_triples('',inv, s)
-#
-# 	for (s2,p2,o2) in triples2:
-# 		#print ('\t it has inverse: ', s2)
-# 		inv_collect.add(str(s2))
-#
-# 	#print('count inverse: ', len(inv_collect))
-# 	# total_inverse += len(inv_collect)
-#
-#
+
+
+
+record = 0
+closure_coll = trans_collect.copy()
+while len(closure_coll) != record : # untill the size does not expand anymore.
+	record = len(closure_coll)
+	for t in closure_coll:
+		triples, cardinality = hdt.search_triples("", subPropertyOf, t)
+		for (s,p,o) in triples:
+			# print('new:',s,p,o)
+			closure_coll.add(str(s))
+
+		triples1, cardinality1 = hdt.search_triples(s ,inv, '')
+		for (s,p,o) in triples1:
+			# print('new:',s,p,o)
+			closure_coll.add(str(s))
+
+print ('After computing the closure, there are in total', len (closure_coll), ' relations in the set')
+
 # print('======')
 # inv_collect = inv_collect.difference(trans_collect)
 #
