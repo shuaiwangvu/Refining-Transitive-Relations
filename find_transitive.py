@@ -418,7 +418,7 @@ print ('#######################')
 # aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
 # r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
 # iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
-
+print ('among the directly typed : ', len(closure_coll))
 count_s = 0
 count_antiS = 0
 count_aS = 0
@@ -487,7 +487,7 @@ print ('gives ', count_iR_triple, 'triples')
 
 
 
-print ('\n\n === Now the those in closure ====')
+print ('\n\n === Now the those in closure ====: ' len (closure_coll))
 count_s = 0
 count_antiS = 0
 count_aS = 0
