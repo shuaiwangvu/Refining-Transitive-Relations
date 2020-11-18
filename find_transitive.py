@@ -174,64 +174,42 @@ print ('that gives ', count_triples_trans/ total_triples , ' overall')
 
 
 #
-# count_triples_inv = 0
-# for p in inv_collect:
-# 	triples, cardinality = hdt.search_triples("", p, "")
-# 	count_triples_inv += cardinality
-#
-# print('count_triples_trans: ', count_triples_trans)
-# print('count_triples_inv: ', count_triples_inv)
-#
+trans_collect_large = []
+
+ct = {}
+
+count = 0
+for p in trans_collect:
+	t_triples, t_cardinality = hdt.search_triples("", p, "")
+	if t_cardinality > 100000: # over 100,000
+		trans_collect_large.append(p)
+		print ('trans: ', p, ' : ', t_cardinality)
+		ct[p] = t_cardinality
+		count += 1
+
+print ('# trans: count over million: ', count)
 
 
-#print("nb triples: %i" % hdt.total_triples)
-#print("nb predicates: %i" % hdt.nb_predicates)
-#
-# triples, cardinality = hdt.search_triples("", "", "")
-# print ('There are ', cardinality, '  triples')
-# print ('percentage : ', (count_triples_trans + count_triples_inv) / cardinality)
-#
-# print ('***** end *****')
-# find the inverse of a transitive property
+print ('Now the extended part: ')
+trans_collect_large = []
 
-# subproperty
-#
-# triples, cardinality = hdt.search_triples(narrower, "", broader)
-# print ('There are ', cardinality, 'narrower -> broader')
-# for (s,p ,o) in triples:
-#     print ('predicate: ', p)
-#
-#
-# triples, cardinality = hdt.search_triples(broader, "", narrower)
-# print ('There are ', cardinality, 'broader -> narrower')
-# for (s,p ,o) in triples:
-#     print ('predicate: ', p)
+ct = {}
+
+count = 0
+for p in closure_coll:
+	t_triples, t_cardinality = hdt.search_triples("", p, "")
+	if t_cardinality > 100000: # over 100,000
+		trans_collect_large.append(p)
+		print ('trans: ', p, ' : ', t_cardinality)
+		ct[p] = t_cardinality
+		count += 1
+
+print ('# trans: count over million: ', count)
 
 
 
-# print ('==========================\n\n')
-# print ('as object:')
-
-#
-# trans_collect_large = []
-#
-# ct = {}
-#
-# count = 0
-# for p in trans_collect:
-# 	t_triples, t_cardinality = hdt.search_triples("", p, "")
-# 	if t_cardinality <= 10000 and t_cardinality > 1000: # between 0.1 m and 1m
-# 		trans_collect_large.append(p)
-# 		print ('trans: ', p, ' : ', t_cardinality)
-# 		ct[p] = t_cardinality
-# 		count += 1
-#
-# print ('trans: count over million: ', count)
-#
-#
-#
 # print ('now print their SCC info')
-#
+
 # trans_collect_large = [
 # # "http://dbpedia.org/ontology/order",
 # # "http://dbpedia.org/ontology/family",
