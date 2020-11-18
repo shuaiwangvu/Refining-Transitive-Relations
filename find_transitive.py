@@ -110,8 +110,8 @@ inv = 'http://www.w3.org/2002/07/owl#inverseOf'
 trans_collect = set()
 inv_collect = set()
 
-triples, cardinality = hdt.search_triples("", type, t)
-print ('There are ', total_trans_cardinality, 'type of owl:transitive properties')
+triples, direct_trans_relations = hdt.search_triples("", type, t)
+print ('There are ', direct_trans_relations, 'as typed by owl:transitive properties')
 for (s,p ,o) in triples:
 	trans_collect.add(str(s))
 #
