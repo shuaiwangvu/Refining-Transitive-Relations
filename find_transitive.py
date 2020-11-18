@@ -485,6 +485,75 @@ print ('there are ', count_iR, ' irreflexive relations')
 print ('gives ', count_iR_triple, 'triples')
 
 
+
+
+print ('\n\n === Now the those in closure ====')
+count_s = 0
+count_antiS = 0
+count_aS = 0
+count_r = 0
+count_iR = 0
+
+count_s_triple = 0
+count_antiS_triple = 0
+count_aS_triple = 0
+count_r_triple = 0
+count_iR_triple = 0
+
+for p in closure_coll:
+
+	_, s_cardinality = hdt.search_triples(p, t, s)
+	if s_cardinality >= 1:
+		count_s += 1
+		_, s_cardinality = hdt.search_triples("", p, "")
+		count_s_triple += s_cardinality
+
+
+	_, antiS_cardinality = hdt.search_triples(p, t, antiS)
+	if antiS_cardinality >= 1:
+		count_antiS += 1
+		_, antiS_cardinality = hdt.search_triples("", p, "")
+		count_antiS_triple += antiS_cardinality
+
+	_, aS_cardinality = hdt.search_triples(p, t, aS)
+	if aS_cardinality >= 1:
+		count_aS += 1
+		_, aS_cardinality = hdt.search_triples("", p, "")
+		count_aS_triple += aS_cardinality
+
+	_, r_cardinality = hdt.search_triples(p, t, r)
+	if r_cardinality >= 1:
+		count_r += 1
+		_, r_cardinality = hdt.search_triples("", p, "")
+		count_r_triple += r_cardinality
+
+	_, iR_cardinality = hdt.search_triples(p, t, iR)
+	if iR_cardinality >= 1:
+		count_iR += 1
+		_, iR_cardinality = hdt.search_triples("", p, "")
+		count_iR_triple += iR_cardinality
+
+
+# count_trans_rel_triples
+print ('there are ', count_s, ' symmetric relations')
+print ('gives ', count_s_triple, 'triples')
+print ('-------')
+print ('there are ', count_antiS, 'antisymmetric relations')
+print ('gives ', count_antiS_triple, 'triples')
+
+print ('-------')
+print ('there are ', count_aS, ' asymmetric relations')
+print ('gives ', count_aS_triple, 'triples')
+
+print ('-------')
+print ('there are ', count_r, ' reflexive relations')
+print ('gives ', count_r_triple, 'triples')
+
+print ('-------')
+print ('there are ', count_iR, ' irreflexive relations')
+print ('gives ', count_iR_triple, 'triples')
+
+print ('#######################')
 # print ('now print their SCC info')
 
 # trans_collect_large = [
