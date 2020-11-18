@@ -113,79 +113,86 @@ triples, cardinality = hdt.search_triples("", type, t)
 print ('There are ', cardinality, 'type of owl:transitive properties')
 for (s,p ,o) in triples:
 	trans_collect.add(str(s))
+#
+# # and another http://www.cyc.com/2003/04/01/cyc#EquivalenceRelation
+# cyc_eq = 'http://www.cyc.com/2003/04/01/cyc#EquivalenceRelation'
+# triples, cardinality = hdt.search_triples("", type, cyc_eq)
+# print ('There are ', cardinality, 'type of cyc#eq properties')
+# for (s,p ,o) in triples:
+# 	trans_collect.add(str(s))
+#
+# print ('So in total that is ', len(trans_collect))
+count_trans_rel_triples = 0
+for trans_rel in trans_collect:
+	triples, cardinality = hdt.search_triples("", trans_rel, "")
+	count_trans_rel_triples += cardinality
 
-# and another http://www.cyc.com/2003/04/01/cyc#EquivalenceRelation
-cyc_eq = 'http://www.cyc.com/2003/04/01/cyc#EquivalenceRelation'
-triples, cardinality = hdt.search_triples("", type, cyc_eq)
-print ('There are ', cardinality, 'type of cyc#eq properties')
-for (s,p ,o) in triples:
-	trans_collect.add(str(s))
-
-print ('So in total that is ', len(trans_collect))
-
-
-record = 0
-while len(trans_collect) != record :
-	record = len(trans_collect)
-	found_subp = set()
-	for t in trans_collect:
-		triples, cardinality = hdt.search_triples("", subPropertyOf, t)
-		for (s,p,o) in triples:
-			# print('new:',s,p,o)
-			found_subp.add(str(s))
-	trans_collect = trans_collect.union(found_subp)
-
-print ('now there are ', len(trans_collect), 'type of owl:transitive properties')
-
-for s in trans_collect:
-	#print ('property: ', s)
-	triples1, cardinality1 = hdt.search_triples(s ,inv, '')
-
-	for (s1,p1,o1) in triples1:
-		#print ('\t it has inverse: ', o1)
-		inv_collect.add(str(o1))
+print ('there are in total ', count_trans_rel_triples, ' triples among these  2,486 relations')
 
 
-	triples2, cardinality2 = hdt.search_triples('',inv, s)
-
-	for (s2,p2,o2) in triples2:
-		#print ('\t it has inverse: ', s2)
-		inv_collect.add(str(s2))
-
-	#print('count inverse: ', len(inv_collect))
-	# total_inverse += len(inv_collect)
-
-
-print('======')
-inv_collect = inv_collect.difference(trans_collect)
-
-print ('transitive relations', len(trans_collect))
-print ('total inverse', len (inv_collect))
-
-# count how many triples are there in total
-count_triples_trans = 0
-for p in trans_collect:
-	triples, cardinality = hdt.search_triples("", p, "")
-	count_triples_trans += cardinality
-
-count_triples_inv = 0
-for p in inv_collect:
-	triples, cardinality = hdt.search_triples("", p, "")
-	count_triples_inv += cardinality
-
-print('count_triples_trans: ', count_triples_trans)
-print('count_triples_inv: ', count_triples_inv)
-
+#
+# record = 0
+# while len(trans_collect) != record :
+# 	record = len(trans_collect)
+# 	found_subp = set()
+# 	for t in trans_collect:
+# 		triples, cardinality = hdt.search_triples("", subPropertyOf, t)
+# 		for (s,p,o) in triples:
+# 			# print('new:',s,p,o)
+# 			found_subp.add(str(s))
+# 	trans_collect = trans_collect.union(found_subp)
+#
+# print ('now there are ', len(trans_collect), 'type of owl:transitive properties')
+#
+# for s in trans_collect:
+# 	#print ('property: ', s)
+# 	triples1, cardinality1 = hdt.search_triples(s ,inv, '')
+#
+# 	for (s1,p1,o1) in triples1:
+# 		#print ('\t it has inverse: ', o1)
+# 		inv_collect.add(str(o1))
+#
+#
+# 	triples2, cardinality2 = hdt.search_triples('',inv, s)
+#
+# 	for (s2,p2,o2) in triples2:
+# 		#print ('\t it has inverse: ', s2)
+# 		inv_collect.add(str(s2))
+#
+# 	#print('count inverse: ', len(inv_collect))
+# 	# total_inverse += len(inv_collect)
+#
+#
+# print('======')
+# inv_collect = inv_collect.difference(trans_collect)
+#
+# print ('transitive relations', len(trans_collect))
+# print ('total inverse', len (inv_collect))
+#
+# # count how many triples are there in total
+# count_triples_trans = 0
+# for p in trans_collect:
+# 	triples, cardinality = hdt.search_triples("", p, "")
+# 	count_triples_trans += cardinality
+#
+# count_triples_inv = 0
+# for p in inv_collect:
+# 	triples, cardinality = hdt.search_triples("", p, "")
+# 	count_triples_inv += cardinality
+#
+# print('count_triples_trans: ', count_triples_trans)
+# print('count_triples_inv: ', count_triples_inv)
+#
 
 
 #print("nb triples: %i" % hdt.total_triples)
 #print("nb predicates: %i" % hdt.nb_predicates)
-
-triples, cardinality = hdt.search_triples("", "", "")
-print ('There are ', cardinality, '  triples')
-print ('percentage : ', (count_triples_trans + count_triples_inv) / cardinality)
-
-print ('***** end *****')
+#
+# triples, cardinality = hdt.search_triples("", "", "")
+# print ('There are ', cardinality, '  triples')
+# print ('percentage : ', (count_triples_trans + count_triples_inv) / cardinality)
+#
+# print ('***** end *****')
 # find the inverse of a transitive property
 
 # subproperty
@@ -206,75 +213,75 @@ print ('***** end *****')
 # print ('==========================\n\n')
 # print ('as object:')
 
-
-trans_collect_large = []
-
-ct = {}
-
-count = 0
-for p in trans_collect:
-	t_triples, t_cardinality = hdt.search_triples("", p, "")
-	if t_cardinality <= 10000 and t_cardinality > 1000: # between 0.1 m and 1m
-		trans_collect_large.append(p)
-		print ('trans: ', p, ' : ', t_cardinality)
-		ct[p] = t_cardinality
-		count += 1
-
-print ('trans: count over million: ', count)
-
-
-
-print ('now print their SCC info')
-
-trans_collect_large = [
-# "http://dbpedia.org/ontology/order",
-# "http://dbpedia.org/ontology/family",
-"http://www.geonames.org/ontology#parentADM1"]
-
-
-
-
-def print_SCC_info(p):
-	print (p)
-	graph = nx.DiGraph()
-	t_triples, t_cardinality = hdt.search_triples("", p, "")
-	print ("amount of triples: ", t_cardinality)
-	for (l, p, r) in t_triples:
-		graph.add_edge(l,r)
-
-	try:
-		collect_nodes_remove= []
-		for n in graph.nodes():
-			if graph.in_degree(n) == 0 or graph.out_degree(n) == 0:
-				collect_nodes_remove.append(n)
-
-		graph.remove_nodes_from(collect_nodes_remove)
-
-		print ('now the amount of triples : ', graph.number_of_edges())
-		print ('now the amount of nodes : ', graph.number_of_nodes())
-
-
-		mydict = {}
-		for n in graph.nodes:
-			collect_succssor = []
-			for s in graph.successors(n):
-				collect_succssor.append(s)
-			mydict[n] = collect_succssor
-		scc = tarjan(mydict)
-
-
-
-		filter_scc = [x for x in scc if len(x)>1]
-		# if len(filter_scc) > 5:
-		print('# Connected Component Filtered: ', len(filter_scc))
-		ct = Counter()
-		for f in filter_scc:
-			ct[len(f)] += 1
-		print ('SCC info', ct)
-
-
-	except Exception as e:
-		print ('oh there is an error: ', e)
+#
+# trans_collect_large = []
+#
+# ct = {}
+#
+# count = 0
+# for p in trans_collect:
+# 	t_triples, t_cardinality = hdt.search_triples("", p, "")
+# 	if t_cardinality <= 10000 and t_cardinality > 1000: # between 0.1 m and 1m
+# 		trans_collect_large.append(p)
+# 		print ('trans: ', p, ' : ', t_cardinality)
+# 		ct[p] = t_cardinality
+# 		count += 1
+#
+# print ('trans: count over million: ', count)
+#
+#
+#
+# print ('now print their SCC info')
+#
+# trans_collect_large = [
+# # "http://dbpedia.org/ontology/order",
+# # "http://dbpedia.org/ontology/family",
+# "http://www.geonames.org/ontology#parentADM1"]
+#
+#
+#
+#
+# def print_SCC_info(p):
+# 	print (p)
+# 	graph = nx.DiGraph()
+# 	t_triples, t_cardinality = hdt.search_triples("", p, "")
+# 	print ("amount of triples: ", t_cardinality)
+# 	for (l, p, r) in t_triples:
+# 		graph.add_edge(l,r)
+#
+# 	try:
+# 		collect_nodes_remove= []
+# 		for n in graph.nodes():
+# 			if graph.in_degree(n) == 0 or graph.out_degree(n) == 0:
+# 				collect_nodes_remove.append(n)
+#
+# 		graph.remove_nodes_from(collect_nodes_remove)
+#
+# 		print ('now the amount of triples : ', graph.number_of_edges())
+# 		print ('now the amount of nodes : ', graph.number_of_nodes())
+#
+#
+# 		mydict = {}
+# 		for n in graph.nodes:
+# 			collect_succssor = []
+# 			for s in graph.successors(n):
+# 				collect_succssor.append(s)
+# 			mydict[n] = collect_succssor
+# 		scc = tarjan(mydict)
+#
+#
+#
+# 		filter_scc = [x for x in scc if len(x)>1]
+# 		# if len(filter_scc) > 5:
+# 		print('# Connected Component Filtered: ', len(filter_scc))
+# 		ct = Counter()
+# 		for f in filter_scc:
+# 			ct[len(f)] += 1
+# 		print ('SCC info', ct)
+#
+#
+# 	except Exception as e:
+# 		print ('oh there is an error: ', e)
 
 
 # print ('there are in total : ', len(trans_collect_large ))
