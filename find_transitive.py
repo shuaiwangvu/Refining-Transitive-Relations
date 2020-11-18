@@ -445,6 +445,7 @@ for p in trans_collect:
 		count_antiS += 1
 		_, antiS_cardinality = hdt.search_triples("", p, "")
 		count_antiS_triple += antiS_cardinality
+		print ('this antiS is ', p)
 
 	_, aS_cardinality = hdt.search_triples(p, type, aS)
 	if aS_cardinality >= 1:
