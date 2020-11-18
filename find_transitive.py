@@ -130,6 +130,10 @@ for trans_rel in trans_collect:
 print ('there are in total ', count_trans_rel_triples, ' triples among these  2,486 relations')
 
 
+triples, cardinality = hdt.search_triples("", "", "")
+print ('that gives ', count_trans_rel_triples/ cardinality , ' overall')
+
+
 #
 # record = 0
 # while len(trans_collect) != record :
