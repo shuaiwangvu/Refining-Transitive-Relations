@@ -458,6 +458,7 @@ for p in trans_collect:
 		count_r += 1
 		_, r_cardinality = hdt.search_triples("", p, "")
 		count_r_triple += r_cardinality
+		print ('this reflexive is ', p)
 
 	_, iR_cardinality = hdt.search_triples(p, type, iR)
 	if iR_cardinality >= 1:
