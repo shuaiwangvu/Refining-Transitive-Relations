@@ -150,7 +150,7 @@ while len(closure_coll) != record : # untill the size does not expand anymore.
 			# print('new:',s,p,o)
 			newly_found.add(str(s))
 
-		triples1, cardinality1 = hdt.search_triples(s ,inv, '')
+		triples1, cardinality1 = hdt.search_triples("" ,inv, t)
 		for (s,p,o) in triples1:
 			# print('new:',s,p,o)
 			newly_found.add(str(s))
