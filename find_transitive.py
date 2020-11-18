@@ -143,16 +143,18 @@ record = 0
 closure_coll = trans_collect.copy()
 while len(closure_coll) != record : # untill the size does not expand anymore.
 	record = len(closure_coll)
+	newly_found = set()
 	for t in closure_coll:
 		triples, cardinality = hdt.search_triples("", subPropertyOf, t)
 		for (s,p,o) in triples:
 			# print('new:',s,p,o)
-			closure_coll.add(str(s))
+			newly_found.add(str(s))
 
 		triples1, cardinality1 = hdt.search_triples(s ,inv, '')
 		for (s,p,o) in triples1:
 			# print('new:',s,p,o)
-			closure_coll.add(str(s))
+			newly_found.add(str(s))
+	closure_coll = closure_coll.union (newly_found)
 
 print ('After computing the closure, there are in total', len (closure_coll), ' relations in the set')
 
