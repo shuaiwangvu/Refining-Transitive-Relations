@@ -418,7 +418,7 @@ print ('#######################')
 # aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
 # r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
 # iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
-print ('among the directly typed : ', len(closure_coll))
+print ('among the directly typed : ', len(trans_collect))
 count_s = 0
 count_antiS = 0
 count_aS = 0
@@ -487,7 +487,7 @@ print ('gives ', count_iR_triple, 'triples')
 
 
 
-print ('\n\n === Now the those in closure ====: ', len (closure_coll))
+print ('\n\n === Now those in closure ====: ', len (closure_coll))
 count_s = 0
 count_antiS = 0
 count_aS = 0
@@ -520,6 +520,7 @@ for p in closure_coll:
 		count_aS += 1
 		_, aS_cardinality = hdt.search_triples("", p, "")
 		count_aS_triple += aS_cardinality
+		print ('this asymmetric relation is ', p)
 
 	_, r_cardinality = hdt.search_triples(p, type, r)
 	if r_cardinality >= 1:
