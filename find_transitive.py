@@ -559,6 +559,37 @@ print ('there are ', count_iR, ' irreflexive relations')
 print ('gives ', count_iR_triple, 'triples')
 
 print ('#######################')
+
+
+has_part = "http://www.obofoundry.org/ro/ro.owl#has_part"
+print ('as for ', has_part)
+
+def print_relation_info(p):
+	_, s_cardinality = hdt.search_triples(p, type, s)
+	if s_cardinality >= 1:
+		print ('symmetric')
+
+
+	_, antiS_cardinality = hdt.search_triples(p, type, antiS)
+	if antiS_cardinality >= 1:
+		print ('antisymmetric')
+
+	_, aS_cardinality = hdt.search_triples(p, type, aS)
+	if aS_cardinality >= 1:
+		print ('asymmetric')
+
+
+	_, r_cardinality = hdt.search_triples(p, type, r)
+	if r_cardinality >= 1:
+		print ('reflexive')
+
+	_, iR_cardinality = hdt.search_triples(p, type, iR)
+	if iR_cardinality >= 1:
+		print ('irreflexive')
+
+
+print_relation_info (has_part)
+
 # print ('now print their SCC info')
 
 # trans_collect_large = [
