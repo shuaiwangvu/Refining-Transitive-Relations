@@ -37,7 +37,7 @@ broader = 'http://www.w3.org/2004/02/skos/core#broader'
 narrower = 'http://www.w3.org/2004/02/skos/core#narrower'
 
 inv = 'http://www.w3.org/2002/07/owl#inverseOf'
-
+ # http://www.w3.org/2002/07/owl#equivalentClass  :  1051979
 # is_eq_to = "http://www.w3.org/2002/07/owl#:equivalentProperty"
 	# subject:  http://agrowiki.org/agrowiki/?title=Special:URIResolver/Category-3AOwl_TransitiveProperty(TransitiveProperty)
 	# predicate:   http://www.w3.org/2002/07/owl#equivalentClass
@@ -111,7 +111,7 @@ trans_collect = set()
 inv_collect = set()
 
 triples, cardinality = hdt.search_triples("", type, t)
-print ('There are ', cardinality, 'type of owl:transitive properties')
+print ('There are ', total_trans_cardinality, 'type of owl:transitive properties')
 for (s,p ,o) in triples:
 	trans_collect.add(str(s))
 #
@@ -133,8 +133,6 @@ print ('there are in total ', count_trans_rel_triples, ' triples among these  2,
 
 triples, total_triples = hdt.search_triples("", "", "")
 print ('that gives ', count_trans_rel_triples/ total_triples , ' overall')
-
-print ('=========================================================================')
 
 
 
@@ -172,6 +170,8 @@ for p in closure_coll:
 print ('under closure = ', count_triples_trans)
 print ('that gives ', count_triples_trans/ total_triples , ' overall')
 
+print ('=========================================================================')
+
 
 #
 trans_collect_large = []
@@ -187,8 +187,24 @@ for p in trans_collect:
 		ct[p] = t_cardinality
 		count += 1
 
-print ('# trans: count over million: ', count)
-
+print ('Among the original # trans: count over million: ', count)
+# trans:  http://www.w3.org/2004/02/skos/core#broader  :  11866699
+# trans:  http://www.w3.org/2004/02/skos/core#narrower  :  817194
+# trans:  http://purl.org/dc/terms/hasPart  :  3461053
+# trans:  http://www.w3.org/2002/07/owl#sameAs  :  558943116
+# trans:  http://purl.org/dc/terms/isPartOf  :  59839730
+# trans:  http://xmlns.com/foaf/0.1/knows  :  122046428
+# trans:  http://www.w3.org/2004/02/skos/core#narrowerTransitive  :  101842
+# trans:  http://www.w3.org/2004/02/skos/core#broaderTransitive  :  133634
+# trans:  http://www.w3.org/2004/02/skos/core#exactMatch  :  566137
+# trans:  http://data-gov.tw.rpi.edu/2009/data-gov-twc.rdf#isPartOf  :  151020
+# trans:  http://www.geonames.org/ontology#parentFeature  :  10699159
+# trans:  http://www.w3.org/2006/03/wn/wn20/schema/hyponymOf  :  203412
+# trans:  http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains  :  167052
+# trans:  http://www.w3.org/2006/time#intervalContains  :  1636798
+# trans:  http://www.w3.org/2000/01/rdf-schema#subClassOf  :  4461717
+# trans:  http://www.w3.org/2002/07/owl#equivalentClass  :  1051979
+# # trans: count over million:  16
 
 print ('Now the extended part: ')
 trans_collect_large = []
@@ -206,6 +222,266 @@ for p in closure_coll:
 
 print ('# trans: count over million: ', count)
 
+# Now the extended part:
+# trans:  http://d-nb.info/standards/elementset/gnd#acquaintanceshipOrFriendship  :  101116
+# trans:  http://www.europeana.eu/schemas/edm/hasView  :  2040572
+# trans:  http://purl.org/ontology/mo/label  :  909022
+# trans:  http://www.w3.org/2004/02/skos/core#narrower  :  817194
+# trans:  http://dbpedia.org/ontology/division  :  274266
+# trans:  http://purl.oclc.org/NET/ssnx/ssn#featureOfInterest  :  393856
+# trans:  http://purl.org/ontology/mo/produced_work  :  517817
+# trans:  http://dbpedia.org/ontology/party  :  256302
+# trans:  http://dbpedia.org/ontology/deathPlace  :  1080556
+# trans:  http://dbpedia.org/ontology/parent  :  105868
+# trans:  http://www.geonames.org/ontology#parentCountry  :  7474352
+# trans:  http://www.w3.org/2002/07/owl#sameAs  :  558943116
+# trans:  http://dbpedia.org/ontology/format  :  336894
+# trans:  http://dbpedia.org/ontology/district  :  335358
+# trans:  http://dbpedia.org/ontology/thumbnail  :  9124175
+# trans:  http://dbpedia.org/ontology/binomialAuthority  :  265429
+# trans:  http://www.w3.org/2004/02/skos/core#inScheme  :  5188952
+# trans:  http://www.openarchives.org/ore/terms/isAggregatedBy  :  130238
+# trans:  http://dbpedia.org/ontology/currentMember  :  447068
+# trans:  http://dbpedia.org/ontology/knownFor  :  107277
+# trans:  http://dbpedia.org/ontology/kingdom  :  792205
+# trans:  http://reference.data.gov.uk/def/intervals/intervalContainsSecond  :  863472
+# trans:  http://dbpedia.org/ontology/owner  :  146108
+# trans:  http://www.w3.org/2004/02/skos/core#topConceptOf  :  340119
+# trans:  http://rdfs.org/ns/void#propertyPartition  :  241094
+# trans:  http://dbpedia.org/ontology/almaMater  :  151201
+# trans:  http://www.w3.org/2004/02/skos/core#exactMatch  :  566137
+# trans:  http://www.geonames.org/ontology#parentADM3  :  228607
+# trans:  http://www.geonames.org/ontology#parentADM2  :  2508526
+# trans:  http://dbpedia.org/ontology/family  :  1844706
+# trans:  http://purl.org/ontology/mo/media_type  :  1152707
+# trans:  http://purl.org/dc/terms/references  :  655907
+# trans:  http://dbpedia.org/ontology/stateOfOrigin  :  196300
+# trans:  http://dbpedia.org/ontology/class  :  1085302
+# trans:  http://dbpedia.org/ontology/capital  :  108442
+# trans:  http://dbpedia.org/ontology/musicalArtist  :  131855
+# trans:  http://vivoweb.org/ontology/core#authorInAuthorship  :  124420
+# trans:  http://www.loc.gov/mads/rdf/v1#hasReciprocalAuthority  :  156583
+# trans:  http://xmlns.com/foaf/0.1/homepage  :  42418326
+# trans:  http://dbpedia.org/ontology/locationCity  :  152889
+# trans:  http://www.geonames.org/ontology#parentADM4  :  121368
+# trans:  http://rdfs.org/ns/void#subset  :  395227
+# trans:  http://www.openarchives.org/ore/terms/aggregates  :  3175425
+# trans:  http://vivoweb.org/ontology/core#linkedAuthor  :  124404
+# trans:  http://purl.org/dc/terms/license  :  557333
+# trans:  http://purl.org/dc/terms/contributor  :  36623164
+# trans:  http://dbpedia.org/ontology/musicComposer  :  230167
+# trans:  http://dbpedia.org/ontology/hometown  :  264864
+# trans:  http://www.w3.org/ns/prov#alternateOf  :  206371
+# trans:  http://www.europeana.eu/schemas/edm/isShownBy  :  751495
+# trans:  http://dbpedia.org/ontology/state  :  250568
+# trans:  http://dbpedia.org/ontology/type  :  941702
+# trans:  http://dbpedia.org/ontology/nationality  :  423874
+# trans:  http://www.w3.org/ns/prov#specializationOf  :  733472
+# trans:  http://dbpedia.org/ontology/subsequentWork  :  511026
+# trans:  http://dbpedia.org/ontology/federalState  :  105000
+# trans:  http://dbpedia.org/ontology/phylum  :  751596
+# trans:  http://purl.org/dc/terms/isPartOf  :  59839730
+# trans:  http://www.w3.org/2004/02/skos/core#related  :  698032
+# trans:  http://dbpedia.org/ontology/cinematography  :  152134
+# trans:  http://dbpedia.org/ontology/category  :  131273
+# trans:  http://www.w3.org/1999/02/22-rdf-syntax-ns#type  :  3321354308
+# trans:  http://dbpedia.org/ontology/recordLabel  :  845329
+# trans:  http://dbpedia.org/ontology/careerStation  :  698004
+# trans:  http://purl.oclc.org/NET/ssnx/ssn#observedProperty  :  393856
+# trans:  http://www.w3.org/2003/01/geo/wgs84_pos#location  :  14688561
+# trans:  http://xmlns.com/foaf/0.1/knows  :  122046428
+# trans:  http://dbpedia.org/ontology/occupation  :  886464
+# trans:  http://dbpedia.org/ontology/isPartOf  :  1003184
+# trans:  http://rdfs.org/sioc/ns#links_to  :  19031184
+# trans:  http://dbpedia.org/ontology/managerClub  :  121879
+# trans:  http://dbpedia.org/ontology/author  :  195471
+# trans:  http://dbpedia.org/ontology/editing  :  117096
+# trans:  http://data-gov.tw.rpi.edu/2009/data-gov-twc.rdf#isPartOf  :  151020
+# trans:  http://dbpedia.org/ontology/instrument  :  246932
+# trans:  http://dbpedia.org/ontology/musicalBand  :  109868
+# trans:  http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains  :  167052
+# trans:  http://purl.org/dc/terms/format  :  16306496
+# trans:  http://www.w3.org/2006/time#intervalContains  :  1636798
+# trans:  http://dbpedia.org/ontology/department  :  300506
+# trans:  http://purl.org/ontology/mo/release  :  1102387
+# trans:  http://dbpedia.org/ontology/leaderName  :  124883
+# trans:  http://dbpedia.org/ontology/order  :  1633215
+# trans:  http://dbpedia.org/ontology/location  :  952877
+# trans:  http://www.w3.org/2000/01/rdf-schema#subClassOf  :  4461717
+# trans:  http://vivoweb.org/ontology/core#dateTimeInterval  :  176247
+# trans:  http://www.europeana.eu/schemas/edm/isShownAt  :  2344986
+# trans:  http://dbpedia.org/ontology/genre  :  2009853
+# trans:  http://dbpedia.org/ontology/league  :  131856
+# trans:  http://dbpedia.org/ontology/previousWork  :  551284
+# trans:  http://purl.org/ontology/bibo/editor  :  2699958
+# trans:  http://www.w3.org/2004/02/skos/core#broader  :  11866699
+# trans:  http://purl.org/dc/terms/hasVersion  :  312884
+# trans:  http://rdfs.org/sioc/ns#previous_version  :  111038
+# trans:  http://purl.org/dc/terms/extent  :  6427515
+# trans:  http://www.europeana.eu/schemas/edm/object  :  2047562
+# trans:  http://dbpedia.org/ontology/city  :  469144
+# trans:  http://dbpedia.org/ontology/industry  :  139703
+# trans:  http://purl.org/dc/terms/isFormatOf  :  2947607
+# trans:  http://dbpedia.org/ontology/domain  :  320576
+# trans:  http://purl.org/dc/terms/hasPart  :  3461053
+# trans:  http://dbpedia.org/ontology/bandMember  :  104268
+# trans:  http://dbpedia.org/ontology/commander  :  156192
+# trans:  http://www.w3.org/ns/prov#wasDerivedFrom  :  113625586
+# trans:  http://dbpedia.org/ontology/director  :  385773
+# trans:  http://rdfs.org/sioc/ns#parent_of  :  101219
+# trans:  http://dbpedia.org/ontology/starring  :  1819647
+# trans:  http://purl.org/dc/terms/creator  :  10580237
+# trans:  http://dbpedia.org/ontology/province  :  400757
+# trans:  http://reference.data.gov.uk/def/intervals/intervalContainsMinute  :  682074
+# trans:  http://purl.org/dc/terms/publisher  :  32564723
+# trans:  http://dbpedia.org/ontology/riverMouth  :  109804
+# trans:  http://purl.org/dc/terms/medium  :  15587471
+# trans:  http://dbpedia.org/ontology/neighboringMunicipality  :  187256
+# trans:  http://dbpedia.org/ontology/locationCountry  :  132800
+# trans:  http://dbpedia.org/ontology/municipality  :  234629
+# trans:  http://umbel.org/umbel#isLike  :  461054
+# trans:  http://rdfs.org/sioc/ns#has_container  :  940843
+# trans:  http://purl.org/dc/terms/source  :  1914955
+# trans:  http://www.geonames.org/ontology#parentADM1  :  6814740
+# trans:  http://dbpedia.org/ontology/wikiPageWikiLink  :  906449419
+# trans:  http://purl.org/ontology/last-fm/user  :  630099
+# trans:  http://dbpedia.org/ontology/formerTeam  :  377734
+# trans:  http://xmlns.com/foaf/0.1/based_near  :  1130399
+# trans:  http://www.w3.org/2004/02/skos/core#narrowerTransitive  :  101842
+# trans:  http://purl.org/dc/terms/hasFormat  :  3360771
+# trans:  http://dbpedia.org/ontology/distributor  :  196458
+# trans:  http://dbpedia.org/ontology/country  :  2686392
+# trans:  http://rdfs.org/sioc/ns#member_of  :  177681
+# trans:  http://purl.org/ontology/bibo/status  :  218138
+# trans:  http://dbpedia.org/ontology/award  :  242632
+# trans:  http://dbpedia.org/ontology/associatedBand  :  243124
+# trans:  http://dbpedia.org/ontology/region  :  733479
+# trans:  http://www.europeana.eu/schemas/edm/landingPage  :  2388739
+# trans:  http://dbpedia.org/ontology/club  :  409608
+# trans:  http://www.europeana.eu/schemas/edm/aggregatedCHO  :  4771779
+# trans:  http://dbpedia.org/ontology/producer  :  821305
+# trans:  http://purl.org/ontology/mo/composer  :  477618
+# trans:  http://dbpedia.org/ontology/birthPlace  :  3257921
+# trans:  http://dbpedia.org/ontology/album  :  144151
+# trans:  http://dbpedia.org/ontology/authority  :  104820
+# trans:  http://dbpedia.org/ontology/computingPlatform  :  174810
+# trans:  http://purl.org/dc/terms/isReferencedBy  :  12925902
+# trans:  http://purl.org/dc/terms/rights  :  130488
+# trans:  http://purl.org/dc/terms/language  :  20220368
+# trans:  http://www.w3.org/2000/01/rdf-schema#isDefinedBy  :  9254565
+# trans:  http://dbpedia.org/ontology/residence  :  112369
+# trans:  http://dbpedia.org/ontology/associatedMusicalArtist  :  283705
+# trans:  http://www.w3.org/2004/02/skos/core#hasTopConcept  :  345150
+# trans:  http://data.ordnancesurvey.co.uk/ontology/spatialrelations/touches  :  102299
+# trans:  http://dbpedia.org/ontology/product  :  125351
+# trans:  http://dbpedia.org/ontology/locatedInArea  :  264481
+# trans:  http://dbpedia.org/ontology/battle  :  228848
+# trans:  http://rdfs.org/ns/void#inDataset  :  26725718
+# trans:  http://dbpedia.org/ontology/successor  :  440746
+# trans:  http://www.loc.gov/mads/rdf/v1#isMemberOfMADSScheme  :  8915253
+# trans:  http://dbpedia.org/ontology/genus  :  1152472
+# trans:  http://vivoweb.org/ontology/core#informationResourceInAuthorship  :  126543
+# trans:  http://rdfs.org/ns/void#classPartition  :  4385636
+# trans:  http://www.loc.gov/loc.terms/relators/AUT  :  415903
+# trans:  http://dbpedia.org/ontology/canton  :  239080
+# trans:  http://dbpedia.org/ontology/field  :  115543
+# trans:  http://creativecommons.org/ns#license  :  175826
+# trans:  http://dbpedia.org/ontology/gender  :  115033
+# trans:  http://dbpedia.org/ontology/recordedIn  :  162317
+# trans:  http://purl.org/dc/terms/relation  :  635978
+# trans:  http://www.daml.org/2003/02/fips55/location-ont#directlyLocatedIn  :  213836
+# trans:  http://dbpedia.org/ontology/team  :  2852279
+# trans:  http://www.w3.org/2004/02/skos/core#broaderTransitive  :  133634
+# trans:  http://www.w3.org/ns/prov#wasAttributedTo  :  214124
+# trans:  http://dbpedia.org/ontology/writer  :  604597
+# trans:  http://dbpedia.org/ontology/artist  :  492910
+# trans:  http://dbpedia.org/ontology/language  :  464106
+# trans:  http://www.geonames.org/ontology#parentFeature  :  10699159
+# trans:  http://www.w3.org/2006/03/wn/wn20/schema/hyponymOf  :  203412
+# trans:  http://dbpedia.org/ontology/ground  :  102978
+# trans:  http://dbpedia.org/ontology/arrondissement  :  221618
+# trans:  http://rdfs.org/sioc/ns#has_parent  :  112259
+# trans:  http://dbpedia.org/ontology/predecessor  :  358244
+# trans:  http://dbpedia.org/ontology/publisher  :  222853
+# trans:  http://dbpedia.org/ontology/religion  :  136139
+# trans:  http://dbpedia.org/ontology/timeZone  :  784340
+# trans:  http://vivoweb.org/ontology/core#linkedInformationResource  :  126181
+# trans:  http://purl.oclc.org/NET/ssnx/ssn#observedBy  :  393856
+# trans:  http://www.w3.org/2002/07/owl#equivalentClass  :  1051979
+# trans:  http://dbpedia.org/ontology/county  :  317518
+# # trans: count over million:  186
+
+
+# s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
+# antiS = "http://www.w3.org/2002/07/owl#AntisymmetricProperty" # not sure about this one
+# aS = "http://www.w3.org/2002/07/owl#AsymmetricProperty"
+# r = "http://www.w3.org/2002/07/owl#ReflexiveProperty"
+# iR = "http://www.w3.org/2002/07/owl#IrreflexiveProperty"
+
+count_s = 0
+count_antiS = 0
+count_aS = 0
+count_r = 0
+count_iR = 0
+
+count_s_triple = 0
+count_antiS_triple = 0
+count_aS_triple = 0
+count_r_triple = 0
+count_iR_triple = 0
+
+for p in trans_collect:
+
+	_, s_cardinality = hdt.search_triples(p, t, s)
+	if s_cardinality > 1:
+		count_s += 1
+		_, s_cardinality = hdt.search_triples("", p, "")
+		count_s_triple += s_cardinality
+
+
+	_, antiS_cardinality = hdt.search_triples(p, t, antiS)
+	if antiS_cardinality > 1:
+		count_antiS += 1
+		_, antiS_cardinality = hdt.search_triples("", p, "")
+		count_antiS_triple += antiS_cardinality
+
+	-, aS_cardinality = hdt.search_triples(p, t, aS)
+	if aS_cardinality > 1:
+		count_aS += 1
+		_, aS_cardinality = hdt.search_triples("", p, "")
+		count_aS_triple += aS_cardinality
+
+	-, r_cardinality = hdt.search_triples(p, t, r)
+	if r_cardinality > 1:
+		count_r += 1
+		_, r_cardinality = hdt.search_triples("", p, "")
+		count_r_triple += r_cardinality
+
+	_, iR_cardinality = hdt.search_triples(p, t, iR)
+	if iR_cardinality > 1:
+		count_iR += 1
+		_, iR_cardinality = hdt.search_triples("", p, "")
+		count_iR_triple += iR_cardinality
+
+
+# count_trans_rel_triples
+print ('there are ', count_s, ' symmetric relations')
+print ('gives ', count_s_triple, 'triples')
+print ('-------')
+print ('there are ', count_antiS, 'antisymmetric relations')
+print ('gives ', count_antiS_triple, 'triples')
+
+print ('-------')
+print ('there are ', count_aS, ' asymmetric relations')
+print ('gives ', count_aS_triple, 'triples')
+
+print ('-------')
+print ('there are ', count_r, ' reflexive relations')
+print ('gives ', count_r_triple, 'triples')
+
+print ('-------')
+print ('there are ', count_iR, ' irreflexive relations')
+print ('gives ', count_iR_triple, 'triples')
 
 
 # print ('now print their SCC info')
