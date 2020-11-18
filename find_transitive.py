@@ -131,8 +131,8 @@ for trans_rel in trans_collect:
 print ('there are in total ', count_trans_rel_triples, ' triples among these  2,486 relations')
 
 
-triples, cardinality = hdt.search_triples("", "", "")
-print ('that gives ', count_trans_rel_triples/ cardinality , ' overall')
+triples, total_triples = hdt.search_triples("", "", "")
+print ('that gives ', count_trans_rel_triples/ total_triples , ' overall')
 
 print ('=========================================================================')
 
@@ -164,11 +164,14 @@ print ('After computing the closure, there are in total', len (closure_coll), ' 
 # print ('transitive relations', len(trans_collect))
 # print ('total inverse', len (inv_collect))
 #
-# # count how many triples are there in total
-# count_triples_trans = 0
-# for p in trans_collect:
-# 	triples, cardinality = hdt.search_triples("", p, "")
-# 	count_triples_trans += cardinality
+# count how many triples are there in total
+count_triples_trans = 0
+for p in closure_coll:
+	triples, cardinality = hdt.search_triples("", p, "")
+	count_triples_trans += cardinality
+print ('that gives ', count_triples_trans/ total_triples , ' overall')
+
+
 #
 # count_triples_inv = 0
 # for p in inv_collect:
