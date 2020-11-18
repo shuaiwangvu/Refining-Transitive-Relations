@@ -514,13 +514,14 @@ for p in closure_coll:
 		count_antiS += 1
 		_, antiS_cardinality = hdt.search_triples("", p, "")
 		count_antiS_triple += antiS_cardinality
+		print ('this antiS is ', p)
 
 	_, aS_cardinality = hdt.search_triples(p, type, aS)
 	if aS_cardinality >= 1:
 		count_aS += 1
 		_, aS_cardinality = hdt.search_triples("", p, "")
 		count_aS_triple += aS_cardinality
-		print ('this asymmetric relation is ', p)
+
 
 	_, r_cardinality = hdt.search_triples(p, type, r)
 	if r_cardinality >= 1:
@@ -533,6 +534,7 @@ for p in closure_coll:
 		count_iR += 1
 		_, iR_cardinality = hdt.search_triples("", p, "")
 		count_iR_triple += iR_cardinality
+		print ('this iR relation is ', p)
 
 
 # count_trans_rel_triples
