@@ -487,7 +487,7 @@ print ('gives ', count_iR_triple, 'triples')
 
 
 
-print ('\n\n === Now the those in closure ====: ' len (closure_coll))
+print ('\n\n === Now the those in closure ====: ', len (closure_coll))
 count_s = 0
 count_antiS = 0
 count_aS = 0
