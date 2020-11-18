@@ -433,32 +433,32 @@ count_iR_triple = 0
 
 for p in trans_collect:
 
-	_, s_cardinality = hdt.search_triples(p, t, s)
+	_, s_cardinality = hdt.search_triples(p, type, s)
 	if s_cardinality >= 1:
 		count_s += 1
 		_, s_cardinality = hdt.search_triples("", p, "")
 		count_s_triple += s_cardinality
 
 
-	_, antiS_cardinality = hdt.search_triples(p, t, antiS)
+	_, antiS_cardinality = hdt.search_triples(p, type, antiS)
 	if antiS_cardinality >= 1:
 		count_antiS += 1
 		_, antiS_cardinality = hdt.search_triples("", p, "")
 		count_antiS_triple += antiS_cardinality
 
-	_, aS_cardinality = hdt.search_triples(p, t, aS)
+	_, aS_cardinality = hdt.search_triples(p, type, aS)
 	if aS_cardinality >= 1:
 		count_aS += 1
 		_, aS_cardinality = hdt.search_triples("", p, "")
 		count_aS_triple += aS_cardinality
 
-	_, r_cardinality = hdt.search_triples(p, t, r)
+	_, r_cardinality = hdt.search_triples(p, type, r)
 	if r_cardinality >= 1:
 		count_r += 1
 		_, r_cardinality = hdt.search_triples("", p, "")
 		count_r_triple += r_cardinality
 
-	_, iR_cardinality = hdt.search_triples(p, t, iR)
+	_, iR_cardinality = hdt.search_triples(p, type, iR)
 	if iR_cardinality >= 1:
 		count_iR += 1
 		_, iR_cardinality = hdt.search_triples("", p, "")
