@@ -411,6 +411,7 @@ print ('# trans: count over million: ', count)
 # trans:  http://dbpedia.org/ontology/county  :  317518
 # # trans: count over million:  186
 
+print ('#######################')
 
 # s = "http://www.w3.org/2002/07/owl#SymmetricProperty"
 # antiS = "http://www.w3.org/2002/07/owl#AntisymmetricProperty" # not sure about this one
@@ -433,32 +434,32 @@ count_iR_triple = 0
 for p in trans_collect:
 
 	_, s_cardinality = hdt.search_triples(p, t, s)
-	if s_cardinality > 1:
+	if s_cardinality >= 1:
 		count_s += 1
 		_, s_cardinality = hdt.search_triples("", p, "")
 		count_s_triple += s_cardinality
 
 
 	_, antiS_cardinality = hdt.search_triples(p, t, antiS)
-	if antiS_cardinality > 1:
+	if antiS_cardinality >= 1:
 		count_antiS += 1
 		_, antiS_cardinality = hdt.search_triples("", p, "")
 		count_antiS_triple += antiS_cardinality
 
 	_, aS_cardinality = hdt.search_triples(p, t, aS)
-	if aS_cardinality > 1:
+	if aS_cardinality >= 1:
 		count_aS += 1
 		_, aS_cardinality = hdt.search_triples("", p, "")
 		count_aS_triple += aS_cardinality
 
 	_, r_cardinality = hdt.search_triples(p, t, r)
-	if r_cardinality > 1:
+	if r_cardinality >= 1:
 		count_r += 1
 		_, r_cardinality = hdt.search_triples("", p, "")
 		count_r_triple += r_cardinality
 
 	_, iR_cardinality = hdt.search_triples(p, t, iR)
-	if iR_cardinality > 1:
+	if iR_cardinality >= 1:
 		count_iR += 1
 		_, iR_cardinality = hdt.search_triples("", p, "")
 		count_iR_triple += iR_cardinality
