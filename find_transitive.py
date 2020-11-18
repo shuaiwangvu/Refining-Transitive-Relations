@@ -169,6 +169,7 @@ count_triples_trans = 0
 for p in closure_coll:
 	triples, cardinality = hdt.search_triples("", p, "")
 	count_triples_trans += cardinality
+print ('under closure = ', count_triples_trans)
 print ('that gives ', count_triples_trans/ total_triples , ' overall')
 
 
