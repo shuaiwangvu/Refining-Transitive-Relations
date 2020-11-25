@@ -603,10 +603,12 @@ print_relation_info (is_part_of)
 
 triples, cardinality = hdt.search_triples("", is_part_of, "")
 cot = 0
-for t in triples:
-	print (t)
-	cot+= 1
-	if cot > 300:
+for (l, p , r) in triples:
+	r_triples, r_cardinality = hdt.search_triples(r, is_part_of, l)
+	if r_cardinality >0:
+		print (l, r)
+		cot+= 1
+	if cot > 100:
 		break
 
 
