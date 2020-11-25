@@ -601,10 +601,16 @@ is_part_of = "http://dbpedia.org/ontology/isPartOf"
 print ('as for ', is_part_of)
 print_relation_info (is_part_of)
 
+triples, cardinality = hdt.search_triples("", is_part_of, "")
+for t in triples[:300]:
+	print (t)
 
-has_part = "http://dbpedia.org/ontology/hasPart"
-print ('as for ', has_part)
-print_relation_info (has_part)
+
+# print some examples of is_part_of
+
+# has_part = "http://dbpedia.org/ontology/hasPart"
+# print ('as for ', has_part)
+# print_relation_info (has_part)
 
 # print ('now print their SCC info')
 
@@ -734,23 +740,23 @@ print_relation_info (has_part)
 # 	# print ('\n')
 # 	collect_irreflexive_properties.add(s)
 
-
-triples, cardinality = hdt.search_triples("", type, iR)
-print ('iR: ', cardinality)
-for (s, p, o) in triples:
-	# triples, cardinality = hdt.search_triples(s, "", t)
-	if s in trans_collect:
-		print ('Transitive and irreflexive ===> ', s)
-
-triples, cardinality = hdt.search_triples("", type, r)
-print ('r: ', cardinality)
-for (s, p, o) in triples:
-	# triples, cardinality = hdt.search_triples(s, type, t)
-	if s in trans_collect:
-		print ('Transitive and reflexive ===> ', s)
-
-
+# this prints some irreflexive transitve ones
+# triples, cardinality = hdt.search_triples("", type, iR)
+# print ('iR: ', cardinality)
+# for (s, p, o) in triples:
+# 	# triples, cardinality = hdt.search_triples(s, "", t)
+# 	if s in trans_collect:
+# 		print ('Transitive and irreflexive ===> ', s)
 #
+# triples, cardinality = hdt.search_triples("", type, r)
+# print ('r: ', cardinality)
+# for (s, p, o) in triples:
+# 	# triples, cardinality = hdt.search_triples(s, type, t)
+# 	if s in trans_collect:
+# 		print ('Transitive and reflexive ===> ', s)
+#
+#
+# #
 #
 #
 # collect_equivalent_properties = collect_reflexive_properties.intersection(collect_symmetric_properties.intersection(collect_transitive_properties))
