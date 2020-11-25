@@ -564,6 +564,9 @@ print ('#######################')
 
 def print_relation_info(p):
 
+	_, cardinality = hdt.search_triples("", p, "")
+	print ("cardinality: ", cardinality)
+
 	_, s_cardinality = hdt.search_triples(p, type, t)
 	if s_cardinality >= 1:
 		print ('transitive')
@@ -571,7 +574,6 @@ def print_relation_info(p):
 	_, s_cardinality = hdt.search_triples(p, type, s)
 	if s_cardinality >= 1:
 		print ('symmetric')
-
 
 	_, antiS_cardinality = hdt.search_triples(p, type, antiS)
 	if antiS_cardinality >= 1:
