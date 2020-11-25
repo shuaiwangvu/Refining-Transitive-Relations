@@ -561,10 +561,13 @@ print ('gives ', count_iR_triple, 'triples')
 print ('#######################')
 
 
-has_part = "http://www.obofoundry.org/ro/ro.owl#has_part"
-print ('as for ', has_part)
 
 def print_relation_info(p):
+
+	_, s_cardinality = hdt.search_triples(p, type, t)
+	if s_cardinality >= 1:
+		print ('transitive')
+
 	_, s_cardinality = hdt.search_triples(p, type, s)
 	if s_cardinality >= 1:
 		print ('symmetric')
@@ -587,7 +590,18 @@ def print_relation_info(p):
 	if iR_cardinality >= 1:
 		print ('irreflexive')
 
+has_part = "http://www.obofoundry.org/ro/ro.owl#has_part"
+print ('as for ', has_part)
+print_relation_info (has_part)
 
+
+is_part_of = "http://dbpedia.org/ontology/isPartOf"
+print ('as for ', is_part_of)
+print_relation_info (is_part_of)
+
+
+has_part = "http://dbpedia.org/ontology/hasPart"
+print ('as for ', has_part)
 print_relation_info (has_part)
 
 # print ('now print their SCC info')
