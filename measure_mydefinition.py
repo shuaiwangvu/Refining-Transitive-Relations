@@ -82,11 +82,12 @@ def get_domain_and_label(t):
 def compute_SCC_graphs(p):
 	graph = nx.DiGraph()
 	t_triples, t_cardinality = hdt.search_triples("", p, "")
-	print ("amount of triples: ", t_cardinality)
+
 	for (l, p, r) in t_triples:
 		graph.add_edge(l,r)
 
-
+	overall_nodes = graph.number_of_nodes()
+	overall_edges = graph.number_of_edges()
 	nx_sccs = nx.strongly_connected_components(graph)
 	filter_nx_sccs = [x for x in nx_sccs if len(x)>1]
 	nx_ct = Counter()
@@ -113,7 +114,7 @@ def compute_SCC_graphs(p):
 	print ('Largest at index ', id)
 	largest_scc = scc_graphs[id]
 	print ('Largest number of edges ', largest_scc.number_of_edges())
-	return filter_nx_sccs, scc_graphs, largest_scc
+	return overall_nodes, overall_edges, filter_nx_sccs, scc_graphs, largest_scc
 
 def compute_alpha_beta (scc_graphs):
 	num_all_scc_edges = 0
@@ -187,8 +188,8 @@ writer_reduced = csv.writer(outputfile_reduced, delimiter='\t')
 measures = {}
 for p in predicate_to_study:
 	print ('\n\n\n\n now dealing with p = ', p)
-	sccs, scc_graphs, largest = compute_SCC_graphs(p)
-	print ('total SCCs', len(sccs))
+	overall_nodes, overall_edges, sccs, scc_graphs, largest = compute_SCC_graphs(p)
+	# print ('total SCCs', len(sccs))
 	edge_acc = 0
 	for scc in scc_graphs:
 		edge_acc +=  scc.number_of_edges()
@@ -196,8 +197,11 @@ for p in predicate_to_study:
 	for scc in scc_graphs:
 		nodes_acc +=  scc.number_of_nodes()
 
-	print ('total edges', edge_acc)
-	print ('the largest scc has ', largest.number_of_nodes(), ' nodes, and ', largest.number_of_edges(), ' edges')
+	print ('SCCs edges', edge_acc)
+	print ('SCCs nodes = ', nodes_acc)
+	largest_nodes = largest.number_of_nodes()
+	largest_edges = largest.number_of_edges()
+	print ('the largest scc has ', largest_nodes, ' nodes, and ', largest_edges, ' edges')
 	print ('that is ', largest.number_of_edges()/ edge_acc, ' (portion) of number of edges')
 	# how many are size-two cycles?
 	size_two_sccs = 0
@@ -221,4 +225,7 @@ for p in predicate_to_study:
 	# print ('gamma = ', gamma, ' delta ', delta)
 	# print ('\n\n')
 	# measures [p] = (alpha, beta, gamma, delta)
-	# writer_reduced.writerow([p, alpha, beta, gamma, delta])
+	d, l = get_domain_and_label(p)
+	p = d + ':' +l
+	print ('for latex: ', p, overall_edges, overall_nodes, edge_acc, nodes_acc, alpha, beta, delta_overall, largest_edges, largest_nodes, alpha_max, beta_max, gamma, delta)
+	writer_reduced.writerow([p, overall_edges, overall_nodes, edge_acc, nodes_acc, alpha, beta, delta_overall, largest_edges, largest_nodes, alpha_max, beta_max, gamma, delta])
