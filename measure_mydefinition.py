@@ -108,7 +108,7 @@ def compute_SCC_graphs(p):
 		scc_graphs.append(g)
 
 	# list(map( (lambda x: x+1), l ))
-	id = scc_graphs.index(max(list (map (lambda x: x. number_of_edges()), scc_graphs)))
+	id = scc_graphs.index(max(list (map (lambda x: x. number_of_edges(), scc_graphs))))
 	largest_scc = scc_graphs [id]
 
 	return filter_nx_sccs, scc_graphs, largest_scc
@@ -179,7 +179,7 @@ writer_reduced = csv.writer(outputfile_reduced, delimiter='\t')
 # now we deal with each predicate
 measures = {}
 for p in predicate_to_study:
-	print ('now dealing with p = ', p)
+	print ('\n\n\n\n now dealing with p = ', p)
 	sccs, scc_graphs, largest = compute_SCC_graphs(p)
 	print ('total SCCs', len(sccs))
 	edge_acc = 0
