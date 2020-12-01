@@ -187,7 +187,7 @@ for p in predicate_to_study:
 		edge_acc +=  scc.number_of_edges()
 	nodes_acc = 0
 	for scc in scc_graphs:
-		nodes_acc +=  scc.number_of_noes()
+		nodes_acc +=  scc.number_of_nodes()
 
 	print ('total edges', edge_acc)
 	print ('the largest scc has ', largest.number_of_nodes(), ' and ', largest.number_of_edges(), ' edges')
