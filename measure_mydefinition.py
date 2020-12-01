@@ -121,7 +121,7 @@ def compute_alpha_beta (scc_graphs):
 	resulting_graph  = nx.DiGraph() # the resuling graph after computing SCC
 
 	for s in scc_graphs:
-		resulting_graph.add_edges_from(s.subgraph(s).edges())
+		resulting_graph.add_edges_from(s.edges())
 		num_all_scc_edges += s.number_of_edges()
 		edges_to_remove = set()
 		for (l,r) in s.edges():
