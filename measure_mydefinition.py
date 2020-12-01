@@ -110,9 +110,9 @@ def compute_SCC_graphs(p):
 	# list(map( (lambda x: x+1), l ))
 	lst = list (map (lambda x: x. number_of_edges(), scc_graphs))
 	id = lst.index(max (lst))
-	print ('at index ', id)
+	print ('Largest at index ', id)
 	largest_scc = scc_graphs[id]
-	print ('number of nodes ', largest_scc.number_of_nodes())
+	print ('Largest number of edges ', largest_scc.number_of_edges())
 	return filter_nx_sccs, scc_graphs, largest_scc
 
 def compute_alpha_beta (scc_graphs):
@@ -134,15 +134,6 @@ def compute_alpha_beta (scc_graphs):
 		num_of_size_two_cycle_edges += len (edges_to_remove)
 		resulting_graph.remove_edges_from(list(edges_to_remove))
 
-	# now compute the SCCs for this new graph
-	# mydict = {}
-	# for n in resulting_graph.nodes:
-	# 	collect_succssor = []
-	# 	for s in resulting_graph.successors(n):
-	# 		collect_succssor.append(s)
-	# 	mydict[n] = collect_succssor
-	#
-	# sccs = tarjan(mydict)
 	sccs = nx.strongly_connected_components(resulting_graph)
 	filter_scc = [x for x in sccs if len(x)>1]
 
@@ -205,7 +196,7 @@ for p in predicate_to_study:
 	print ('======== Now Alpha + Beta ======== ')
 	(alpha, beta) = compute_alpha_beta(scc_graphs)
 	print ('Entire graph     : alpha = ', alpha, ' beta =', beta)
-	(alpha, beta) = compute_alpha_beta(largest)
+	(alpha, beta) = compute_alpha_beta([largest])
 	print ('Only largest SCC : alpha = ', alpha, ' beta =', beta)
 	# ======== Gamma, Delta =======
 	# (gamma, delta) = compute_gamma_delta(sccs)
