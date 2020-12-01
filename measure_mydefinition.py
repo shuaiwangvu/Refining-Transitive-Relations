@@ -108,9 +108,9 @@ def compute_SCC_graphs(p):
 		scc_graphs.append(g)
 
 	# list(map( (lambda x: x+1), l ))
-	id = scc_graphs.index(max(list (map (lambda x: x. number_of_edges(), scc_graphs))))
-	largest_scc = scc_graphs [id]
-
+	lst = list (map (lambda x: x. number_of_edges(), scc_graphs))
+	id = lst.index(max (lst))
+	largest_scc = scc_graphs[id]
 	return filter_nx_sccs, scc_graphs, largest_scc
 
 def compute_alpha_beta (scc_graphs):
