@@ -44,9 +44,9 @@ c2=[
 c3 =[
 "http://www.w3.org/2000/01/rdf-schema#subClassOf",
 "http://www.w3.org/2004/02/skos/core#broader",
-"http://www.w3.org/2004/02/skos/core#narrower",
-"http://purl.org/dc/terms/hasPart",
-"http://purl.org/dc/terms/isPartOf",
+"http://www.w3.org/2004/02/skos/core#narrower", # Counter({2: 3, 4: 1, 3: 1, 6: 1, 5: 1})
+# "http://purl.org/dc/terms/hasPart", #  Counter({2: 332, 3: 49, 4: 13, 5: 4, 7: 2, 6: 2, 8: 1})
+# "http://purl.org/dc/terms/isPartOf",  # Counter({2: 327, 3: 40, 4: 17, 6: 2, 5: 2, 8: 1})
 "http://dbpedia.org/ontology/isPartOf"
 ]
 
@@ -149,18 +149,32 @@ def compute_alpha_beta (scc_graphs):
 
 	return (alpha, beta)
 
-def compute_gamma_delta (sccs):
-	ct = Counter()
-	for f in sccs:
-		ct[len(f)] += 1
-	gamma = 0
-	delta = 0
+# def compute_gamma_delta (sccs):
+# 	ct = Counter()
+# 	for f in sccs:
+# 		ct[len(f)] += 1
+# 	gamma = 0
+# 	delta = 0
+#
+# 	for s in ct.keys():
+# 		gamma += math.log10(ct[s]) / s
+# 		delta += math.log10(s) / ct[s]
+#
+# 	return (gamma, delta)
 
-	for s in ct.keys():
-		gamma += math.log10(ct[s]) / s
-		delta += math.log10(s) / ct[s]
+def compute_scc_gamma_delta (scc):
+	alpha, beta = compute_alpha_beta([scc])
+	gamma = (1- alpha + beta)/ 2 * (alpha +beta)
+	delta = gamma * scc.number_of_edges()
+	return gamma, delta
 
-	return (gamma, delta)
+def compute_delta(sccs):
+	# for each s in sccs, compute gamma
+	delta_acc = 0
+	for s in sccs:
+		g, d = compute_gamma(s)
+		delta_acc += d
+	return delta_acc
 
 
 file_name_reduced = 'measure_output'
@@ -183,7 +197,7 @@ for p in predicate_to_study:
 		nodes_acc +=  scc.number_of_nodes()
 
 	print ('total edges', edge_acc)
-	print ('the largest scc has ', largest.number_of_nodes(), ' and ', largest.number_of_edges(), ' edges')
+	print ('the largest scc has ', largest.number_of_nodes(), ' nodes, and ', largest.number_of_edges(), ' edges')
 	print ('that is ', largest.number_of_edges()/ edge_acc, ' (portion) of number of edges')
 	# how many are size-two cycles?
 	size_two_sccs = 0
@@ -196,9 +210,13 @@ for p in predicate_to_study:
 	print ('======== Now Alpha + Beta ======== ')
 	(alpha, beta) = compute_alpha_beta(scc_graphs)
 	print ('Entire graph     : alpha = ', alpha, ' beta =', beta)
-	(alpha, beta) = compute_alpha_beta([largest])
-	print ('Only largest SCC : alpha = ', alpha, ' beta =', beta)
+	(alpha_max, beta_max) = compute_alpha_beta([largest])
+	print ('Only largest SCC : alpha = ', alpha_max, ' beta =', beta_max)
 	# ======== Gamma, Delta =======
+	gamma, delta = compute_scc_gamma_delta(largest)
+	print ('largest:  gamma = ', gamma , ' and delta = ', delta)
+	delta_overall = compute_delta(scc_graphs)
+	print ('overall delta = ', delta_overall)
 	# (gamma, delta) = compute_gamma_delta(sccs)
 	# print ('gamma = ', gamma, ' delta ', delta)
 	# print ('\n\n')
