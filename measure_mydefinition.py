@@ -110,7 +110,9 @@ def compute_SCC_graphs(p):
 	# list(map( (lambda x: x+1), l ))
 	lst = list (map (lambda x: x. number_of_edges(), scc_graphs))
 	id = lst.index(max (lst))
+	print ('at index ', id)
 	largest_scc = scc_graphs[id]
+	print ('number of nodes ', largest_scc.number_of_nodes())
 	return filter_nx_sccs, scc_graphs, largest_scc
 
 def compute_alpha_beta (scc_graphs):
@@ -121,7 +123,7 @@ def compute_alpha_beta (scc_graphs):
 	resulting_graph  = nx.DiGraph() # the resuling graph after computing SCC
 
 	for s in scc_graphs:
-		resulting_graph.add_edges_from(s.edges())
+		resulting_graph.add_edges_from(list(s.edges()))
 		num_all_scc_edges += s.number_of_edges()
 		edges_to_remove = set()
 		for (l,r) in s.edges():
