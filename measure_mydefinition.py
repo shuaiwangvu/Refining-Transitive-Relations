@@ -140,9 +140,9 @@ def compute_alpha_beta (scc_graphs):
 	for f in filter_scc:
 		num_edges_left_in_new_SCC += resulting_graph.subgraph(f).number_of_edges()
 
-	print ('num_all_edges               = ', num_all_scc_edges )
-	print ('num_of_size_two_cycle_edges = ',  num_of_size_two_cycle_edges )
-	print ('num_edges_left_in_new_SCC   = ', num_edges_left_in_new_SCC )
+	# print ('num_all_edges               = ', num_all_scc_edges )
+	# print ('num_of_size_two_cycle_edges = ',  num_of_size_two_cycle_edges )
+	# print ('num_edges_left_in_new_SCC   = ', num_edges_left_in_new_SCC )
 
 	alpha = num_of_size_two_cycle_edges / num_all_scc_edges
 	beta = num_edges_left_in_new_SCC / num_all_scc_edges
