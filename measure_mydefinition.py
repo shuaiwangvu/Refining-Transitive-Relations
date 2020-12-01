@@ -227,5 +227,6 @@ for p in predicate_to_study:
 	# measures [p] = (alpha, beta, gamma, delta)
 	d, l = get_domain_and_label(p)
 	p = d + ':' +l
-	print ('for latex: ', p, overall_edges, overall_nodes, edge_acc, nodes_acc, alpha, beta, delta_overall, largest_edges, largest_nodes, alpha_max, beta_max, gamma, delta)
+# print ("{%.2f & %d}" % (3.456, 23))
+	print ('%s & %d & %d & %d & %d & %.2f & %.2f & %.2f & %d & %d &  %.2f &  %.2f & %.2f & %.2f \\\\ ' % (p, overall_edges, overall_nodes, edge_acc, nodes_acc, alpha, beta, delta_overall, largest_edges, largest_nodes, alpha_max, beta_max, gamma, delta))
 	writer_reduced.writerow([p, overall_edges, overall_nodes, edge_acc, nodes_acc, alpha, beta, delta_overall, largest_edges, largest_nodes, alpha_max, beta_max, gamma, delta])
