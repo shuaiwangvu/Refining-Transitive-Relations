@@ -172,7 +172,7 @@ def compute_delta(sccs):
 	# for each s in sccs, compute gamma
 	delta_acc = 0
 	for s in sccs:
-		g, d = compute_gamma(s)
+		g, d = compute_scc_gamma_delta(s)
 		delta_acc += d
 	return delta_acc
 
