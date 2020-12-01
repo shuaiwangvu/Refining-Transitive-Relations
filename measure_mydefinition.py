@@ -106,7 +106,12 @@ def compute_SCC_graphs(p):
 	for s in filter_nx_sccs:
 		g = graph.subgraph(s).copy()
 		scc_graphs.append(g)
-	return filter_nx_sccs, scc_graphs
+
+	# list(map( (lambda x: x+1), l ))
+	id = scc_graphs.index(max(list (map (lambda x: x. number_of_edges()), scc_graphs)))
+	largest_scc = scc_graphs [id]
+
+	return filter_nx_sccs, scc_graphs, largest_scc
 
 def compute_alpha_beta (scc_graphs):
 	num_all_scc_edges = 0
@@ -175,20 +180,34 @@ writer_reduced = csv.writer(outputfile_reduced, delimiter='\t')
 measures = {}
 for p in predicate_to_study:
 	print ('now dealing with p = ', p)
-	sccs, scc_graphs = compute_SCC_graphs(p)
+	sccs, scc_graphs, largest = compute_SCC_graphs(p)
 	print ('total SCCs', len(sccs))
-	biggest = 0
-	for s in sccs:
-		if biggest < len(s):
-			biggest = len(s)
-	print ('maxSCC = ', biggest)
+	edge_acc = 0
+	for scc in scc_graphs:
+		edge_acc +=  scc.number_of_edges()
+	nodes_acc = 0
+	for scc in scc_graphs:
+		nodes_acc +=  scc.number_of_noes()
 
+	print ('total edges', edge_acc)
+	print ('the largest scc has ', largest.number_of_nodes(), ' and ', largest.number_of_edges(), ' edges')
+	print ('that is ', largest.number_of_edges()/ edge_acc, ' (portion) of number of edges')
+	# how many are size-two cycles?
+	size_two_sccs = 0
 
+	for scc in scc_graphs:
+		if scc.number_of_nodes() == 2:
+			size_two_sccs += 1
+	print ('the number of size two SCCs: ', size_two_sccs)
+	# =======  Alpha , Beta  ========
+	print ('======== Now Alpha + Beta ======== ')
 	(alpha, beta) = compute_alpha_beta(scc_graphs)
-	print ('alpha = ', alpha, ' beta =', beta)
-
-	(gamma, delta) = compute_gamma_delta(sccs)
-	print ('gamma = ', gamma, ' delta ', delta)
-	print ('\n\n')
-	measures [p] = (alpha, beta, gamma, delta)
-	writer_reduced.writerow([p, alpha, beta, gamma, delta])
+	print ('Entire graph     : alpha = ', alpha, ' beta =', beta)
+	(alpha, beta) = compute_alpha_beta(largest)
+	print ('Only largest SCC : alpha = ', alpha, ' beta =', beta)
+	# ======== Gamma, Delta =======
+	# (gamma, delta) = compute_gamma_delta(sccs)
+	# print ('gamma = ', gamma, ' delta ', delta)
+	# print ('\n\n')
+	# measures [p] = (alpha, beta, gamma, delta)
+	# writer_reduced.writerow([p, alpha, beta, gamma, delta])
