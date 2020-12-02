@@ -205,7 +205,7 @@ for p in predicate_to_study:
 	print ('that is ', largest.number_of_edges()/ edge_acc, ' (portion) of number of edges')
 	# how many are size-two cycles?
 	size_two_sccs = 0
-
+	num_sccs = len (scc_graphs)
 	for scc in scc_graphs:
 		if scc.number_of_nodes() == 2:
 			size_two_sccs += 1
@@ -228,5 +228,5 @@ for p in predicate_to_study:
 	d, l = get_domain_and_label(p)
 	p = d + ':' +l
 # print ("{%.2f & %d}" % (3.456, 23))
-	print ('%s & %d & %d & %d & %d & %.2f & %.2f & %.2f & %d & %d &  %.2f &  %.2f & %.2f & %.2f \\\\ ' % (p, overall_edges, overall_nodes, edge_acc, nodes_acc, alpha, beta, delta_overall, largest_edges, largest_nodes, alpha_max, beta_max, gamma, delta))
-	writer_reduced.writerow([p, overall_edges, overall_nodes, edge_acc, nodes_acc, alpha, beta, delta_overall, largest_edges, largest_nodes, alpha_max, beta_max, gamma, delta])
+	print ('%s & %d & %d & %d & %d & %d & %.2f & %.2f & %.2f & %d & %d &  %.2f &  %.2f & %.2f & %.2f \\\\ ' % (p, overall_edges, overall_nodes, edge_acc, nodes_acc, num_sccs, alpha, beta, delta_overall, largest_edges, largest_nodes, alpha_max, beta_max, gamma, delta))
+	writer_reduced.writerow([p, overall_edges, overall_nodes, edge_acc, nodes_acc, num_sccs, alpha, beta, delta_overall, largest_edges, largest_nodes, alpha_max, beta_max, gamma, delta])
