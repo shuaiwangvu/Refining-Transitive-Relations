@@ -13,7 +13,9 @@ python main.py -w ../data-gold-standard/rdfs_subClassOf_edgelist_inferred.gz P1 
 ```
 
 There are two static settings of the parameter given:
+
 static 1: b1 = 15,000 and b2 = 3,000
+
 static 2: b1 = 1,000 and b2 = 200
 
 An experimental setting in a dynamic fashion is also provided. However, we are not entiredly sure about it and some more fine-tuning is required. 
