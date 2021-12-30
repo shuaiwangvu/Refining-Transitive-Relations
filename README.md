@@ -1,4 +1,4 @@
-# Refining-Transitive-and-Pseudo-Transitive-Relations
+# Refining Transitive and (Pseudo-)Transitive Relations
 
 This repository provides code and scripts for the refinement of edges of knowledge graphs of transitive and pseudo-transitive relations. 
 
